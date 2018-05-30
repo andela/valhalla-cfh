@@ -47,7 +47,7 @@ gulp.task('watch', ['sass'], () => {
 * quality in app folder using eslint
 */
 gulp.task('eslint', () => {
-  return gulp.src('app/**/*.js')
+  gulp.src('app/**/*.js')
     .pipe(eslint())
     .pipe(eslint.format());
 });
