@@ -1,5 +1,8 @@
 Cards for Humanity - [http://cfh.io](http://cfh.io)
 ===========
+[![Build Status](https://travis-ci.org/andela/valhalla-cfh.svg?branch=develop)](https://travis-ci.org/andela/valhalla-cfh)
+[![Coverage Status](https://coveralls.io/repos/github/andela/valhalla-cfh/badge.svg?branch=develop)](https://coveralls.io/github/andela/valhalla-cfh?branch=develop)
+
 Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.
 
 Our Team
