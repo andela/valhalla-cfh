@@ -7,7 +7,7 @@ const sass = require('gulp-sass');
 const bower = require('gulp-bower');
 const runSequence = require('run-sequence');
 const browserSync = require('browser-sync');
-
+require('dotenv').config();
 // initialize browserSync
 browserSync.create();
 
@@ -57,7 +57,10 @@ gulp.task('nodemon', () => {
   nodemon({
     script: 'server.js',
     ext: 'js html',
-    env: { NODE_ENV: 'development' }
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      PORT: process.env.PORT
+    }
   });
 });
 
@@ -75,10 +78,12 @@ gulp.task('concurrent', () => {
 });
 
 // gulp task to run bower installation
-gulp.task('bower', () => bower());
+gulp.task('bower', () => bower({
+  directory: 'public/lib'
+}));
 
 // run default task
-gulp.task('default', ['concurrent', 'sass', 'eslint']);
+gulp.task('default', ['concurrent']);
 
 // run test task
 gulp.task('test', ['mochaTest']);
