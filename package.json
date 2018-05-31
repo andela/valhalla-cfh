@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "babel-node node_modules/grunt-cli/bin/grunt",
-    "test": "node node_modules/grunt-cli/bin/grunt test",
+    "test": "node node_modules/grunt-cli/bin/grunt test --timeout 150000",
     "postinstall": "node node_modules/grunt-cli/bin/grunt install",
     "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
   },
@@ -43,6 +43,7 @@
     "jade": "~0.35.0",
     "jsonwebtoken": "^8.2.2",
     "mean-logger": "~0.0.1",
+    "mongodb": "^3.1.0-beta4",
     "mongoose": "^4.13.7",
     "passport": "~0.1.17",
     "passport-facebook": "~2.0.0",
