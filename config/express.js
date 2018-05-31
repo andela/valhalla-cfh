@@ -6,17 +6,21 @@ var express = require('express'),
     flash = require('connect-flash'),
     helpers = require('view-helpers'),
     config = require('./config');
+    expressValidator = require('express-validator');
 
-module.exports = function(app, passport, mongoose) {
-    app.set('showStackError', true);
-
-    //Should be placed before express.static
-    app.use(express.compress({
-        filter: function(req, res) {
-            return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
-        },
-        level: 9
-    }));
+    
+    module.exports = function(app, passport, mongoose) {
+        app.set('showStackError', true);
+        
+        //Should be placed before express.static
+        app.use(express.compress({
+            filter: function(req, res) {
+                return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
+            },
+            level: 9
+        }));
+        
+        app.use(expressValidator());
 
     //Setting the fav icon and static folder
     app.use(express.favicon());
