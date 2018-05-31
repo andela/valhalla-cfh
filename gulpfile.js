@@ -13,7 +13,7 @@ browserSync.create();
 
 // gulp task to convert sass files to css
 gulp.task('sass', () => {
-  return gulp.src('public/css/*.scss')
+  gulp.src('public/css/*.scss')
     .pipe(sass())
     .pipe(gulp.dest('public/css'))
     .pipe(browserSync.reload({
