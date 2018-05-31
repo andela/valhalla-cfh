@@ -1,8 +1,12 @@
 var async = require('async');
 
 module.exports = function(app, passport, auth) {
+    //signup validator
+    var signupValidator = require('./middlewares/signupValidator');
+
     //User Routes
     var users = require('../app/controllers/users');
+
     app.get('/signin', users.signin);
     app.get('/signup', users.signup);
     app.get('/chooseavatars', users.checkAvatar);
@@ -22,6 +26,9 @@ module.exports = function(app, passport, auth) {
 
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
+
+    // Route to register a user.
+    app.post('/api/auth/signup', signupValidator.userSignup, users.registerUser);
 
     //Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {
