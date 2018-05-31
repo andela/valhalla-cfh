@@ -48,7 +48,8 @@ module.exports = function(grunt) {
                     debug: true,
                     delayTime: 1,
                     env: {
-                        PORT: 3000
+                        PORT: 3000,
+                        MONGOHQ_URL: 'mongodb://localhost:27017/valhalla-cfh'
                     },
                     cwd: __dirname
                 }

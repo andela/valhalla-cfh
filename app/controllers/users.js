@@ -1,6 +1,8 @@
 /**
  * Module dependencies.
  */
+var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose'),
   User = mongoose.model('User');
 var avatars = require('./avatars').all();
@@ -186,3 +188,40 @@ exports.user = function(req, res, next, id) {
       next();
     });
 };
+
+
+/**
+ * Find user by id
+ */
+exports.login = function(req, res){
+  const { email, password } = req.body;
+
+  User.findOne({email}).exec((err, user) => {
+    if(err){
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      })
+    }
+    if (!user) {
+      return res.status(400).json({
+        error: 'User Not Found'
+      })
+    } else {
+
+      if(bcrypt.compareSync(password, user.hashed_password)){
+        const userData = {
+          id: user.id
+        }
+        const token = jwt.sign(userData, 'secretkey', { expiresIn: '5h'});
+         return res.status(200).json({
+          token,
+          message: 'Successfully SignIn',
+        });
+      } 
+        return res.status(400).json({
+          error: 'Username or Password Incorrect'
+        })
+      
+    }
+  })
+}
