@@ -13,10 +13,10 @@
     "npm": "5.6.0"
   },
   "scripts": {
-      "start": "node node_modules/gulp-cli/bin/gulp",
-      "test": "node node_modules/gulp-cli/bin/gulp test",
-      "postinstall": "node node_modules/glup-cli/bin/glup install",
-      "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
+    "start": "node node_modules/gulp-cli/bin/gulp",
+    "test": "node node_modules/gulp-cli/bin/gulp test",
+    "postinstall": "node node_modules/gulp-cli/bin/gulp install",
+    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
     "async": "~0.2.9",
