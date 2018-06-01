@@ -15,7 +15,7 @@ const index = require('../app/controllers/index');
 
 // const async = require('async');
 
-module.exports = (app, passport, auth) => {
+module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-vars
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/chooseavatars', users.checkAvatar);
