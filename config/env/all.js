@@ -5,6 +5,6 @@ require('dotenv').config();
 
 module.exports = {
 	root: rootPath,
-	port: process.env.PORT || 3000,
+	port: process.env.PORT,
     db: process.env.MONGOHQ_URL
 };

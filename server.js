@@ -55,7 +55,7 @@ require('./config/express')(app, passport, mongoose);
 require('./config/routes')(app, passport, auth);
 
 //Start the app by listening on <port>
-var port = config.port;
+var port = process.env.PORT;
 var server = app.listen(port);
 var ioObj = io.listen(server, { log: false });
 //game logic handled here

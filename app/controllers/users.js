@@ -1,9 +1,12 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-  User = mongoose.model('User');
-var avatars = require('./avatars').all();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+
+const User = mongoose.model('User');
+const avatars = require('./avatars').all();
 
 /**
  * Auth callback
@@ -185,4 +188,81 @@ exports.user = function(req, res, next, id) {
       req.profile = user;
       next();
     });
+};
+
+/**
+  * @param {any} req
+  * @param {any} res
+  * @return {Object}
+*/
+exports.registerUser = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  }).exec(function(err, existingUser) {
+      if(existingUser) {
+        return res.status(409).json(['User already exists'])        
+      }
+      
+      const user = new User(req.body);
+      user.provider = 'local';
+      user.save((err, createdUser) => {
+        if (err) {
+          return res.status(500).json(['User data not saved'])
+        }
+
+        const userData = {
+          id: createdUser._id,
+          username: createdUser.name,
+          email: createdUser.email,
+        }
+
+        const token = jwt.sign(userData, 'secret');
+
+        return res.status(200).json({
+          message: 'User successfully registered',
+          token,
+          userData
+        })
+      })
+    })
+};
+
+/**
+  * @param {any} req
+  * @param {any} res
+  * @return {Object}
+*/
+// Method to Login User
+exports.login = function (req, res) {
+  // Destructure from user
+  const { email, password } = req.body;
+  // Find email
+  User.findOne({ email }).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    // If no user found
+    if (!user) {
+      return res.status(400).json({
+        error: 'User Not Found'
+      });
+    }
+    // Compare password from user to database
+    if (bcrypt.compareSync(password, user.hashed_password)) {
+      const userData = {
+        id: user.id
+      };
+      // Create token
+      const token = jwt.sign(userData, 'secretkey', { expiresIn: '5h' });
+      return res.status(200).json({
+        token,
+        message: 'Successfully SignIn',
+      });
+    }
+    return res.status(400).json({
+      error: 'Username or Password Incorrect'
+    });
+  });
 };
