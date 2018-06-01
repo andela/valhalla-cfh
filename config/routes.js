@@ -1,6 +1,9 @@
 var async = require('async');
 
 module.exports = function(app, passport, auth) {
+    // Signin Validator
+    var validator =  require('./middlewares/signinValidator');
+    
     //User Routes
     var users = require('../app/controllers/users');
     app.get('/signin', users.signin);
@@ -11,6 +14,9 @@ module.exports = function(app, passport, auth) {
     //Setting up the users api
     app.post('/users', users.create);
     app.post('/users/avatars', users.avatars);
+
+    // Login Route
+    app.post('/api/auth/login', validator.signin, users.login);
 
     // Donation Routes
     app.post('/donations', users.addDonation);

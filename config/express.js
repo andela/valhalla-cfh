@@ -6,6 +6,7 @@ var express = require('express'),
     flash = require('connect-flash'),
     helpers = require('view-helpers'),
     config = require('./config');
+    expressValidator = require('express-validator');
 
 module.exports = function(app, passport, mongoose) {
     app.set('showStackError', true);
@@ -17,6 +18,8 @@ module.exports = function(app, passport, mongoose) {
         },
         level: 9
     }));
+
+    app.use(expressValidator());
 
     //Setting the fav icon and static folder
     app.use(express.favicon());
