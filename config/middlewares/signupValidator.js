@@ -20,9 +20,8 @@ exports.userSignup = (req, res, next) => {
   if (errors) {
     errors.map((err) => {
       errorArray[err.param] = err.msg;
+      return res.status(400).json(errorArray);
     });
-
-    return res.status(400).json(errorArray);
   }
 
   next();
