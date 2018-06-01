@@ -1,6 +1,12 @@
 var async = require('async');
 
 module.exports = function(app, passport, auth) {
+    // Signin Validator
+    var validator =  require('./middlewares/signinValidator');
+
+    //signup validator
+    var signupValidator = require('./middlewares/signupValidator');
+    
     //User Routes
     var users = require('../app/controllers/users');
     app.get('/signin', users.signin);
@@ -11,6 +17,16 @@ module.exports = function(app, passport, auth) {
     //Setting up the users api
     app.post('/users', users.create);
     app.post('/users/avatars', users.avatars);
+
+    // Route to register a user.
+    app.post(
+        '/api/auth/signup',
+        signupValidator.userSignup,
+        users.registerUser
+    );
+
+    // Login Route
+    app.post('/api/auth/login', validator.signin, users.login);
 
     // Donation Routes
     app.post('/donations', users.addDonation);
