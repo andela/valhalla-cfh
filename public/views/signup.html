@@ -1,4 +1,4 @@
-<div id="main-bod">
+<div id="main-bod" ng-controller="IndexController" ng-app="ng-animate">
   <!-- Fixed Logo & Menu Bar Start -->
   <div id="top-part">
     <div class="wpb-top-bar">
@@ -6,28 +6,27 @@
         <div class="row">
           <!-- Logo -->
           <div class="wpb-logo-container">
-            <div id="landing-logo"> 
+            <div id="landing-logo">
               <span id="first-word">Cards</span>
-              <span id="second-word"> for</span> 
-              <span id="third-word">Humanity</span> 
-            </div> 
+              <span id="second-word"> for</span>
+              <span id="third-word">Humanity</span>
+            </div>
             <div class="col-md-9 wpb-menu-container">
               <ul class="wpb-main-menu">
                 <li><a href="/">Home</a></li>
               </ul>
             </div>
-          </div>      
+          </div>
         </div>
       </div>
     </div>
   </div>
 <!-- Fixed Logo & Menu Bar End -->
-
 <!-- Landing Start -->
 <div class="wpb-teaser parallax-background" id="homer">
-  <div class="background-opacity"></div> 
+  <div class="background-opacity"></div>
   <div class="modified-container">
-    <div class="row" id="main-text"> 
+    <div class="row" id="main-text">
     <!-- Teaser Text Start -->
     <div id="landing-logo">
       <h2 id="slogan">Sign Up with:</h2>
@@ -36,34 +35,43 @@
         <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
         <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
         <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
+        <a href="/auth/instagram"><img class="login-item" src="/img/icons/google.png"></a>
       </div>
       <p id="create">Or create a username/password and select an avatar:</p>
-
       <div class="sign-body">
         <div class="more-sign">
-          <form class="signup form-horizontal" action="/users" method="post">
+          <form class="signup form-horizontal" ng-submit="signup()">
             <div class="control-group">
               <label for="name" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="name" type="text" name="name" placeholder="Full name" required novalidate />
+                <input class="input-info" ng-model="user.name" id="name" type="text" name="name" placeholder="Full name" />
+              </div>
+              <div class="sign-error" ng-show="hasError">
+                {{hasError.name}}
               </div>
             </div>
             <div class="control-group">
               <label for="email" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="email" type="email" name="email" placeholder="Email" required novalidate />
+                <input class="input-info" ng-model="user.email" id="email" type="email" name="email" placeholder="Email" />
+              </div>
+              <div class="sign-error" ng-show="hasError">
+                {{hasError.email}}
               </div>
             </div>
             <div class="control-group">
               <label for="password" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="password" type="password" name="password" placeholder="Password" required novalidate />
+                <input class="input-info" ng-model="user.password" id="password" type="password" name="password" placeholder="Password" />
+              </div>
+              <div class="sign-error" ng-show="hasError">
+                {{hasError.password}}
               </div>
             </div>
             <div id="contain-avatars">
               <ul ng-controller="IndexController" class="avatar-list">
                 <li ng-repeat="avatar in avatars" class="avatars ng-scope">
-                  <input name="avatar" type='radio' value="{{$index}}">
+                  <input name="avatar" ng-model="user.avatar" type='radio' value="{{$index}}">
                     <img ng-src="{{avatar}}">
                   </input>
                 </li>
@@ -80,6 +88,3 @@
     </div>
   </div>
 </div>
-
-
-

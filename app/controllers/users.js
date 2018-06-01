@@ -195,6 +195,43 @@ exports.user = function(req, res, next, id) {
   * @param {any} res
   * @return {Object}
 */
+exports.registerUser = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  }).exec(function(err, existingUser) {
+      if(existingUser) {
+        return res.status(409).json(['User already exists'])        
+      }
+      
+      const user = new User(req.body);
+      user.provider = 'local';
+      user.save((err, createdUser) => {
+        if (err) {
+          return res.status(500).json(['User data not saved'])
+        }
+
+        const userData = {
+          id: createdUser._id,
+          username: createdUser.name,
+          email: createdUser.email,
+        }
+
+        const token = jwt.sign(userData, 'secret');
+
+        return res.status(200).json({
+          message: 'User successfully registered',
+          token,
+          userData
+        })
+      })
+    })
+};
+
+/**
+  * @param {any} req
+  * @param {any} res
+  * @return {Object}
+*/
 // Method to Login User
 exports.login = function (req, res) {
   // Destructure from user
