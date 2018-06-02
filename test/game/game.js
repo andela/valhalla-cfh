@@ -1,7 +1,9 @@
 // const should = require('should');
 const io = require('socket.io-client');
+const os = require('os');
+require('dotenv').config();
 
-const socketURL = 'http://localhost:3000';
+const socketURL = `http://${os.hostname()}:${process.env.PORT}`;
 
 const options = {
   transports: ['websocket'],
@@ -16,6 +18,7 @@ describe('Game Server', () => {
   it('Should accept requests to joinGame', (done) => {
     const client1 = io.connect(socketURL, options);
     const disconnect = () => {
+      console.log(socketURL);
       client1.disconnect();
       done();
     };

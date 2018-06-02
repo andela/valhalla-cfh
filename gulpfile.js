@@ -21,8 +21,18 @@ gulp.task('sass', () => {
     }));
 });
 
+/**
+* gulp task to check for appropriate code
+* quality in app folder using eslint
+*/
+gulp.task('eslint', () => {
+  gulp.src('app/**/*.js')
+    .pipe(eslint())
+    .pipe(eslint.format());
+});
+
 // gulp task to watch for changes in public and app folders
-gulp.task('watch', ['sass'], () => {
+gulp.task('watch', ['sass', 'eslint'], () => {
   // watching changes to sass files in public folder
   gulp.watch('public/css/*.scss', ['sass']);
 
@@ -36,20 +46,10 @@ gulp.task('watch', ['sass'], () => {
   gulp.watch('public/views/*.html', browserSync.reload);
 
   // watching changes to all js files in app folder
-  gulp.watch('app/**/*.js', browserSync.reload);
+  gulp.watch('app/**/*.js', ['eslint'], browserSync.reload);
 
   // watching changes to all jade files in app folder
   gulp.watch('app/views/**/*.jade', browserSync.reload);
-});
-
-/**
-* gulp task to check for appropriate code
-* quality in app folder using eslint
-*/
-gulp.task('eslint', () => {
-  gulp.src('app/**/*.js')
-    .pipe(eslint())
-    .pipe(eslint.format());
 });
 
 // gulp task to run nodemon and check for server changes
@@ -58,8 +58,7 @@ gulp.task('nodemon', () => {
     script: 'server.js',
     ext: 'js html',
     env: {
-      NODE_ENV: process.env.NODE_ENV,
-      PORT: process.env.PORT
+      NODE_ENV: 'development'
     }
   });
 });
@@ -79,11 +78,11 @@ gulp.task('concurrent', () => {
 
 // gulp task to run bower installation
 gulp.task('bower', () => bower({
-  directory: 'public/lib'
+  directory: './public/lib'
 }));
 
 // run default task
-gulp.task('default', ['concurrent']);
+gulp.task('default', ['concurrent', 'sass', 'eslint']);
 
 // run test task
 gulp.task('test', ['mochaTest']);

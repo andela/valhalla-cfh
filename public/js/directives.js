@@ -73,9 +73,8 @@ angular.module('mean.directives', [])
 
         if (window.localStorage.token) {
           scope.showOptions = false;
-        } else {
-          scope.showOptions = true;
         }
+        
         scope.signOut = function () {
           window.localStorage.removeItem('token');
           scope.showOptions = true;
