@@ -18,7 +18,6 @@ describe('Game Server', () => {
   it('Should accept requests to joinGame', (done) => {
     const client1 = io.connect(socketURL, options);
     const disconnect = () => {
-      console.log(socketURL);
       client1.disconnect();
       done();
     };
