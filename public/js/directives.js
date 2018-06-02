@@ -71,8 +71,13 @@ angular.module('mean.directives', [])
       link: function(scope, elem, attr) {
         scope.showOptions = true;
 
-        if (scope.$$childHead.global.authenticated === true) {
+        if (window.localStorage.token) {
           scope.showOptions = false;
+        }
+        
+        scope.signOut = function () {
+          window.localStorage.removeItem('token');
+          scope.showOptions = true;
         }
       }
     };
