@@ -78,7 +78,7 @@ gulp.task('concurrent', () => {
 
 // gulp task to run bower installation
 gulp.task('bower', () => bower({
-  directory: './public/lib'
+  directory: 'public/lib'
 }));
 
 // run default task
