@@ -1,58 +1,57 @@
 // /**
 //  * Module dependencies.
 //  */
-// var should = require('should'),
-//     app = require('../../server'),
-//     mongoose = require('mongoose'),
-//     User = mongoose.model('User'),
-//     Article = mongoose.model('Article');
+// // const app = require('../../server');
+// const should = require('should');
+// const mongoose = require('mongoose');
 
-// //Globals
-// var user;
-// var article;
+// const User = mongoose.model('User');
+// const Article = mongoose.model('Article');
 
-// //The tests
-// describe('<Unit Test>', function() {
-//     describe('Model Article:', function() {
-//         beforeEach(function(done) {
-//             user = new User({
-//                 name: 'Full name',
-//                 email: 'test@test.com',
-//                 username: 'user',
-//                 password: 'password'
-//             });
+// // Globals
+// let user;
+// let article;
 
-//             user.save(function(err) {                
-//                 article = new Article({
-//                     title: 'Article Title',
-//                     content: 'Article Content',
-//                     user: user
-//                 });
+// // The tests
+// describe('<Unit Test>', () => {
+//   describe('Model Article:', () => {
+//     beforeEach((done) => {
+//       user = new User({
+//         name: 'Full name',
+//         email: 'test@test.com',
+//         username: 'user',
+//         password: 'password'
+//       });
 
-//                 done();
-//             });
+//       user.save(() => {
+//         article = new Article({
+//           title: 'Article Title',
+//           content: 'Article Content',
+//           user
 //         });
 
-//         describe('Method Save', function() {
-//             it('should be able to save whithout problems', function(done) {
-//                 return article.save(function(err) {
-//                     should.not.exist(err);
-//                     done();
-//                 });
-//             });
-
-//             it('should be able to show an error when try to save witout title', function(done) {
-//                 article.title = '';
-
-//                 return article.save(function(err) {
-//                     should.exist(err);
-//                     done();
-//                 });
-//             });
-//         });
-
-//         afterEach(function(done) {
-//             done();
-//         });
+//         done();
+//       });
 //     });
+
+//     describe('Method Save', () => {
+//       it('should be able to save whithout problems', done => article.save((err) => {
+//         should.not.exist(err);
+//         done();
+//       }));
+
+//       it('should be able to show an error when try to save witout title', (done) => {
+//         article.title = '';
+
+//         return article.save((err) => {
+//           should.exist(err);
+//           done();
+//         });
+//       });
+//     });
+
+//     afterEach((done) => {
+//       done();
+//     });
+//   });
 // });
