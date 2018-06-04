@@ -25,12 +25,13 @@ angular.module('mean.system')
         const token = response.data.token;
         if(token){
           localStorage.setItem('token', token);
+          toastr.success('Successfully signed in');
           $location.path('/');
         }
       },
     (response) => {
       const { error } = response.data
-      $scope.hasError = error;
+      toastr.error(error);
     })
     };
 
