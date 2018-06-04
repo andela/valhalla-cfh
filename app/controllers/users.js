@@ -310,3 +310,37 @@ exports.login = (req, res) => {
     });
   });
 };
+
+exports.search = function (req, res) {
+  const { searchTerm } = req.body;
+  const escapeRegex = searchTerm.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  const searchQuery = new RegExp(escapeRegex, 'gi');
+  let foundUsers = [];
+  User.find()
+    .or([
+      { 'name': searchQuery }, { 'email': searchQuery }
+    ])
+    .exec((error, users) => {
+      if (error) {
+        return res.status(500).send({
+          error: 'Internal Server Error'
+        });
+      }
+      if (users.length === 0) {
+        return res.status(404).send({
+          error: 'User not found'
+        });
+      }
+      users.forEach((user) => {
+        const userDetails = {
+          email: user.email,
+          name: user.name
+        };
+        return foundUsers.push(userDetails)
+      });
+      return res.status(200).send({
+        message: 'Successfully found users',
+        foundUsers
+      });
+  });
+};

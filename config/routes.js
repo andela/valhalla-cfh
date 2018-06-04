@@ -35,6 +35,9 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   // Login Route
   app.post('/api/auth/login', validator.signin, users.login);
 
+  // Route to search for users
+  app.post('/api/search/users', users.search);
+
   // Donation Routes
   app.post('/donations', users.addDonation);
 
