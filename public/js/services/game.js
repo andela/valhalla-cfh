@@ -177,6 +177,10 @@ angular.module('mean.system')
       $('#maxPlayer').modal('show');
    });
 
+   socket.on('cantStartGame', function() {
+    $('#cantStartGame').modal('show');
+ });
+
   socket.on('notification', function(data) {
     addToNotificationQueue(data.notification);
   });

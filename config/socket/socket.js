@@ -206,6 +206,10 @@ module.exports = (io) => {
       if (allGames[socket.gameID]) {
         const thisGame = allGames[socket.gameID];
         console.log('comparing', thisGame.players[0].socket.id, 'with', socket.id);
+        // To check whether the user has minimum number of player to play the game
+        if(thisGame.players.length < thisGame.playerMinLimit){
+          socket.emit('cantStartGame');
+        }
         if (thisGame.players.length >= thisGame.playerMinLimit) {
           // Remove this game from gamesNeedingPlayers so new players can't join it.
           gamesNeedingPlayers.forEach((game, index) => {
