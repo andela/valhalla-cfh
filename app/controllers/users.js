@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const avatars = require('./avatars').all();
+const nodemailer = require('nodemailer');
 
 const User = mongoose.model('User');
 
@@ -342,5 +343,34 @@ exports.search = function (req, res) {
         message: 'Successfully found users',
         foundUsers
       });
+  });
+};
+
+exports.invites = function (req, res) {
+  const { userEmail, username, gameLink } = req.body;
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'valhallacfh@gmail.com',
+      pass: 'valhalla190'
+    }
+  });
+  const mailOptions = {
+    from: 'valhallacfh@gmail.com',
+    to: userEmail,
+    subject: 'CFH - Join Cards for Humanity Game',
+    html: `<p>Hello ${username}, </p>
+          <p>Valhalla CFH invites link: ${gameLink}, join game on Cards For Humanity</p>`
+  };
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      res.status(500).json({
+        error: 'Email Not Sent!'
+      });
+    } else {
+      res.status(200).json({
+        message: `Email invite sent successfully`
+      });
+    }
   });
 };
