@@ -12,7 +12,7 @@ angular.module('mean.system')
     table: [],
     czar: null,
     playerMinLimit: 3,
-    playerMaxLimit: 6,
+    playerMaxLimit: 12,
     pointLimit: null,
     state: null,
     round: 0,
@@ -172,6 +172,10 @@ angular.module('mean.system')
       game.time = 0;
     }
   });
+
+  socket.on('maxPlayer', function() {
+      $('#maxPlayer').modal('show');
+   });
 
   socket.on('notification', function(data) {
     addToNotificationQueue(data.notification);

@@ -9,6 +9,7 @@ angular.module('mean.system')
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
+    $scope.totalInvites = 0;
 
     // handle search change 
     $scope.handleSearch = function(){
@@ -21,7 +22,6 @@ angular.module('mean.system')
         
       },
     (response) => {
-      // console.log('I am inside the error function')
       $scope.inviteUser = '';
       $scope.inviteError = response.data.error;
     })
@@ -30,16 +30,23 @@ angular.module('mean.system')
   // sends invites to players
   $scope.sendInvites = function(user){
     $scope.gameLink = $location.absUrl();
+    if($scope.totalInvites >= 11){
+      toastr.success('Sorry, you can not invite more 11 players');
+      document.getElementById("closeModal").click();
+    }
+    else{
     $http.post('/api/invite/users', {
       userEmail: user.email,
       username: user.name,
       gameLink: $scope.gameLink
     }).then((response) => {
       toastr.success(response.data.message);
+      $scope.totalInvites = $scope.totalInvites + 1;
       document.getElementById("closeModal").click();
     }, (response) => {
       toastr.success(response.data.error);
     }) 
+  }
   }
 
     $scope.pickCard = function(card) {

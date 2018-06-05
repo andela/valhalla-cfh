@@ -105,6 +105,7 @@ module.exports = (io) => {
         }
       } else {
         // TODO: Send an error message back to this user saying the game has already started
+        socket.emit('maxPlayer');
       }
     } else {
       // Put players into the general queue
