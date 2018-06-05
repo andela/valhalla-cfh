@@ -244,7 +244,7 @@ exports.registerUser = (req, res) => {
     email: req.body.email
   }).exec((err, existingUser) => {
     if (existingUser) {
-      return res.status(409).json({ email: 'Email already exists' });
+      return res.status(409).json(['Email is taken']);
     }
 
     const user = new User(req.body);
@@ -262,7 +262,7 @@ exports.registerUser = (req, res) => {
 
       const token = jwt.sign(userData, 'secret');
 
-      return res.status(200).json({
+      return res.status(201).json({
         message: 'User successfully registered',
         token,
         userData
