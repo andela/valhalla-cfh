@@ -33,7 +33,13 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   );
 
   // Login Route
-  app.post('/api/auth/login', validator.signin, users.login);
+  // app.post('/api/auth/login', validator.signin, users.login);
+
+  app.post('/api/auth/login', validator.signin, passport.authenticate('local', {
+    // successRedirect: '/play',
+    failureRedirect: '/signin',
+    failureFlash: 'Invalid email or password.'
+  }), users.login);
 
   // Donation Routes
   app.post('/donations', users.addDonation);
@@ -49,33 +55,38 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: ['email'],
+    successRedirect: '/play',
     failureRedirect: '/signin'
   }), users.signin);
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    successRedirect: '/play',
     failureRedirect: '/signin'
   }), users.authCallback);
 
-  // Setting the github oauth routes
-  app.get('/auth/github', passport.authenticate('github', {
-    failureRedirect: '/signin'
-  }), users.signin);
+  // // Setting the github oauth routes
+  // app.get('/auth/github', passport.authenticate('github', {
+  //   failureRedirect: '/signin'
+  // }), users.signin);
 
-  app.get('/auth/github/callback', passport.authenticate('github', {
-    failureRedirect: '/signin'
-  }), users.authCallback);
+  // app.get('/auth/github/callback', passport.authenticate('github', {
+  //   failureRedirect: '/signin'
+  // }), users.authCallback);
 
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
+    successRedirect: '/play',
     failureRedirect: '/signin'
   }), users.signin);
 
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+    successRedirect: '/play',
     failureRedirect: '/signin'
   }), users.authCallback);
 
   // Setting the google oauth routes
   app.get('/auth/google', passport.authenticate('google', {
+    successRedirect: '/play',
     failureRedirect: '/signin',
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
@@ -84,8 +95,21 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   }), users.signin);
 
   app.get('/auth/google/callback', passport.authenticate('google', {
+    successRedirect: '/play',
     failureRedirect: '/signin'
   }), users.authCallback);
+
+  app.get('/auth/instagram', passport.authenticate('instagram', {
+    successRedirect: '/play',
+    failureRedirect: '/signin'
+  }), users.signin);
+
+  app.get('/auth/instagram/callback', passport.authenticate('instagram', {
+    successRedirect: '/play',
+    failureRedirect: '/signin'
+  }), users.authCallback);
+  // Finish with setting up the userId param
+  app.param('userId', users.user);
 
   // Finish with setting up the userId param
   app.param('userId', users.user);
