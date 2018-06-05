@@ -244,7 +244,7 @@ exports.registerUser = (req, res) => {
     email: req.body.email
   }).exec((err, existingUser) => {
     if (existingUser) {
-      return res.status(409).json(['User already exists']);
+      return res.status(409).json({ email: 'Email already exists' });
     }
 
     const user = new User(req.body);
@@ -257,7 +257,7 @@ exports.registerUser = (req, res) => {
       const userData = {
         id: createdUser._id,
         username: createdUser.name,
-        email: createdUser.email,
+        email: createdUser.email
       };
 
       const token = jwt.sign(userData, 'secret');
