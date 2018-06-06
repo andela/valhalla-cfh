@@ -8,13 +8,16 @@ angular.module('mean.system')
       $http.post('/api/auth/signup', userDetails)
       .then(
         (response) => {
-          const token = response.data.token;
+          const { token, message } = response.data;
           localStorage.setItem('token', token);
+          toastr.success(message)
           $location.path('/');
         },
-        (error) => {
-          // display server errors
-          $scope.hasError = error.data
+        (errors) => {
+          // display errors if input is empty or invalid
+          errors.data.map(err => {
+            toastr.error(err);
+          })
         })
     };
 
@@ -36,26 +39,30 @@ angular.module('mean.system')
       const userDetails = $scope.user;
       const { name, email, password } = userDetails;
       $scope.hasError = {};
+      console.log($scope.user);
 
       // collect image chosen from the signup form
       const imageFile = $('#userImage').prop('files')[0];
-      const error = {}
+      const errors = [];
       let imageUrl;
 
       // validate name, email and password is available
       Object.entries({ name, email, password }).forEach(([key, value]) => {
         if (!value || value === '') {
-          error[key] = `Please supply your ${key}`;
+          errors.push(`Please supply your ${key}`);
         }
       });
       // validate that either an avatar or an image upload is chosen
       if (!imageFile && !userDetails.avatar) {
-        error.avatar = 'Please choose an avatar or upload an image';
+        errors.push('Please choose an avatar or upload an image');
       }
 
       // if any validation fails, display the error
-      if (Object.keys(error).length !== 0) {
-        $scope.hasError = error;
+      if (Object.keys(errors).length !== 0) {
+        // Display errors if input is empty
+        errors.map(err => {
+          toastr.error(err)
+        })
       } else {
         // upload the image to cloudinary
         if (imageFile) {

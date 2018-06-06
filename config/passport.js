@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const LocalStrategy = require('passport-local').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-const GitHubStrategy = require('passport-github').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const config = require('./config');
+const InstagramStrategy = require('passport-instagram').Strategy;
 
 const User = mongoose.model('User');
+const config = require('./config');
+require('dotenv').config();
 
 module.exports = (passport) => {
   // Serialize sessions
@@ -61,7 +62,8 @@ module.exports = (passport) => {
     {
       consumerKey: process.env.TWITTER_CONSUMER_KEY || config.twitter.clientID,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET || config.twitter.clientSecret,
-      callbackURL: config.twitter.callbackURL
+      callbackURL: config.twitter.callbackURL,
+      includeEmail: true
     },
     ((token, tokenSecret, profile, done) => {
       User.findOne({
@@ -70,15 +72,19 @@ module.exports = (passport) => {
         if (err) {
           return done(err);
         }
+
         if (!user) {
           user = new User({
             name: profile.displayName,
+            email: profile._json.email,
             username: profile.username,
             provider: 'twitter',
-            twitter: profile._json
+            twitter: profile._json,
+            profile_image: profile._json.profile_image_url
           });
+
           user.save((err) => {
-            if (err) console.log(err);
+            if (err) return err;
             return done(err, user);
           });
         } else {
@@ -93,7 +99,9 @@ module.exports = (passport) => {
     {
       clientID: process.env.FB_CLIENT_ID || config.facebook.clientID,
       clientSecret: process.env.FB_CLIENT_SECRET || config.facebook.clientSecret,
-      callbackURL: config.facebook.callbackURL
+      callbackURL: config.facebook.callbackURL,
+      profileFields: ['id', 'displayName', 'email', 'gender', 'picture.width(200).height(200)', 'link', 'locale', 'name', 'timezone'],
+      enableProof: true
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
@@ -102,55 +110,24 @@ module.exports = (passport) => {
         if (err) {
           return done(err);
         }
+
         if (!user) {
-          console.log(profile);
           user = new User({
             name: profile.displayName,
-            email: (profile.emails && profile.emails[0].value) || '',
+            email: profile._json.email || '',
             username: profile.username,
             provider: 'facebook',
-            facebook: profile._json
+            facebook: profile._json,
+            profile_image: profile.photos[0].value
           });
+
           user.save((err) => {
-            if (err) console.log(err);
+            if (err) return err;
             user.facebook = null;
             return done(err, user);
           });
         } else {
           user.facebook = null;
-          return done(err, user);
-        }
-      });
-    })
-  ));
-
-  // Use github strategy
-  passport.use(new GitHubStrategy(
-    {
-      clientID: process.env.GITHUB_CLIENT_ID || config.github.clientID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || config.github.clientSecret,
-      callbackURL: config.github.callbackURL
-    },
-    ((accessToken, refreshToken, profile, done) => {
-      User.findOne({
-        'github.id': profile.id
-      }, (err, user) => {
-        if (err) {
-          return done(err);
-        }
-        if (!user) {
-          user = new User({
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            username: profile.username,
-            provider: 'github',
-            github: profile._json
-          });
-          user.save((err) => {
-            if (err) console.log(err);
-            return done(err, user);
-          });
-        } else {
           return done(err, user);
         }
       });
@@ -171,16 +148,55 @@ module.exports = (passport) => {
         if (err) {
           return done(err);
         }
+
         if (!user) {
           user = new User({
             name: profile.displayName,
             email: profile.emails[0].value,
             username: profile.username,
             provider: 'google',
-            google: profile._json
+            google: profile._json,
+            profile_image: profile._json.picture
           });
+
           user.save((err) => {
-            if (err) console.log(err);
+            if (err) return err;
+            return done(err, user);
+          });
+        } else {
+          return done(err, user);
+        }
+      });
+    })
+  ));
+
+  // Use instagramstrategy
+  passport.use(new InstagramStrategy(
+    {
+      clientID: process.env.INSTAGRAM_CLIENT_ID || config.instagram.clientID,
+      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET || config.instagram.clientSecret,
+      callbackURL: config.instagram.callbackURL
+    },
+    ((accessToken, refreshToken, profile, done) => {
+      User.findOne({
+        'instagram.data.id': profile.id
+      }, (err, user) => {
+        if (err) {
+          return done(err);
+        }
+
+        if (!user) {
+          user = new User({
+            name: profile.displayName,
+            email: (profile.emails && profile.emails[0].value) || '',
+            username: profile.username,
+            provider: 'instagram',
+            instagram: profile._json,
+            profile_image: profile._json.data.profile_picture
+          });
+          
+          user.save((err) => {
+            if (err) return err;
             return done(err, user);
           });
         } else {

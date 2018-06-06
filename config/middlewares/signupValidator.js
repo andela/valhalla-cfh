@@ -15,11 +15,11 @@ exports.userSignup = (req, res, next) => {
 
   const errors = req.validationErrors();
 
-  const errorArray = {};
+  const errorArray = [];
 
   if (errors) {
     errors.map((err) => {
-      errorArray[err.param] = err.msg;
+      errorArray.push(err.msg);
       return errorArray;
     });
     return res.status(400).json(errorArray);
