@@ -1,5 +1,6 @@
 angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+.controller('GameController', ['$scope', 'Global', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', '$http', function ($scope, Global, game, $timeout, $location, MakeAWishFactsService, $dialog, $http) {
+    $scope.global = Global;
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -8,6 +9,45 @@ angular.module('mean.system')
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
+    $scope.totalInvites = 0;
+
+    // handle search change 
+    $scope.handleSearch = function(){
+      $scope.global.authenticated = true;
+      $scope.global.user = window.user;
+      console.log($scope.global.user);
+      $http.post(`/api/search/users`, {searchTerm: $scope.searchValue}).then((response) => {
+        $scope.inviteError = '';
+        $scope.inviteUser = response.data.foundUsers;
+        
+      },
+    (response) => {
+      $scope.inviteUser = '';
+      $scope.inviteError = response.data.error;
+    })
+  }
+
+  // sends invites to players
+  $scope.sendInvites = function(user){
+    $scope.gameLink = $location.absUrl();
+    if($scope.totalInvites >= 11){
+      toastr.success('Sorry, you can not invite more 11 players');
+      document.getElementById("closeModal").click();
+    }
+    else{
+    $http.post('/api/invite/users', {
+      userEmail: user.email,
+      username: user.name,
+      gameLink: $scope.gameLink
+    }).then((response) => {
+      toastr.success(response.data.message);
+      $scope.totalInvites = $scope.totalInvites + 1;
+      document.getElementById("closeModal").click();
+    }, (response) => {
+      toastr.success(response.data.error);
+    }) 
+  }
+  }
 
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
