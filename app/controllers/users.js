@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const avatars = require('./avatars').all();
+const nodemailer = require('nodemailer');
 
 const User = mongoose.model('User');
 
@@ -308,5 +309,68 @@ exports.login = (req, res) => {
     return res.status(400).json({
       error: 'Username or Password Incorrect'
     });
+  });
+};
+
+exports.search = function (req, res) {
+  const { searchTerm } = req.body;
+  const escapeRegex = searchTerm.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  const searchQuery = new RegExp(escapeRegex, 'gi');
+  let foundUsers = [];
+  User.find()
+    .or([
+      { 'name': searchQuery }, { 'email': searchQuery }
+    ])
+    .exec((error, users) => {
+      if (error) {
+        return res.status(500).send({
+          error: 'Internal Server Error'
+        });
+      }
+      if (users.length === 0) {
+        return res.status(404).send({
+          error: 'User not found'
+        });
+      }
+      users.forEach((user) => {
+        const userDetails = {
+          email: user.email,
+          name: user.name
+        };
+        return foundUsers.push(userDetails)
+      });
+      return res.status(200).send({
+        message: 'Successfully found users',
+        foundUsers
+      });
+  });
+};
+
+exports.invites = function (req, res) {
+  const { userEmail, username, gameLink } = req.body;
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'valhallacfh@gmail.com',
+      pass: 'valhalla190'
+    }
+  });
+  const mailOptions = {
+    from: 'valhallacfh@gmail.com',
+    to: userEmail,
+    subject: 'CFH - Join Cards for Humanity Game',
+    html: `<p>Hello ${username}, </p>
+          <p>Valhalla CFH invites link: ${gameLink}, join game on Cards For Humanity</p>`
+  };
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      res.status(500).json({
+        error: 'Email Not Sent!'
+      });
+    } else {
+      res.status(200).json({
+        message: `Email invite sent successfully`
+      });
+    }
   });
 };

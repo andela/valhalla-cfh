@@ -41,6 +41,12 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
     failureFlash: 'Invalid email or password.'
   }), users.login);
 
+  // Route to search for users
+  app.post('/api/search/users', users.search);
+
+  // Route to send invites
++ app.post('/api/invite/users', users.invites);
+
   // Donation Routes
   app.post('/donations', users.addDonation);
 
