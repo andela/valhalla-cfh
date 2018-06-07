@@ -60,8 +60,8 @@ module.exports = (passport) => {
   // Use twitter strategy
   passport.use(new TwitterStrategy(
     {
-      consumerKey: process.env.TWITTER_CONSUMER_KEY || config.twitter.clientID,
-      consumerSecret: process.env.TWITTER_CONSUMER_SECRET || config.twitter.clientSecret,
+      consumerKey: process.env.TWITTER_CONSUMER_KEY,
+      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
       callbackURL: config.twitter.callbackURL,
       includeEmail: true
     },
@@ -97,8 +97,8 @@ module.exports = (passport) => {
   // Use facebook strategy
   passport.use(new FacebookStrategy(
     {
-      clientID: process.env.FB_CLIENT_ID || config.facebook.clientID,
-      clientSecret: process.env.FB_CLIENT_SECRET || config.facebook.clientSecret,
+      clientID: process.env.FB_CLIENT_ID,
+      clientSecret: process.env.FB_CLIENT_SECRET,
       callbackURL: config.facebook.callbackURL,
       profileFields: ['id', 'displayName', 'email', 'gender', 'picture.width(200).height(200)', 'link', 'locale', 'name', 'timezone'],
       enableProof: true
@@ -137,8 +137,8 @@ module.exports = (passport) => {
   // Use google strategy
   passport.use(new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID || config.google.clientID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.google.clientSecret,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: config.google.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {
@@ -173,8 +173,8 @@ module.exports = (passport) => {
   // Use instagramstrategy
   passport.use(new InstagramStrategy(
     {
-      clientID: process.env.INSTAGRAM_CLIENT_ID || config.instagram.clientID,
-      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET || config.instagram.clientSecret,
+      clientID: process.env.INSTAGRAM_CLIENT_ID,
+      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET,
       callbackURL: config.instagram.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {

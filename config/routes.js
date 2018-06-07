@@ -12,6 +12,10 @@ const questions = require('../app/controllers/questions');
 const avatars = require('../app/controllers/avatars');
 // Home route
 const index = require('../app/controllers/index');
+// Game controllers
+const games = require('../app/controllers/games');
+// Authorization controller
+const authorization = require('./middlewares/tokenVerifier');
 
 // const async = require('async');
 
@@ -140,4 +144,7 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   // index route
   app.get('/', index.render);
+
+  // Game Route
+  app.post('/api/games/:id/start', authorization.tokenVerification, games.saveGameResults);
 };
