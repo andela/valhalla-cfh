@@ -49,7 +49,7 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   app.post('/api/search/users', users.search);
 
   // Route to send invites
-+ app.post('/api/invite/users', users.invites);
+  app.post('/api/invite/users', users.invites);
 
   // Donation Routes
   app.post('/donations', users.addDonation);
