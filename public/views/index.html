@@ -10,7 +10,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
@@ -38,7 +38,7 @@
     </div>
   </nav>
   <!-- NAVBAR -->
-  
+
   <!-- MAIN BODY -->
   <div id="introduction" class="introduction mt-5">
     <div class="introduction-overlay d-flex">
@@ -58,7 +58,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- HOW TO PLAY -->
   <div id="how-to-play" class="how-to-play">
     <div class="container text-center pb-3">
@@ -108,7 +108,7 @@
     </div>
   </div>
   <!-- HOW TO PLAY -->
-  
+
   <!-- CHARITY -->
   <div id="charity" class="charity">
     <div class="container pb-5">
@@ -136,17 +136,17 @@
             We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other players how much better you are than them).
             All donations go to the Make-a-Wish Foundation and benefit children in need.
           </p>
-  
+
           <div class="text-center py-0">
             <button class="w-100 guest-play-button wow rubberBand pointer">Donate</button>
           </div>
-  
+
         </div>
       </div>
     </div>
   </div>
   <!-- CHARITY -->
-  
+
   <!-- ABOUT THE TEAM -->
   <div id="team" class="team">
     <div class="container text-center pb-4">
@@ -197,7 +197,7 @@
   </div>
   <!-- ABOUT THE TEAM -->
   <!-- MAIN BODY -->
-  
+
   <!-- FOOTER -->
   <div class="footer bg-custom text-white py-3">
     <div class="container text-center">
@@ -210,4 +210,108 @@
     </div>
   </div>
   <!-- FOOTER -->
+   <!-- Start of Login Modal -->
+   <div id="loginModal" class="modal fade text-dark">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="contactModalTitle" class="modal-title">
+            Login into the App
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" id="closeLogin">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="social">
+            <h2>Login via</h2>
+            <a href="#" class="btn-fb socy">
+            </a>
+            <a href="#" class="btn-tw socy">
+            </a>
+            <a href="#" class="btn-gg socy">
+            </a>
+            <a href="#" class="btn-ig socy">
+            </a>
+          </div>
+
+          <p class="text-center">OR</p>
+
+          <form ng-submit="login()">
+            <div class="form-group">
+              <input type="email" class="form-control" name="email" ng-model="email" placeholder="email address">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" ng-model="password" placeholder="password">
+            </div>
+            <hr>
+            <button class="btn btn-login btn-lg btn-block" type="submit">
+              Sign In
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of login Modal -->
+
+  <!-- Start of Signup Modal -->
+  <div id="signUpModal" class="modal fade text-dark">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 id="contactModalTitle" class="modal-title">
+                Signup into the App
+            </h5>
+            <button type="button" class="close" id="closeSignUp" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="social">
+            <h2>Signup via</h2>
+            <a href="/auth/facebook" class="btn-fb socy">
+            </a>
+            <a href="/auth/twitter" class="btn-tw socy">
+            </a>
+            <a href="/auth/google" class="btn-gg socy">
+            </a>
+            <a href="/auth/instagram" class="btn-ig socy">
+            </a>
+          </div>
+          <br>
+          <p class="text-center">OR create a username/password and select an avatar</p>
+          <hr>
+          <form ng-submit="signup()">
+            <div class="row">
+              <div class="col-md-6">
+                <input type="file" name="userImage" id="userImage" ng-change="previewImage()" ng-model="user.userImage" accept="image/*">
+                <img ng-src="{{imagePreview}}" style="height: 200px; width: 200px;" >
+              </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="name" placeholder="full name" name="name" ng-model="user.name">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="email" placeholder="email address" name="email" ng-model="user.email">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="password" name="password" ng-model="user.password">
+                  </div>
+                  <button class="btn btn-login btn-lg btn-block" type="submit">
+                    Sign Up
+                  </button>
+                </div>
+            </div>
+            <br>
+            <button>Select an Avatar</button>
+            <ul class="row">
+              <li ng-repeat="avatar in avatars" class="avatars ng-scope">
+                <input name="avatar" ng-model="user.avatar" type='radio' value="{{$index}}">
+                <img ng-src="{{avatar}}">
+                </input>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of signup Modal -->
 </div>
