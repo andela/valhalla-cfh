@@ -1,39 +1,40 @@
-</script>
-<div id="app-container" ng-controller="GameController">
-  <div id="menu-container">
-    <div id="logo">
+<div ng-controller="GameController">
+  <div class="d-flex justify-content-between nav bg-dark text-white py-3 px-5">
+    <a href="/" class="nav-item">
       <span id="first-word">Cards</span>
       <span id="second-word"> for</span>
       <span id="third-word">Humanity</span>
-    </div>
-    <div id = 'abandon-game-button' ng-click="abandonGame()">
+    </a>
+    <div class="nav-item pointer" id='abandon-game-button' ng-click="abandonGame()">
         Abandon Game
     </div>
-    <div id = 'abandon-game-button' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()" style="background-color: #7ce5e9 !important; color:black">
+    <div class="nav-item pointer" id='abandon-game-button' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()" style="background-color: #7ce5e9 !important; color:black">
       Invite Friends
-     </div>
-        <span id="tweet-container">
+    </div>
+    <span id="tweet-container">
       <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </span>
   </div>
-  <div id="gameplay-container">
-    <div id="upper-gameplay-container">
-      <div id="menu-timeremaining-container">
-        <div id="menu-container">
-          <span id="menu-button">Menu</span>
-        </div>
-        <div id="timer-container">
-          <timer></timer>
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-9">
+        <div class="row text-center">
+          <div class="col-4 bg-light rounded">
+            <timer></timer>
+          </div>
+          <div class="col-8">
+            <question></question>
+          </div>
+          <answers></answers>
         </div>
       </div>
-      <div id="question-container-outer">
-        <question></question>
+      <div class="col-3">
+        <player></player>
       </div>
     </div>
-    <answers></answers>
   </div>
-
 
  <!-- Modal for searching users for -->
  <div class="modal fade" id="myModal" role="dialog">
@@ -41,41 +42,40 @@
   
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-header text-center">
         <h4 class="modal-title">Invite Players</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         
         <span class="searchfield">
-            <input type="text" ng-change="handleSearch()" ng-model="searchValue" size="70" height="58" placeholder="Search For Players"/>
-          </span>
+          <input type="text" class="form-control" ng-change="handleSearch()" ng-model="searchValue" placeholder="Search For Players"/>
+        </span>
 
-          <table class="table" ng-show="inviteUser">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="user in inviteUser">
-                  <td>{{user.name}}</td>
-                  <td>{{user.email}}</td>
-                  <td> <button type="button" ng-click="sendInvites(user)" >Invite</button></td>
-                </tr>
-              </tbody>
-            </table></br>
-            <div class="error" ng-show="inviteError">
-              <span>{{inviteError}}</span>
-            </div>
+        <table class="table" ng-show="inviteUser">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="user in inviteUser">
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td> <button type="button" ng-click="sendInvites(user)" >Invite</button></td>
+              </tr>
+            </tbody>
+        </table></br>
+        <div class="error" ng-show="inviteError">
+          <span>{{inviteError}}</span>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="closeModal" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="closeModal" data-dismiss="modal">Close</button>
       </div>
     </div>
-    
   </div>
 </div>
 
