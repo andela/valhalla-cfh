@@ -8,7 +8,7 @@
 exports.userSignup = (req, res, next) => {
   req.check('name', 'Username is required').notEmpty();
   req.check('email', 'Email cannot be empty or invalid').isEmail().trim();
-  req.check('password', 'Minimun password length is 6 chars')
+  req.check('password', 'Minimun password length should be 6 characters')
     .isLength({ min: 6 }).trim();
   req.sanitizeBody('username').trim();
   req.sanitizeBody('email').trim();
