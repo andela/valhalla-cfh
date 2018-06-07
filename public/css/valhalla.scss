@@ -1,103 +1,134 @@
+$grayish-white : #dcdcdc;
+$burnt-orange: #cc5500;
+$little-gray: #f5f5f5;
+$white: #ffffff;
+$teal-green: #00978b;
+
 body {
-  background-color: #dcdcdc;
+  background-color: $grayish-white;
   font-family: 'Lobster Two', cursive;
   font-size: 1.3rem;
 }
+
 .pointer {
   cursor: pointer;
 }
+
 a:hover {
   text-decoration: none;
 }
+
 .introduction {
   background: url("https://images.unsplash.com/photo-1525900732548-63510d8d4fca?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2b0f98d5876886314918126deafb3af0&auto=format&fit=crop&w=1567&q=80") no-repeat fixed center;
   background-size: cover;
-  height: 60vh;
   letter-spacing: 2px;
+  height: 60vh;
+
   .introduction-overlay {
     background-color: rgba(0 ,0, 0, 0.5);
     height: 100%;
   }
+
   h1 {
     font-family: 'Lobster Two', cursive;
   }
+
   a {
     font-family: 'Lobster Two', cursive;
   }
 }
+
 .how-to-play {
-  background-color: #f5f5f5;
+  background-color: $little-gray;
+
   .card {
     border-radius: 15px;
   }
+
   .card-body {
+    border-radius: 15px;
     font-family: 'Marck Script', cursive;
     font-size: 1.2rem;
-    border-radius: 15px;
+
     &:hover{
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
   }
+
   .card-properties {
     height: 400px;
-    max-width: 350px;
     margin: 0 auto;
+    max-width: 350px;
   }
+
   .play-steps {
     font-size: 1.3rem;
   }
+
   h1 {
+    color:$burnt-orange;
     font-family: 'Monoton', cursive;
-    color:#cc5500;
   }
 }
+
 .charity {
-  background-color: #dcdcdc;
+  background-color: $grayish-white;
+
   h1 {
+    color:$burnt-orange;
     font-family: 'Monoton', cursive;
-    color:#cc5500;
   }
 }
+
 .team {
-  background-color: #f5f5f5;
+  background-color: $little-gray;
+
   img {
+    height: 150px;
     transition-property: transform;
     transition-duration: 2s;
     width: 150px;
-    height: 150px;
+
     &:hover {
       transform: scale(1.2);
     }
   }
+
   h1 {
+    color:$burnt-orange;
     font-family: 'Monoton', cursive;
-    color:#cc5500;
   }
 }
+
 .image {
   height: 200px;
   width: 100%;
 }
+
 .signup-button {
-  background: #cc5500;
-  padding: 20px 30px;
-  color: white;
+  background: $burnt-orange;
+  color: $white;
   font-size: 1.2rem;
+  padding: 20px 30px;
+
   &:hover {
-    background: white;
-    color: #cc5500;
+    background: $white;
+    color: $burnt-orange;
   }
 }
+
 .guest-play-button {
-  background: #00978b;
-  padding: 20px 30px;
-  color: white;
+  background: $teal-green;
+  color: $white;
   font-size: 1.2rem;
+  padding: 20px 30px;
+
   &:hover {
-    background: white;
-    color: #00978b;
+    background: $white;
+    color: $teal-green;
   }
 }
+
 .bg-custom {
-  background-color: #cc5500;
+  background-color: $burnt-orange;
 }
