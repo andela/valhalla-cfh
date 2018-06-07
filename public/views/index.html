@@ -3,7 +3,6 @@
     new WOW().init();
   });
 </script>
-
 <div landing ng-controller="IndexController">
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-custom fixed-top">
@@ -27,10 +26,10 @@
             <a class="nav-link" href="/#!/#team">The Team</a>
         </li>
         <li ng-show="showOptions" class="nav-item">
-          <span class="pointer nav-link">SignUp</span>
+          <span class="pointer nav-link" data-toggle="modal" data-target="#signUpModal">SignUp</span>
         </li>
         <li ng-show="showOptions" class="nav-item">
-          <span class="pointer nav-link">SignIn</span>
+          <span class="pointer nav-link" data-toggle="modal" data-target="#loginModal">SignIn</span>
         </li>
         <li ng-hide="showOptions" class="nav-item">
           <span class="pointer nav-link" ng-click="signOut()">Sign Out</span>
@@ -109,4 +108,106 @@
     </div>
   </div>
   <!-- HOW TO PLAY -->
+  
+  <!-- CHARITY -->
+  <div id="charity" class="charity">
+    <div class="container pb-5">
+      <div class="text-center">
+        <h1 class="pt-5 pb-4">CHARITY</h1>
+        <blockquote>
+          "If you don't give back, no one will like you™" - crowdrise.com
+        </blockquote>
+        <hr>
+      </div>
+      <div class="row justify-content-center text-justify wow slideInLeft">
+        <div class="col-md-12 col-lg-6">
+          <p>
+            The <span class="text-primary">Make-A-Wish</span> Foundation is a non-profit organization founded in the United States that arranges experiences described as "wishes" to children with life-threatening medical conditions. We believe a wish experience can be a game-changer. This one belief guides us and inspires us to grant wishes that change the lives of the kids we serve.
+          </p>
+        </div>
+      </div>
+      <hr>
+      <div class="row text-justify wow slideInRight">
+        <div class="col-md-12 col-lg-6">
+          <iframe class="w-100" height="315" src="https://www.youtube.com/embed/_L-5Nqwx1_U" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="col-md-12 col-lg-6">
+          <p>
+            We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other players how much better you are than them).
+            All donations go to the Make-a-Wish Foundation and benefit children in need.
+          </p>
+  
+          <div class="text-center py-0">
+            <button class="w-100 guest-play-button wow rubberBand">Donate</button>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CHARITY -->
+  
+  <!-- ABOUT THE TEAM -->
+  <div id="team" class="team">
+    <div class="container text-center pb-4">
+      <h1 class="pt-5 pb-4">THE TEAM</h1>
+      <div class="d-flex justify-content-around flex-wrap">
+        <div class="wow zoomInDown">
+          <a href="https://github.com/jherey" target="_blank">
+          <div style="overflow: hidden;" class="rounded-circle">
+            <img src="https://ca.slack-edge.com/T02R3LKBA-UAKB7213L-f29cefbeb31b-72" alt="" >
+          </div>
+          <p class="text-danger">Jherey Olufayo</p>
+        </a>
+        </div>
+        <div class="wow rotateIn">
+          <a href="https://github.com/Annmary12" target="_blank">
+        <div style="overflow: hidden" class="rounded-circle">
+          <img src="https://ca.slack-edge.com/T02R3LKBA-UAK602MQU-9c805cd9028b-72" alt="">
+        </div>
+        <p class="text-danger">Annmary Agunanna</p>
+      </a>
+        </div>
+        <div class="wow zoomInDown">
+            <a href="https://github.com/seunzone" target="_blank">
+          <div style="overflow: hidden" class="rounded-circle">
+            <img src="https://ca.slack-edge.com/T02R3LKBA-UAL1SAANB-02b262a5f194-72" alt="">
+          </div>
+          <p class="text-danger">Seun Faluyi</p>
+        </a>
+        </div>
+        <div class="wow rotateIn">
+          <a href="https://github.com/Nedson202" target="_blank">
+            <div style="overflow: hidden" class="rounded-circle">
+              <img src="https://ca.slack-edge.com/T02R3LKBA-UAJSAASAU-e8c5c17a7571-72" alt="">
+            </div>
+            <p class="text-danger">Samson Negedu</p>
+          </a>
+        </div>
+        <div class="wow zoomInDown">
+          <a href="https://github.com/Orelongz" target="_blank">
+          <div style="overflow: hidden" class="rounded-circle">
+            <img src="https://ca.slack-edge.com/T02R3LKBA-UAK1K9K6V-12c733dd4196-72" alt="">
+          </div>
+          <p class="text-danger">Pelumi Longe</p>
+        </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ABOUT THE TEAM -->
+  <!-- MAIN BODY -->
+  
+  <!-- FOOTER -->
+  <div class="footer bg-custom text-white py-3">
+    <div class="container text-center">
+      <p>
+          This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA). Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license of the Cards Against Humanity card game, all proceeds from donations go directly to charity, as managed by crowdrise.
+      </p>
+      <p>
+        Made By Team Valhalla
+      </p>
+    </div>
+  </div>
+  <!-- FOOTER -->
 </div>
