@@ -1,0 +1,68 @@
+body {
+  background-color: #dcdcdc;
+  font-family: 'Lobster Two', cursive;
+  font-size: 1.3rem; }
+
+.pointer {
+  cursor: pointer; }
+
+a:hover {
+  text-decoration: none; }
+
+.image {
+  height: 200px;
+  width: 100%; }
+
+.signup-button {
+  background: #cc5500;
+  padding: 20px 30px;
+  color: white;
+  font-size: 1.2rem; }
+  .signup-button:hover {
+    background: white;
+    color: #cc5500; }
+
+.guest-play-button {
+  background: #00978b;
+  padding: 20px 30px;
+  color: white;
+  font-size: 1.2rem; }
+  .guest-play-button:hover {
+    background: white;
+    color: #00978b; }
+
+.bg-custom {
+  background-color: #cc5500; }
+
+.introduction {
+  background: url("https://images.unsplash.com/photo-1525900732548-63510d8d4fca?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2b0f98d5876886314918126deafb3af0&auto=format&fit=crop&w=1567&q=80") no-repeat fixed center;
+  background-size: cover;
+  height: 60vh;
+  letter-spacing: 2px; }
+  .introduction .introduction-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%; }
+  .introduction h1 {
+    font-family: 'Lobster Two', cursive; }
+  .introduction a {
+    font-family: 'Lobster Two', cursive; }
+
+.how-to-play {
+  background-color: #f5f5f5; }
+  .how-to-play .card {
+    border-radius: 15px; }
+  .how-to-play .card-body {
+    font-family: 'Marck Script', cursive;
+    font-size: 1.2rem;
+    border-radius: 15px; }
+    .how-to-play .card-body:hover {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+  .how-to-play .card-properties {
+    height: 400px;
+    max-width: 350px;
+    margin: 0 auto; }
+  .how-to-play .play-steps {
+    font-size: 1.3rem; }
+  .how-to-play h1 {
+    font-family: 'Monoton', cursive;
+    color: #cc5500; }
