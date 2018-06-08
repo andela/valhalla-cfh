@@ -135,6 +135,7 @@ module.exports = (passport) => {
   // Use google strategy
   passport.use(new GoogleStrategy(
     {
+
       clientID: process.env.GOOGLE_CLIENT_ID || config.google.clientID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.google.clientSecret,
       callbackURL: process.env.GOOGLE_CALLBACK_URL
@@ -173,6 +174,7 @@ module.exports = (passport) => {
       clientID: process.env.INSTAGRAM_CLIENT_ID || config.instagram.clientID,
       clientSecret: process.env.INSTAGRAM_CLIENT_SECRET || config.instagram.clientSecret,
       callbackURL: process.env.INSTAGRAM_CALLBACK_URL
+
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({

@@ -47,12 +47,12 @@
           A game for horrible people desperately trying to do good
         </h1>
         <div ng-show="showOptions" class="py-5 flex-wrap row w-50 mx-auto wow slideInRight">
-          <a href="#" data-toggle="modal" data-target="#signUpModal" class="signup-button col-sm-12 col-md-6 mb-3 d-inline-block">Sign Up</a>
-          <a href="/play" class="guest-play-button col-sm-12 col-md-6 mb-3 d-inline-block">Play As Guest</a>
+          <span data-toggle="modal" data-target="#signUpModal" class="pointer signup-button col-sm-12 col-md-6 mb-3 d-inline-block">Sign Up</span>
+          <span ng-click="startGameModal()" class="pointer guest-play-button col-sm-12 col-md-6 mb-3 d-inline-block">Play As Guest</span>
         </div>
         <div ng-hide="showOptions" class="py-5 flex-wrap row w-50 mx-auto wow slideInRight">
-          <a href="/play" class="signup-button col-sm-12 col-md-6 mb-3 d-inline-block">Play with Strangers</a>
-          <a href="/play" class="guest-play-button col-sm-12 col-md-6 mb-3 d-inline-block">Play with Guests</a>
+          <span ng-click="startGameModal()" class="pointer signup-button col-sm-12 col-md-6 mb-3 d-inline-block">Play with Strangers</span>
+          <span ng-click="startGameModal('custom')" class="pointer guest-play-button col-sm-12 col-md-6 mb-3 d-inline-block">Play with Guests</span>
         </div>
         <!-- Logo -->
       </div>
@@ -209,6 +209,28 @@
       </p>
     </div>
   </div>
+</section>
+<!-- Footer End -->
+
+ <!-- modal start -->
+ <div id="infoModal" class="modal fade" role="dialog" style="padding: 50px;" ng-controller="IndexController">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="button" style="text-align:center">
+        </div>
+        <div class="modal-footer">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of modal -->
+</div>
   <!-- FOOTER -->
    <!-- Start of Login Modal -->
    <div id="loginModal" class="modal fade text-dark">
