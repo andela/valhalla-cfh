@@ -300,7 +300,7 @@ exports.login = (req, res) => {
         id: user.id
       };
       // Create token
-      const token = jwt.sign(userData, 'secretkey', { expiresIn: '5h' });
+      const token = jwt.sign(userData, process.env.SECRET, { expiresIn: '5h' });
       return res.status(200).json({
         token,
         message: 'Successfully SignIn',

@@ -191,35 +191,34 @@ angular.module('mean.system')
       }
 
       if (game.state === 'game ended' && game.playerIndex === 0 || game.state ==='game dissolved') {
-        console.log(game)
-        console.log(game.players);
         const {
           players, gameID, gameWinner, round
         } = game;
         const gameStarter = players[0].username;
-        console.log('who started the game', gameStarter);
-        const winner = 'jherey';
-        // players[gameWinner].username;
-        console.log('winner', winner);
-        const token = localStorage.getItem('token'); //eslint-disable-line
-        console.log('token', token)
-        console.log('how many rounds', round);
+        const nameOfWinner = 'jherey';
+        const result = players.map(player => player.username);
+        const token = localStorage.getItem('token'); 
+
         $http({
           method: 'POST',
           url: `/api/games/${gameID}/start`,
           data: {
-            players,
-            winner,
-            gameStarter,
-            roundsPlayed: round
+            gameId: gameID,
+            gamePlayers: {
+              players: result
+            },
+            gameWinner: nameOfWinner,
+            gameCzar: gameStarter,
           },
           headers: {
             'Content-Type': 'application/json',
-            'token': `${token}`,
+            'Authorization': `${token}`,
            
           }
-        }).then(() => {
-          console.log('success')
+        }).then((response) => {
+          console.log(response.data.message);
+        }, (response) => {
+          console.log(response.data.error);
         })
       }
     });
