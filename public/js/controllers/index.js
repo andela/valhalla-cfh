@@ -3,7 +3,6 @@ angular.module('mean.system')
     $scope.global = Global;
     $scope.gameWithCustom = 'false';
 
-    
     const sendSignUPRequest = (userDetails) => {
       // send the post request to the server
       $http.post('/api/auth/signup', userDetails)

@@ -9,6 +9,7 @@ const avatars = require('./avatars').all();
 const nodemailer = require('nodemailer');
 
 const User = mongoose.model('User');
+require('dotenv').config();
 
 /**
  * Auth callback
@@ -261,7 +262,7 @@ exports.registerUser = (req, res) => {
         email: createdUser.email
       };
 
-      const token = jwt.sign(userData, 'secret');
+      const token = jwt.sign(userData, process.env.SECRET);
 
       return res.status(201).json({
         message: 'User successfully registered',

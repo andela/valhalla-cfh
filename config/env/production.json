@@ -3,15 +3,15 @@
         "name": "Cards for Humanity"
     },
     "facebook": {
-        "callbackURL": "http://cfh.io/auth/facebook/callback"
+        "callbackURL": "https://valhalla-cfh.herokuapp.com/#!/auth/facebook/callback"
     },
     "twitter": {
-        "callbackURL": "http://cfh.io/auth/twitter/callback"
+        "callbackURL": "https://valhalla-cfh.herokuapp.com/#!/auth/twitter/callback"
     },
     "google": {
-        "callbackURL": "http://cfh.io/auth/google/callback"
+        "callbackURL": "https://valhalla-cfh.herokuapp.com/#!/auth/google/callback"
     },
     "instagram": {
-        "callbackURL": "http://cfh.io/auth/google/callback"
+        "callbackURL": "https://valhalla-cfh.herokuapp.com/#!/auth/instagram/callback"
     }
 }

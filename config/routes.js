@@ -37,13 +37,7 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   );
 
   // Login Route
-  // app.post('/api/auth/login', validator.signin, users.login);
-
-  app.post('/api/auth/login', validator.signin, passport.authenticate('local', {
-    // successRedirect: '/play',
-    failureRedirect: '/signin',
-    failureFlash: 'Invalid email or password.'
-  }), users.login);
+  app.post('/api/auth/login', validator.signin, users.login);
 
   // Route to search for users
   app.post('/api/search/users', users.search);
