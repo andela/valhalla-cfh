@@ -10,6 +10,8 @@ angular.module('mean.system')
         (response) => {
           const { token, message } = response.data;
           localStorage.setItem('token', token);
+          $scope.showOptions = false;
+          $('#closeSignUp').click();
           toastr.success(message)
           $location.path('/');
         },
@@ -125,14 +127,15 @@ angular.module('mean.system')
         const token = response.data.token;
         if(token){
           localStorage.setItem('token', token);
+          $scope.showOptions = false;
+          $('#closeLogin').click();
           toastr.success('Successfully signed in');
-          $location.path('/');
         }
       },
-    (response) => {
-      const { error } = response.data
-      toastr.error(error);
-    })
+      (response) => {
+        const { error } = response.data
+        toastr.error(error);
+      })
     };
 
     $scope.playAsGuest = function() {

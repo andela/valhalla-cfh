@@ -60,9 +60,9 @@ module.exports = (passport) => {
   // Use twitter strategy
   passport.use(new TwitterStrategy(
     {
-      consumerKey: process.env.TWITTER_CONSUMER_KEY,
-      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-      callbackURL: config.twitter.callbackURL,
+      consumerKey: process.env.TWITTER_CONSUMER_KEY || config.twitter.clientID,
+      consumerSecret: process.env.TWITTER_CONSUMER_SECRET || config.twitter.clientSecret,
+      // callbackURL: process.env.TWITTER_CALLBACK_URL,
       includeEmail: true
     },
     ((token, tokenSecret, profile, done) => {
@@ -79,7 +79,6 @@ module.exports = (passport) => {
             email: profile._json.email,
             username: profile.username,
             provider: 'twitter',
-            twitter: profile._json,
             profile_image: profile._json.profile_image_url
           });
 
@@ -99,7 +98,7 @@ module.exports = (passport) => {
     {
       clientID: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
-      callbackURL: config.facebook.callbackURL,
+      callbackURL: process.env.FB_CALLBACK_URL,
       profileFields: ['id', 'displayName', 'email', 'gender', 'picture.width(200).height(200)', 'link', 'locale', 'name', 'timezone'],
       enableProof: true
     },
@@ -117,7 +116,6 @@ module.exports = (passport) => {
             email: profile._json.email || '',
             username: profile.username,
             provider: 'facebook',
-            facebook: profile._json,
             profile_image: profile.photos[0].value
           });
 
@@ -137,9 +135,10 @@ module.exports = (passport) => {
   // Use google strategy
   passport.use(new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: config.google.callbackURL
+
+      clientID: process.env.GOOGLE_CLIENT_ID || config.google.clientID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.google.clientSecret,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
@@ -155,7 +154,6 @@ module.exports = (passport) => {
             email: profile.emails[0].value,
             username: profile.username,
             provider: 'google',
-            google: profile._json,
             profile_image: profile._json.picture
           });
 
@@ -173,9 +171,10 @@ module.exports = (passport) => {
   // Use instagramstrategy
   passport.use(new InstagramStrategy(
     {
-      clientID: process.env.INSTAGRAM_CLIENT_ID,
-      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET,
-      callbackURL: config.instagram.callbackURL
+      clientID: process.env.INSTAGRAM_CLIENT_ID || config.instagram.clientID,
+      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET || config.instagram.clientSecret,
+      callbackURL: process.env.INSTAGRAM_CALLBACK_URL
+
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
@@ -191,7 +190,6 @@ module.exports = (passport) => {
             email: (profile.emails && profile.emails[0].value) || '',
             username: profile.username,
             provider: 'instagram',
-            instagram: profile._json,
             profile_image: profile._json.data.profile_picture
           });
           
