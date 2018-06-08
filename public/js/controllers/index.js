@@ -2,7 +2,6 @@ angular.module('mean.system')
 .controller('IndexController', ['$scope', '$http', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, $http, Global, $location, socket, game, AvatarService) {
     $scope.global = Global;
 
-    // 
     const sendSignUPRequest = (userDetails) => {
       // send the post request to the server
       $http.post('/api/auth/signup', userDetails)

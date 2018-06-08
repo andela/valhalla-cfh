@@ -1,5 +1,5 @@
 <div id="question-container-inner">
-  <div class="card longBlack">
+  <div class="card longBlack bg-primary">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
 
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
@@ -14,7 +14,7 @@
         <div id="loading-gif"><img ng-src="../img/loader.gif"/></div>
       </div>
       <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride)">
-        <div id='start-game-button'>
+        <div class="pointer btn btn-secondary mb-2" id='start-game-button'>
           Start Game</br>with {{game.players.length}} players
         </div>
       </div>
@@ -36,8 +36,7 @@
   </div>
 
   <!-- modal for cant start a game message -->
-
-<div class="modal" id="cantStartGame" tabindex="-1" role="dialog">
+  <div class="modal" id="cantStartGame" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -51,7 +50,7 @@
         </div>
         <div class="modal-footer">
         
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

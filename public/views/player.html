@@ -1,12 +1,12 @@
 <div id="player-container" ng-repeat="player in game.players" style="background-color:{{colors[player.color]}}">
   <div id ="above-czar-container">
-    <div id="avatar_">
+    <div id="avatar_" class="d-inline pull-right">
       <span ng-show="isPremium($index)">
         <img ng-src="img/king.png" id="king">
       </span>
-      <img ng-src="{{player.avatar}}"/>
+      <img ng-src="{{player.avatar}}" style=""/>
     </div>
-    <div id="player-container-inner">
+    <div id="player-container-inner" class="d-inline">
       <div id="player-name"><h4>{{player.username | upperFirstLetter}}</h4></div>
       <div id="player-score"><h2>{{player.points}}/{{game.pointLimit}}</h2></div>
       <div ng-show="isPlayer($index)" id="player-star">

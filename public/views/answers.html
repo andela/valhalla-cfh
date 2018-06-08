@@ -1,7 +1,7 @@
 <div ng-cloak id="cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
-  <div id="social-bar-container">
+  <!-- <div id="social-bar-container">
     <player></player>
-  </div>
+  </div> -->
   <div id="cards" class='hand'>
 
     <span ng-show="winnerPicked()"></span>
@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<div id="info-container" ng-show="game.state === 'awaiting players'">
+<div id="info-container" ng-show="game.state === 'awaiting players'" class="mt-5 bg-primary rounded pb-5 pt-3">
   <div id="inner-info">
     <div id="lobby-how-to-play">How To Play</div>
     <ol id="oh-el">
