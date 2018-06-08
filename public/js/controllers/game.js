@@ -10,6 +10,7 @@ angular.module('mean.system')
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
     $scope.totalInvites = 0;
+    $scope.showAppModal = true;
 
     // handle search change 
     $scope.handleSearch = function(){
@@ -184,8 +185,42 @@ angular.module('mean.system')
 
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function() {
+      console.log('*********************');
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
+      }
+
+      if (game.state === 'game ended' && game.playerIndex === 0 || game.state ==='game dissolved') {
+        console.log(game)
+        console.log(game.players);
+        const {
+          players, gameID, gameWinner, round
+        } = game;
+        const gameStarter = players[0].username;
+        console.log('who started the game', gameStarter);
+        const winner = 'jherey';
+        // players[gameWinner].username;
+        console.log('winner', winner);
+        const token = localStorage.getItem('token'); //eslint-disable-line
+        console.log('token', token)
+        console.log('how many rounds', round);
+        $http({
+          method: 'POST',
+          url: `/api/games/${gameID}/start`,
+          data: {
+            players,
+            winner,
+            gameStarter,
+            roundsPlayed: round
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            'token': `${token}`,
+           
+          }
+        }).then(() => {
+          console.log('success')
+        })
       }
     });
 

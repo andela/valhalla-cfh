@@ -1,8 +1,9 @@
 angular.module('mean.system')
 .controller('IndexController', ['$scope', '$http', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, $http, Global, $location, socket, game, AvatarService) {
     $scope.global = Global;
+    $scope.gameWithCustom = 'false';
 
-    // 
+    
     const sendSignUPRequest = (userDetails) => {
       // send the post request to the server
       $http.post('/api/auth/signup', userDetails)
@@ -33,6 +34,31 @@ angular.module('mean.system')
         };
       }
     };
+
+    // open modal for start Game
+    $scope.startGameModal = function(term){
+        // setting the buttons
+        const startButton= `<a href="/play"><button type="button" class="btn btn-md" style="background: aqua">Start</button></a>`;
+        const idStartButton = `<a href="/play?custom"><button type="button" class="btn btn-md" style="background: aqua">Start</button></a>`;
+        const closeModal = `<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md" style="background: rgb(255, 136, 0)">Close</button>`;
+        // call the modal and append their attributes
+        const infoModal = $('#infoModal');
+        infoModal.find('.modal-title')
+          .text('Info!!!');
+        infoModal.find('.modal-body')
+         .text('You are about to start a new game. Click button to start');
+         
+         if(term === 'custom') { 
+            $( ".button" ).empty();
+            infoModal.find('.button').append(idStartButton, closeModal);
+        }
+        if(term === undefined){
+          $( ".button" ).empty();
+            infoModal.find('.button').append(startButton, closeModal);
+        }
+        infoModal.modal('show');
+     
+    }
 
     $scope.signup = function(){
       // collect user details from the signup form
