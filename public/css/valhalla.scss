@@ -132,3 +132,78 @@ a:hover {
 .bg-custom {
   background-color: $burnt-orange;
 }
+.socy {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 2px 2px #999;
+  padding: 0px;
+  text-decoration: none;
+  text-align: center;
+  color: #fff;
+  font-size: 25px;
+  font-weight: normal;
+  line-height: 2em;
+  border-radius: 25px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+}
+
+.btn-fb {
+    background: #4060A5;
+}
+.btn-fb:before {
+    font-family: "FontAwesome";
+    content: "\f09a";
+}
+.btn-fb:hover {
+    color: #4060A5;
+    background: #fff;
+}
+.btn-tw {
+    background: #00ABE3;
+}
+.btn-tw:before {
+    font-family: "FontAwesome";
+    content: "\f099";
+}
+.btn-tw:hover {
+    color: #00ABE3;
+    background: #fff;
+}
+.btn-gg {
+    background: #e64522;
+}
+.btn-gg:before {
+    font-family: "FontAwesome";
+    content: "\f0d5";
+}
+.btn-gg:hover {
+    color: #e64522;
+    background: #fff;
+}
+.btn-ig {
+    background: #cb2027;
+}
+.btn-ig:before {
+    font-family: "FontAwesome";
+    content: "\f16d";
+}
+.btn-ig:hover {
+    color: #cb2027;
+    background: #fff;
+}
+.btn-login {
+    color: white;
+    background-color: #cc5500;
+}
+.social-buttons a {
+    margin: 12px 0;
+    width: 49%;
+}
+#social {
+    margin: 20px 10px;
+    text-align: center;
+}
