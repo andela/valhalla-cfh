@@ -1,14 +1,17 @@
-<div ng-controller="GameController">
+<div ng-controller="GameController" ng-init="takeTour()" id="app-container">
   <div class="d-flex justify-content-between nav bg-dark text-white py-3 px-5">
     <a href="/" class="nav-item">
       <span id="first-word">Cards</span>
       <span id="second-word"> for</span>
       <span id="third-word">Humanity</span>
     </a>
-    <div class="nav-item pointer" id='abandon-game-button' ng-click="abandonGame()">
+    <div class="nav-item pointer" id='abandon' ng-click="abandonGame()">
         Abandon Game
     </div>
-    <div class="nav-item pointer" id='abandon-game-button' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()" style="background-color: #7ce5e9 !important; color:black">
+    <div class="nav-item pointer" id="takeTourBtn" ng-click="repeatTour()">
+      Take Tour
+    </div>
+    <div class="nav-item pointer" id='invite-players' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()" style="background-color: #7ce5e9 !important; color:black">
       Invite Friends
     </div>
     <span id="tweet-container">
@@ -21,7 +24,7 @@
     <div class="row">
       <div class="col-9">
         <div class="row text-center">
-          <div class="col-4 bg-light rounded">
+          <div class="col-4 bg-light rounded" id="counter">
             <timer></timer>
           </div>
           <div class="col-8">
@@ -31,7 +34,9 @@
         </div>
       </div>
       <div class="col-3">
-        <player></player>
+        <div id="player-card">
+          <player></player>
+        </div>
       </div>
     </div>
   </div>

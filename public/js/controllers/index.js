@@ -44,8 +44,8 @@ angular.module('mean.system')
         const closeModal = `<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md" style="background: rgb(255, 136, 0)">Close</button>`;
         // call the modal and append their attributes
         const infoModal = $('#infoModal');
-        infoModal.find('.modal-title')
-          .text('Info!!!');
+        // infoModal.find('.modal-title')
+        //   .text('Info!!!');
         infoModal.find('.modal-body')
          .text('You are about to start a new game. Click button to start');
          
