@@ -1,21 +1,27 @@
-<div id="player-container" ng-repeat="player in game.players" style="background-color:{{colors[player.color]}}">
-  <div id ="above-czar-container">
-    <div id="avatar_" class="d-inline pull-right">
-      <span ng-show="isPremium($index)">
-        <img ng-src="img/king.png" id="king">
-      </span>
-      <img ng-src="{{player.avatar}}" style=""/>
-    </div>
-    <div id="player-container-inner" class="d-inline">
-      <div id="player-name"><h4>{{player.username | upperFirstLetter}}</h4></div>
-      <div id="player-score"><h2>{{player.points}}/{{game.pointLimit}}</h2></div>
-      <div ng-show="isPlayer($index)" id="player-star">
-        <img src="../img/11.png"/>
-      </div>
-    </div>
-  </div>
-  <div id="czar-container" ng-show="currentCzar($index)">
-    <span id='the-czar'>CZAR</span>
-  </div>
-</div>
+<div ng-repeat="player in game.players" class="d-flex p-2 rounded-bottom" style="background-color:{{colors[player.color]}}">
+  
+  <!-- USER AVATAR -->
+  <div>
+    <!-- CROWN FOR USER THAT HAVE DONATED -->
+    <img ng-show="isPremium($index)" ng-src="img/king.png" id="king" />
+    <!-- CROWN FOR USER THAT HAVE DONATED -->
 
+    <!-- DISPLAY USER AVATAR-->
+    <img ng-src="{{player.avatar}}" style="width: 60px; z-index: 999;" />
+    <!-- DISPLAY USER AVATAR-->
+
+  </div>
+  <!-- USER AVATAR -->
+
+  <!-- SHOW USER DETAILS DURING GAME -->
+  <div class="w-100">
+    <h4 class="my-0">{{player.username | upperFirstLetter}}</h4>
+    <div class="d-flex justify-content-between">
+      <h4>{{player.points}}/{{game.pointLimit}}</h4>
+      <span ng-show="currentCzar($index)">CZAR</span>
+      <img ng-show="isPlayer($index)" src="../img/11.png" style="height: 90%;"/>
+    </div>
+  </div>
+  <!-- SHOW USER DETAILS DURING GAME -->
+
+</div>

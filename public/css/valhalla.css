@@ -86,6 +86,15 @@ a:hover {
 .bg-custom {
   background-color: #cc5500; }
 
+#time {
+  font-size: 5em; }
+
+.timer-height {
+  height: 215px; }
+
+.answer-height {
+  min-height: 350px; }
+
 .socy {
   display: inline-block;
   position: relative;
@@ -159,3 +168,9 @@ a:hover {
 #social {
   margin: 20px 10px;
   text-align: center; }
+
+#king {
+  max-width: 80%;
+  -webkit-transform: rotate(-28deg);
+  margin-bottom: -30px;
+  margin-left: -15px; }
