@@ -5,42 +5,44 @@
 </script>
 <div landing ng-controller="IndexController">
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-custom fixed-top">
-    <a class="navbar-brand" href="/">Cards For Humanity</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/#!/#how-to-play">How To Play</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/#!/#charity">Charity</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/#!/#team">The Team</a>
-        </li>
-        <li ng-show="showOptions" class="nav-item">
-          <span class="pointer nav-link" data-toggle="modal" data-target="#signUpModal">SignUp</span>
-        </li>
-        <li ng-show="showOptions" class="nav-item">
-          <span class="pointer nav-link" data-toggle="modal" data-target="#loginModal">SignIn</span>
-        </li>
-        <li ng-hide="showOptions" class="nav-item">
-          <span class="pointer nav-link" ng-click="signOut()">Sign Out</span>
-        </li>
-      </ul>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="fixed-nav" style="background-color: rgba(255, 255, 255, 0)">
+    <div class="container">
+      <a class="navbar-brand" href="/">Cards For Humanity</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/#!/#how-to-play">How To Play</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/#!/#charity">Charity</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/#!/#team">The Team</a>
+          </li>
+          <!-- <li ng-show="showOptions" class="nav-item">
+            <span class="pointer nav-link" data-toggle="modal" data-target="#signUpModal">SignUp</span>
+          </li> -->
+          <li ng-show="showOptions" class="nav-item">
+            <span class="pointer nav-link btn btn-success text-white" data-toggle="modal" data-target="#loginModal">SignIn</span>
+          </li>
+          <li ng-hide="showOptions" class="nav-item">
+            <span class="pointer nav-link" ng-click="signOut()">Sign Out</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
   <!-- NAVBAR -->
 
   <!-- MAIN BODY -->
-  <div id="introduction" class="introduction mt-5">
+  <div id="introduction" class="introduction">
     <div class="introduction-overlay d-flex">
       <div class="container text-center text-white align-self-center">
         <h1 class="text-white pt-5 wow slideInLeft">
@@ -50,7 +52,7 @@
           <span data-toggle="modal" data-target="#signUpModal" class="new_button home_btn col-sm-12 col-md-6 mb-3 p-3">Sign Up</span>
           <span ng-click="startGameModal()" class="new_button home_btn col-sm-12 col-md-6 mb-3 p-3">Play As Guest</span>
         </div>
-        <div ng-hide="showOptions" class="py-5 flex-wrap row w-50 mx-auto wow slideInRight">
+        <div ng-hide="showOptions" class="py-5 justify-content-center wow slideInRight">
           <span ng-click="startGameModal()" class="new_button home_btn col-sm-12 col-md-6 mb-3 d-inline-block">Play with Strangers</span>
           <span ng-click="startGameModal('custom')" class="new_button home_btn col-sm-12 col-md-6 mb-3 d-inline-block">Play with Guests</span>
         </div>
@@ -67,7 +69,6 @@
         <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
           <div class="card card-properties wow bounceInLeft">
             <div class="card-body py-0">
-              <p class="w-100">1</p>
               <img class="image" src="https://seunzone.github.io/cfh-demo/spade1.png" alt="step-1">
               <p class="play-steps">Each player begins with, and will always have, 10 white answer cards.</p>
             </div>
@@ -76,7 +77,6 @@
         <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
           <div class="card card-properties wow bounceInUp">
             <div class="card-body py-0">
-              <p class="w-100">2</p>
               <img class="image" src="https://seunzone.github.io/cfh-demo/spade2.png" alt="step-2">
               <p class="play-steps">For each round, one player is randomly chosen as the Card Czar.</p>
             </div>
@@ -85,7 +85,6 @@
         <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
           <div class="card card-properties wow slideInDown">
             <div class="card-body py-0">
-              <p class="w-100">3</p>
               <img class="image" src="https://seunzone.github.io/cfh-demo/spade3.png" alt="">
               <p class="play-steps">Everyone else answers the black question card by clicking on the answer card they want to use.</p>
             </div>
@@ -94,7 +93,6 @@
         <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
           <div class="card card-properties wow bounceInRight">
             <div class="card-body py-0">
-              <p class="w-100">4</p>
               <img class="image" src="https://seunzone.github.io/cfh-demo/spade4.png" alt="">
               <p class="play-steps">The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</p>
             </div>
@@ -417,5 +415,19 @@
 </div>
 
 <script>
+  $(document).ready(function() {
+    if ($(window).scrollTop() >= 100) {
+      $('#fixed-nav').css('background-color', '#BF360C');
+    } else {
+      $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
+    }
 
+    $(window).on("scroll", function() {
+      if ($(window).scrollTop() >= 100) {
+        $('#fixed-nav').css('background-color', '#BF360C')
+      } else {
+        $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
+      }
+    });
+  });
 </script>
