@@ -30,10 +30,10 @@
             <span class="pointer nav-link" data-toggle="modal" data-target="#signUpModal">SignUp</span>
           </li> -->
           <li ng-show="showOptions" class="nav-item">
-            <span class="pointer nav-link btn btn-success text-white" data-toggle="modal" data-target="#loginModal">SignIn</span>
+            <span class="pointer nav-link btn nav-action-btn text-white" data-toggle="modal" data-target="#loginModal">Sign In</span>
           </li>
           <li ng-hide="showOptions" class="nav-item">
-            <span class="pointer nav-link" ng-click="signOut()">Sign Out</span>
+            <span class="pointer nav-link btn nav-action-btn text-white" ng-click="signOut()">Sign Out</span>
           </li>
         </ul>
       </div>
@@ -65,6 +65,7 @@
   <div id="how-to-play" class="how-to-play">
     <div class="container text-center pb-3">
       <h1 class="pt-5 pb-4">HOW TO PLAY</h1>
+      <hr>
       <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
           <div class="card card-properties wow bounceInLeft">
@@ -117,26 +118,26 @@
         </blockquote>
         <hr>
       </div>
-      <div class="row justify-content-center text-justify wow slideInLeft">
+      <!-- <div class="row justify-content-center text-justify wow slideInLeft">
         <div class="col-md-12 col-lg-6">
           <p>
             The <span class="text-primary">Make-A-Wish</span> Foundation is a non-profit organization founded in the United States that arranges experiences described as "wishes" to children with life-threatening medical conditions. We believe a wish experience can be a game-changer. This one belief guides us and inspires us to grant wishes that change the lives of the kids we serve.
           </p>
         </div>
-      </div>
-      <hr>
+      </div> -->
+      <!-- <hr> -->
       <div class="row text-justify wow slideInRight">
         <div class="col-md-12 col-lg-6">
-          <iframe class="w-100" height="315" src="https://www.youtube.com/embed/_L-5Nqwx1_U" frameborder="0" allowfullscreen></iframe>
+          <iframe class="w-100" height="290" src="https://www.youtube.com/embed/_L-5Nqwx1_U" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="col-md-12 col-lg-6">
-          <p>
+          <p class="charity-text">
             We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other players how much better you are than them).
             All donations go to the Make-a-Wish Foundation and benefit children in need.
           </p>
 
           <div class="text-center py-0">
-            <button class="w-100 guest-play-button wow rubberBand pointer">Donate</button>
+            <button class="w-100 donate-button wow rubberBand pointer donate-button">Donate</button>
           </div>
 
         </div>
@@ -148,7 +149,7 @@
   <!-- ABOUT THE TEAM -->
   <div id="team" class="team">
     <div class="container text-center pb-4">
-      <h1 class="pt-5 pb-4">THE TEAM</h1>
+      <h1>THE TEAM</h1><br/><br/>
       <div class="d-flex justify-content-around flex-wrap">
         <div class="wow zoomInDown">
           <a href="https://github.com/jherey" target="_blank">
@@ -202,9 +203,9 @@
       <p>
           This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA). Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license of the Cards Against Humanity card game, all proceeds from donations go directly to charity, as managed by crowdrise.
       </p>
-      <p>
+      <!-- <p>
         Made By Team Valhalla
-      </p>
+      </p> -->
     </div>
   </div>
   <!-- Footer End -->

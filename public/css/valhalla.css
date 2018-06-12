@@ -1,6 +1,6 @@
 body {
   background-color: #dcdcdc;
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1.3rem; }
 
 .pointer {
@@ -13,22 +13,24 @@ a:hover {
   background: url("https://images.unsplash.com/photo-1525900732548-63510d8d4fca?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2b0f98d5876886314918126deafb3af0&auto=format&fit=crop&w=1567&q=80") no-repeat fixed center;
   background-size: cover;
   letter-spacing: 2px;
-  height: 60vh; }
+  height: 80vh; }
   .introduction .introduction-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     height: 100%; }
   .introduction h1 {
-    font-family: 'Lobster Two', cursive; }
+    font-family: 'Open Sans', cursive; }
   .introduction a {
-    font-family: 'Lobster Two', cursive; }
+    font-family: 'Open Sans', cursive; }
 
 .how-to-play {
-  background-color: #f5f5f5; }
+  background-color: #f5f5f5;
+  height: 90vh;
+  padding-top: 30px; }
   .how-to-play .card {
     border-radius: 15px; }
   .how-to-play .card-body {
     border-radius: 15px;
-    font-family: 'Marck Script', cursive;
+    font-family: 'Open Sans', cursive;
     font-size: 1.2rem; }
     .how-to-play .card-body:hover {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
@@ -37,19 +39,22 @@ a:hover {
     margin: 0 auto;
     max-width: 350px; }
   .how-to-play .play-steps {
-    font-size: 1.3rem; }
+    font-size: 1.2rem; }
   .how-to-play h1 {
-    color: #cc5500;
+    color: #BF360C;
     font-family: 'Monoton', cursive; }
 
 .charity {
   background-color: #dcdcdc; }
   .charity h1 {
-    color: #cc5500;
+    color: #BF360C;
     font-family: 'Monoton', cursive; }
 
 .team {
-  background-color: #f5f5f5; }
+  background-color: #f5f5f5;
+  height: 60vh;
+  margin-top: 50px;
+  padding-top: 80px; }
   .team img {
     height: 150px;
     transition-property: transform;
@@ -74,17 +79,16 @@ a:hover {
     background: #ffffff;
     color: #cc5500; }
 
-.guest-play-button {
-  background: #00978b;
+.donate-button {
+  background: #1B5E20;
   color: #ffffff;
   font-size: 1.2rem;
-  padding: 20px 30px; }
-  .guest-play-button:hover {
-    background: #ffffff;
-    color: #00978b; }
+  padding: 15px 20px;
+  border-radius: 5px; }
 
 .bg-custom {
-  background-color: #cc5500; }
+  background-color: #BF360C;
+  font-size: 16px; }
 
 .socy {
   display: inline-block;
@@ -244,3 +248,14 @@ a:hover {
   outline-color: rgba(255, 255, 255, 0);
   outline-offset: 15px;
   text-shadow: 1px 1px 2px #427388; }
+
+hr {
+  padding-bottom: 20px; }
+
+.charity-text {
+  font-size: 18px;
+  padding-left: 10px; }
+
+.nav-action-btn {
+  background: #1B5E20;
+  color: white; }
