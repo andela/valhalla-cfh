@@ -31,9 +31,14 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   // Route to register a user.
   app.post(
-    '/api/auth/signup',
+    '/api/validator',
     signupValidator.userSignup,
-    users.registerUser
+    users.validator
+  );
+
+  app.post(
+    '/api/auth/signup',
+    users.finishUserSignup
   );
 
   // Login Route
