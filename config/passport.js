@@ -168,39 +168,39 @@ module.exports = (passport) => {
     })
   ));
 
-  // Use instagramstrategy
-  passport.use(new InstagramStrategy(
-    {
-      clientID: process.env.INSTAGRAM_CLIENT_ID || config.instagram.clientID,
-      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET || config.instagram.clientSecret,
-      callbackURL: process.env.INSTAGRAM_CALLBACK_URL
+  // // Use instagramstrategy
+  // passport.use(new InstagramStrategy(
+  //   {
+  //     clientID: process.env.INSTAGRAM_CLIENT_ID || config.instagram.clientID,
+  //     clientSecret: process.env.INSTAGRAM_CLIENT_SECRET || config.instagram.clientSecret,
+  //     callbackURL: process.env.INSTAGRAM_CALLBACK_URL
 
-    },
-    ((accessToken, refreshToken, profile, done) => {
-      User.findOne({
-        'instagram.data.id': profile.id
-      }, (err, user) => {
-        if (err) {
-          return done(err);
-        }
+  //   },
+  //   ((accessToken, refreshToken, profile, done) => {
+  //     User.findOne({
+  //       'instagram.data.id': profile.id
+  //     }, (err, user) => {
+  //       if (err) {
+  //         return done(err);
+  //       }
 
-        if (!user) {
-          user = new User({
-            name: profile.displayName,
-            email: (profile.emails && profile.emails[0].value) || '',
-            username: profile.username,
-            provider: 'instagram',
-            profile_image: profile._json.data.profile_picture
-          });
+  //       if (!user) {
+  //         user = new User({
+  //           name: profile.displayName,
+  //           email: (profile.emails && profile.emails[0].value) || '',
+  //           username: profile.username,
+  //           provider: 'instagram',
+  //           profile_image: profile._json.data.profile_picture
+  //         });
           
-          user.save((err) => {
-            if (err) return err;
-            return done(err, user);
-          });
-        } else {
-          return done(err, user);
-        }
-      });
-    })
-  ));
+  //         user.save((err) => {
+  //           if (err) return err;
+  //           return done(err, user);
+  //         });
+  //       } else {
+  //         return done(err, user);
+  //       }
+  //     });
+  //   })
+  // ));
 };
