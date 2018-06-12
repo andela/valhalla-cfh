@@ -1,11 +1,7 @@
-* {
-  list-style-type: none;
-}
 body {
   background-color: #dcdcdc;
-  font-family: 'Lobster Two', cursive;
-  font-size: 1.3rem; 
-}
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.3rem; }
 
 .pointer {
   cursor: pointer; }
@@ -164,62 +160,55 @@ a:hover {
   margin: 20px 10px;
   text-align: center; }
 
-  #contain-avatars {
-    margin-top: 25px;
-  }
- 
-  .avatar-list {
-    overflow: hidden;
-    padding-left: 0px;
-    margin-left: 3%;
-  }
- 
-  .avatar-list img {
-    max-width: 60%;
-  }
- 
-  .avatars {
-    position: relative;
-    float: left;
-    margin: 2px 5px;
-    border-radius: 8px;
-  }
+#contain-avatars {
+  margin-top: 25px; }
 
-  .finish-signup-button {
-    margin-top: 35px;
-  }
+.avatar-list {
+  overflow: hidden;
+  padding-left: 0px;
+  margin-left: 3%; }
 
-  .hide {
-    display: none;
-  }
+.avatar-list img {
+  max-width: 60%; }
 
-  .success-modal {
-    width: 100%;
-    max-width: 250px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-  }
+.avatars {
+  position: relative;
+  float: left;
+  margin: 2px 5px;
+  border-radius: 8px; }
 
-  .check-mark {
-    height: 100px;
-    width: 100px;
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 10px;
-  }
+.finish-signup-button {
+  margin-top: 35px; }
 
-  .btn-outline-success {
-    margin-top: 15px;
-    width: 40%;
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
-  }
+.hide {
+  display: none; }
 
-  .rounded-circle {
-    margin-left: 20px;
-  }
+.success-modal {
+  width: 100%;
+  max-width: 250px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%; }
+
+.check-mark {
+  height: 100px;
+  width: 100px;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px; }
+
+.btn-outline-success {
+  margin-top: 15px;
+  width: 40%;
+  display: block;
+  margin-right: auto;
+  margin-left: auto; }
+
+.rounded-circle {
+  margin-left: 20px; }
+
+#select-option {
+  margin-bottom: 20px; }
