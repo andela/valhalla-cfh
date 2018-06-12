@@ -46,13 +46,13 @@
         <h1 class="text-white pt-5 wow slideInLeft">
           A game for horrible people desperately trying to do good
         </h1>
-        <div ng-show="showOptions" class="py-5 flex-wrap row w-50 mx-auto wow slideInRight">
-          <span data-toggle="modal" data-target="#signUpModal" class="pointer signup-button col-sm-12 col-md-6 mb-3 d-inline-block">Sign Up</span>
-          <span ng-click="startGameModal()" class="pointer guest-play-button col-sm-12 col-md-6 mb-3 d-inline-block">Play As Guest</span>
+        <div ng-show="showOptions" class="py-5 justify-content-center wow slideInRight">
+          <span data-toggle="modal" data-target="#signUpModal" class="new_button home_btn col-sm-12 col-md-6 mb-3 p-3">Sign Up</span>
+          <span ng-click="startGameModal()" class="new_button home_btn col-sm-12 col-md-6 mb-3 p-3">Play As Guest</span>
         </div>
         <div ng-hide="showOptions" class="py-5 flex-wrap row w-50 mx-auto wow slideInRight">
-          <span ng-click="startGameModal()" class="pointer signup-button col-sm-12 col-md-6 mb-3 d-inline-block">Play with Strangers</span>
-          <span ng-click="startGameModal('custom')" class="pointer guest-play-button col-sm-12 col-md-6 mb-3 d-inline-block">Play with Guests</span>
+          <span ng-click="startGameModal()" class="new_button home_btn col-sm-12 col-md-6 mb-3 d-inline-block">Play with Strangers</span>
+          <span ng-click="startGameModal('custom')" class="new_button home_btn col-sm-12 col-md-6 mb-3 d-inline-block">Play with Guests</span>
         </div>
         <!-- Logo -->
       </div>
