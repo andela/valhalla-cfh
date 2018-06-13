@@ -276,18 +276,25 @@ exports.finishUserSignup = (req, res) => {
         return res.status(500).json(['User data not saved']);
       }
 
+      console.log(createdUser);
+      
+
       const userData = {
         id: createdUser._id,
-        username: createdUser.name,
+        name: createdUser.name,
         email: createdUser.email
       };
 
       const token = jwt.sign(userData, process.env.SECRET);
 
-      return res.status(201).json({
-        message: `Welcome, ${createdUser.name}`,
-        token,
-        userData
+      req.login(createdUser, (err) => {
+        if (err) return next(err);
+      
+        return res.status(201).json({
+          message: `Welcome, ${createdUser.name}`,
+          token,
+          userData
+        });
       });
     });
   });
