@@ -195,4 +195,19 @@ angular.module('mean.system')
       .then((data) => {
         $scope.avatars = data;
       });
+
+      $scope.showOptions = true;
+
+      if (window.localStorage.token) {
+        $scope.showOptions = false;
+      }
+      
+      $scope.signOut = function () {
+        $http.get('/signout').then(
+          () => {
+            window.localStorage.removeItem('token');
+            $scope.showOptions = true;
+          }
+        )
+      }
   }]);
