@@ -40,7 +40,6 @@ a:hover {
 
 .how-to-play {
   background-color: $little-gray;
-  height: 90vh;
   padding-top: 30px;
 
   .card {
@@ -85,7 +84,6 @@ a:hover {
 
 .team {
   background-color: $little-gray;
-  height: 60vh;
   margin-top: 50px;
   padding-top: 80px;
 
@@ -204,10 +202,7 @@ a:hover {
     color: #cb2027;
     background: #fff;
 }
-.btn-login {
-    color: white;
-    background-color: #cc5500;
-}
+
 .social-buttons a {
     margin: 12px 0;
     width: 49%;
@@ -326,4 +321,13 @@ hr {
 .nav-action-btn{
   background: #1B5E20;
   color: white;
+}
+.btn-login {
+  color: white;
+  background-color: #1B5E20;
+}
+.navbar{
+  @media(min-width: 300px) {
+    background-color: #BF360C;
+  }
 }

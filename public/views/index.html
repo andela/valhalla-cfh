@@ -417,18 +417,16 @@
 
 <script>
   $(document).ready(function() {
-    if ($(window).scrollTop() >= 100) {
-      $('#fixed-nav').css('background-color', '#BF360C');
-    } else {
-      $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
-    }
-
-    $(window).on("scroll", function() {
-      if ($(window).scrollTop() >= 100) {
-        $('#fixed-nav').css('background-color', '#BF360C')
-      } else {
-        $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
-      }
-    });
+        if($(window).width() <= 900) {
+          $('#fixed-nav').css('background-color', '#BF360C')      
+        } else {
+          $(window).on("scroll", function() {
+            if ($(window).scrollTop() >= 100) {
+              $('#fixed-nav').css('background-color', '#BF360C')
+            } else {
+              $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
+            }
+          });
+        }
   });
 </script>

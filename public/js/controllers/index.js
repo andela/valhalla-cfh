@@ -62,9 +62,9 @@ angular.module('mean.system')
     // open modal for start Game
     $scope.startGameModal = function (term) {
       // setting the buttons
-      const startButton = '<a href="/play"><button type="button" class="btn btn-md" style="background: aqua">Start</button></a>';
-      const idStartButton = '<a href="/play?custom"><button type="button" class="btn btn-md" style="background: aqua">Start</button></a>';
-      const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md" style="background: rgb(255, 136, 0)">Close</button>';
+      const startButton = '<a href="/play"><button type="button" class="btn btn-md text-white" style="background: #1B5E20">Start</button></a>&nbsp;';
+      const idStartButton = '<a href="/play?custom"><button type="button" class="btn btn-md text-white" style="background: #1B5E20">Start</button></a>&nbsp;';
+      const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white" style="background: red">Close</button>';
       // call the modal and append their attributes
       const infoModal = $('#infoModal');
       infoModal.find('.modal-title')
