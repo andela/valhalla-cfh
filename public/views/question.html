@@ -4,7 +4,7 @@
 
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
 
-    <div id="startGame" ng-show="game.state === 'awaiting players'">
+    <div id="startGame" ng-show="game.state === 'awaiting players'" style="height: 230px;">
       <div id="finding-players">Finding Players</div>
       <div id="player-count-container">
         <div id="player-count">{{game.players.length}} / 12 </div>
@@ -57,5 +57,26 @@
   </div>
 
   <!-- End of the modal -->
+
+  <div id="start-modal" class="modal fade center" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" style="margin-left: auto; margin-right: auto">
+        <div class="modal-header" style="background-color: #cc5403; color: #FFF;">
+          <h5 class="modal-title" style="text-align: center; margin: auto;">Cards For Humanity</h5>
+        </div>
+            <div class="modal-body" style="min-height: 250px; margin: auto;">
+                <h6 id="shuffleText" style="color: rgb(0, 0, 0); text-align: center;">You are the Czar - Click card to pick question</h6>
+                  <div class="center" style="margin: auto;">
+                    <div class="shuffle" ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style="margin: auto; cursor: pointer;">
+                    <img src="../img/card4hum.png" style="width: 100px;" class="animated flipInX" id="shufflecard1">
+                    <img src="../img/card4hum.png" style="width: 100px;" class="animated flipInX" id="shufflecard2">
+                    <img src="../img/card4hum.png" style="width: 100px;" class="animated flipInX" id="shufflecard3">
+                    <img src="../img/card4hum.png" style="width: 100px;" class="animated flipInX" id="shufflecard4">
+                    </div>
+                  </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
