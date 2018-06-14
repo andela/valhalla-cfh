@@ -1,157 +1,148 @@
 angular.module('mean.system')
-  .controller('IndexController', ['$scope', '$http', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, $http, Global, $location, socket, game, AvatarService) {
+.controller('IndexController', ['$scope', '$http', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, $http, Global, $location, socket, game, AvatarService) {
     $scope.global = Global;
     $scope.gameWithCustom = 'false';
 
-    // Run validation on user input
-    $scope.validator = () => {
-      const userDetails = $scope.user;
-      const { name, email, password } = userDetails;
-      $scope.hasError = {};
+    const sendSignUPRequest = (userDetails) => {
       // send the post request to the server
-      $http.post('/api/validator', userDetails)
-        .then(
-          (response) => {
-            // toggle modal if action is successful
-            $('#closeSignUp').click();
-            $('#openSecondSignUp').click();
-          },
-          (errors) => {
+      $http.post('/api/auth/signup', userDetails)
+      .then(
+        (response) => {
+          const { token, message } = response.data;
+          localStorage.setItem('token', token);
+          $scope.showOptions = false;
+          $('#closeSignUp').click();
+          toastr.success(message)
+          $location.path('/');
+        },
+        (errors) => {
           // display errors if input is empty or invalid
-            $scope.hasError = errors.data
-          }
-);
+          errors.data.map(err => {
+            toastr.error(err);
+          })
+        })
     };
 
     $scope.previewImage = () => {
       // collect image chosen from the signup form
-      // const imageFile = '';
       const imageFile = $('#userImage').prop('files')[0];
-      
       if (imageFile) {
-        document.getElementById("addHide").classList.add('hide');
-        document.getElementById("removeHide").classList.add('rounded-circle');
-        document.getElementById("removeHide").classList.remove('hide');
-        // $('#addHide').classList.add('hide');
         const fileReader = new FileReader();
         fileReader.readAsDataURL(imageFile);
-        fileReader.onload = (event) => {
+        fileReader.onload = event => {
           // set the preview
           $scope.imagePreview = event.target.result;
         };
       }
     };
 
-    // toggle option to select avatar or upload an image
-    $scope.toggleImageSelect = () => {
-      const option = $scope.user.option;
-      if(option === 'Upload image') {
-        document.getElementById('image-upload').classList.remove('hide');
-        document.getElementById('avatar-select').classList.add('hide');
-        document.getElementById('toggle-button').classList.remove('hide');
-        $scope.user.avatar = null;
-        $scope.hasError = null;
-      } else {
-        document.getElementById('avatar-select').classList.remove('hide');
-        document.getElementById('image-upload').classList.add('hide');
-        document.getElementById('toggle-button').classList.remove('hide');
-        $scope.hasError = null;
-      }
+    // open modal for start Game
+    $scope.startGameModal = function(term){
+        // setting the buttons
+        const startButton= `<a href="/play"><button type="button" class="btn btn-md" style="background: aqua">Start</button></a>`;
+        const idStartButton = `<a href="/play?custom"><button type="button" class="btn btn-md" style="background: aqua">Start</button></a>`;
+        const closeModal = `<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md" style="background: rgb(255, 136, 0)">Close</button>`;
+        // call the modal and append their attributes
+        const infoModal = $('#infoModal');
+        infoModal.find('.modal-title')
+          .text('Info!!!');
+        infoModal.find('.modal-body')
+         .text('You are about to start a new game. Click button to start');
+         
+         if(term === 'custom') { 
+            $( ".button" ).empty();
+            infoModal.find('.button').append(idStartButton, closeModal);
+        }
+        if(term === undefined){
+          $( ".button" ).empty();
+            infoModal.find('.button').append(startButton, closeModal);
+        }
+        infoModal.modal('show');
+     
     }
 
-    // open modal for start Game
-    $scope.startGameModal = function (term) {
-      // setting the buttons
-      const startButton = '<a href="/play"><button type="button" class="btn btn-md text-white" style="background: #1B5E20">Start</button></a>&nbsp;';
-      const idStartButton = '<a href="/play?custom"><button type="button" class="btn btn-md text-white" style="background: #1B5E20">Start</button></a>&nbsp;';
-      const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white" style="background: red">Close</button>';
-      // call the modal and append their attributes
-      const infoModal = $('#infoModal');
-      infoModal.find('.modal-title')
-        .text('Info!!!');
-      infoModal.find('.modal-body')
-        .text('You are about to start a new game. Click button to start');
-
-      if (term === 'custom') {
-        $('.button').empty();
-        infoModal.find('.button').append(idStartButton, closeModal);
-      }
-      if (term === undefined) {
-        $('.button').empty();
-        infoModal.find('.button').append(startButton, closeModal);
-      }
-      infoModal.modal('show');
-    };
-    
-    const finishSignup = (userDetails) => {
-      $http.post('api/auth/signup', userDetails).then(
-      (response) => {
-          const { token } = response.data;
-          if (token) {
-            localStorage.setItem('token', token);
-            $scope.showOptions = false;
-            $('#closeSecondModal').click();
-            $scope.showSuccessMessage = response.data.message
-            $('#openSuccessModal').click();
-
-            $scope.user = null;
-        document.getElementById('toggle-button').innerHTML = "Signup";
-
-            setTimeout(() => {
-              $('#close-sucess-dialog').click();
-            }, 10000);
-          }
-        },
-        (response) => {
-        }
-      );
-    };
-
-    $scope.signup = function () {
+    $scope.signup = function(){
       // collect user details from the signup form
       const userDetails = $scope.user;
-      const { name, email, password, avatar, userImage } = userDetails;
+      const { name, email, password } = userDetails;
+      $scope.hasError = {};
+      console.log($scope.user);
 
       // collect image chosen from the signup form
       const imageFile = $('#userImage').prop('files')[0];
+      const errors = [];
       let imageUrl;
 
-      if(!userImage && !avatar) {
-        return $scope.hasError = {'error': 'Sorry you need to upload an image or choose an avatar'}
+      // validate name, email and password is available
+      Object.entries({ name, email, password }).forEach(([key, value]) => {
+        if (!value || value === '') {
+          errors.push(`Please supply your ${key}`);
+        }
+      });
+      // validate that either an avatar or an image upload is chosen
+      if (!imageFile && !userDetails.avatar) {
+        errors.push('Please choose an avatar or upload an image');
       }
-      
-      document.getElementById('has-error').classList.add('hide');
-      document.getElementById('toggle-button').innerHTML = "processing...";
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append('file', imageFile);
-        formData.append('upload_preset', 'lpxun7n2');
-        $.ajax({
-          url: 'https://api.cloudinary.com/v1_1/longe/image/upload',
-          data: formData,
-          type: 'POST',
-          cache: false,
-          processData: false,
-          contentType: false,
-          dataType: 'json',
-        })
-          .then((res) => {
-            imageUrl = res.secure_url;
-            userDetails.avatar = imageUrl;
 
-            return finishSignup(userDetails);
-          });
+      // if any validation fails, display the error
+      if (Object.keys(errors).length !== 0) {
+        // Display errors if input is empty
+        errors.map(err => {
+          toastr.error(err)
+        })
       } else {
-        // send the post request to the server
-        return finishSignup(userDetails);
+        // upload the image to cloudinary
+        if (imageFile) {
+          const formData = new FormData();
+          formData.append('file', imageFile);
+          formData.append('upload_preset', 'lpxun7n2');
+          $.ajax({
+            url: 'https://api.cloudinary.com/v1_1/longe/image/upload',
+            data: formData,
+            type: 'POST',
+            cache : false,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+          })
+            .then((res) => {
+              imageUrl = res.secure_url;
+              userDetails.avatar = imageUrl;
+
+              return sendSignUPRequest(userDetails);
+            });
+        } else {
+          // send the post request to the server
+          return sendSignUPRequest(userDetails);
+        }
       }
     };
 
     // login a user
-    $scope.login = function () {
+    $scope.login = function() {
       $http.post('api/auth/login', {
         email: $scope.email,
         password: $scope.password
+      }).then((response) => {
+        const token = response.data.token;
+        if(token){
+          localStorage.setItem('token', token);
+          $scope.showOptions = false;
+          $('#closeLogin').click();
+          toastr.success('Successfully signed in');
+        }
+      },
+      (response) => {
+        const { error } = response.data
+        toastr.error(error);
+      })
+    };
+    // reset user password
+    $scope.resetPassword = function () {
+      $http.put('api/auth/passwordreset', {
+        email: $scope.email,
+        password: $scope.password,
+        confirmPassword: $scope.confirmPassword,
       }).then(
 (         response) => {
           const token = response.data.token;
@@ -170,16 +161,18 @@ angular.module('mean.system')
               "showMethod": "fadeIn",
               "hideMethod": "fadeOut"
             }
-            toastr.success('Successfully signed in');
+            toastr.success('Successfully updated password');
+            $('#closeResetModal').click();
+            $scope.hasError = {};
         }
       },
       (errors) => {
-        $scope.hasError = {'error': 'Username or Password is Incorrect'};
+        $scope.hasError = errors.data;
       }
 );
     };
 
-    $scope.playAsGuest = function () {
+    $scope.playAsGuest = function() {
       game.joinGame();
       $location.path('/app');
     };
@@ -187,14 +180,14 @@ angular.module('mean.system')
     $scope.showError = function() {
       if ($location.search().error) {
         return $location.search().error;
-      } 
+      } else {
         return false;
-      
+      }
     };
 
     $scope.avatars = [];
     AvatarService.getAvatars()
-      .then((data) => {
+      .then(function(data) {
         $scope.avatars = data;
       });
 
@@ -211,5 +204,9 @@ angular.module('mean.system')
             $scope.showOptions = true;
           }
         )
+      }
+
+      $scope.toggleResetModal = function() {
+        document.getElementById('closeLogin').click();
       }
   }]);
