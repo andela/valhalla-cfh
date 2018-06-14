@@ -118,14 +118,6 @@
         </blockquote>
         <hr>
       </div>
-      <!-- <div class="row justify-content-center text-justify wow slideInLeft">
-        <div class="col-md-12 col-lg-6">
-          <p>
-            The <span class="text-primary">Make-A-Wish</span> Foundation is a non-profit organization founded in the United States that arranges experiences described as "wishes" to children with life-threatening medical conditions. We believe a wish experience can be a game-changer. This one belief guides us and inspires us to grant wishes that change the lives of the kids we serve.
-          </p>
-        </div>
-      </div> -->
-      <!-- <hr> -->
       <div class="row text-justify wow slideInRight">
         <div class="col-md-12 col-lg-6">
           <iframe class="w-100" height="290" src="https://www.youtube.com/embed/_L-5Nqwx1_U" frameborder="0" allowfullscreen></iframe>
@@ -407,7 +399,7 @@
             <div ng-show="showSuccessMessage" class="text-center">
               {{showSuccessMessage}}
             </div>
-            <button type="button" class="btn btn-outline-success" data-dismiss="modal">close</button>
+            <button type="button" class="btn btn-outline-success" data-dismiss="modal" id="close-sucess-dialog">close</button>
           </div>
         </div>
       </div>
@@ -417,16 +409,16 @@
 
 <script>
   $(document).ready(function() {
-        if($(window).width() <= 900) {
-          $('#fixed-nav').css('background-color', '#BF360C')      
-        } else {
-          $(window).on("scroll", function() {
-            if ($(window).scrollTop() >= 100) {
-              $('#fixed-nav').css('background-color', '#BF360C')
-            } else {
-              $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
-            }
-          });
-        }
+      if($(window).width() <= 991) {
+        $('#fixed-nav').css('background-color', '#BF360C')      
+      } else {
+        $(window).on("scroll", function() {
+          if ($(window).scrollTop() >= 100) {
+            $('#fixed-nav').css('background-color', '#BF360C')
+          } else {
+            $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
+          }
+        });
+      }
   });
 </script>
