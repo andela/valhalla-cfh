@@ -241,27 +241,7 @@ exports.user = (req, res, next, id) => {
 * @param {Object} res
 * @return {Object} registration object
 */
-exports.validator = (req, res) => {
-  User.findOne({
-    email: req.body.email
-  }).exec((err, existingUser) => {
-    if (existingUser) {
-      return res.status(409).json({
-        emailConflict: 'Email is taken'
-      });
-    }
-
-    return res.status(200).json(['okay']);
-  });
-};
-
-/**
-* Register a new user
-* @param {Object} req
-* @param {Object} res
-* @return {Object} registration object
-*/
-exports.finishUserSignup = (req, res) => {
+exports.registerUser = (req, res) => {
   User.findOne({
     email: req.body.email
   }).exec((err, existingUser) => {
@@ -275,23 +255,19 @@ exports.finishUserSignup = (req, res) => {
       if (err) {
         return res.status(500).json(['User data not saved']);
       }
-      
+
       const userData = {
         id: createdUser._id,
-        name: createdUser.name,
+        username: createdUser.name,
         email: createdUser.email
       };
 
       const token = jwt.sign(userData, process.env.SECRET);
 
-      req.login(createdUser, (err) => {
-        if (err) return next(err);
-      
-        return res.status(201).json({
-          message: `Welcome, ${createdUser.name}`,
-          token,
-          userData
-        });
+      return res.status(201).json({
+        message: 'User successfully registered',
+        token,
+        userData
       });
     });
   });
@@ -316,7 +292,7 @@ exports.login = (req, res) => {
     // If no user found
     if (!user) {
       return res.status(400).json({
-        error: 'Username or Password Incorrect'
+        error: 'User Not Found'
       });
     }
     // Compare password from user to database
@@ -326,11 +302,6 @@ exports.login = (req, res) => {
       };
       // Create token
       const token = jwt.sign(userData, process.env.SECRET, { expiresIn: '5h' });
-      // return res.status(200).json({
-      //   token,
-      //   message: 'Successfully SignIn',
-      // });
-
       
       return res.status(200).json({
         token,
@@ -338,7 +309,64 @@ exports.login = (req, res) => {
       });
     }
     return res.status(400).json({
-      error: 'Username or Password is Incorrect'
+      error: 'Username or Password Incorrect'
+    });
+  });
+};
+
+/**
+* Method to Login User
+* @param {Object} req
+* @param {Object} res
+* @return {Object} logged in object
+*/
+exports.resetPassword = (req, res) => {
+  // Destructure from user
+  const { email, password, confirmPassword } = req.body;
+  // Find email
+  User.findOne({ email }).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    // If no user found
+    if (!user) {
+      return res.status(400).json({
+        emailError: 'Sorry user with email provided does not exist'
+      });
+    }
+    
+    // Compare password from user
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        passwordMismatch: 'Passwords do not match'
+      });
+    }
+
+    user.password = password; 
+    user.save((err, updatedUser) => {
+      if (err) {
+        return res.status(500).json(['Sorry password update failed']);
+      }
+      
+      const userData = {
+        id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email
+      };
+
+      const token = jwt.sign(userData, process.env.SECRET);
+
+      req.login(updatedUser, (err) => {
+        if (err) return next(err);
+      
+        return res.status(200).json({
+          message: `Welcome, ${updatedUser.name}`,
+          token,
+          userData
+        });
+      });
     });
   });
 };
