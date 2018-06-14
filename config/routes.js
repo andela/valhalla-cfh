@@ -54,8 +54,7 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   app.post('/donations', users.addDonation);
 
   app.post('/api/auth/login', validator.signin, passport.authenticate('local', {
-    failureRedirect: '/signin',
-    failureFlash: 'Invalid email or password.'
+    // failureRedirect: '/signin',
   }), users.login);
 
   app.get('/users/me', users.me);

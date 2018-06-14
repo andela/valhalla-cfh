@@ -41,7 +41,7 @@ module.exports = (passport) => {
           return done(err);
         }
         if (!user) {
-          return done(null, false, {
+           return done(null, false, {
             message: 'Unknown user'
           });
         }
@@ -50,6 +50,7 @@ module.exports = (passport) => {
             message: 'Invalid password'
           });
         }
+        
         user.email = null;
         user.hashed_password = null;
         return done(null, user);

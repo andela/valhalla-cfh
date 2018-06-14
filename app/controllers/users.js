@@ -275,10 +275,7 @@ exports.finishUserSignup = (req, res) => {
       if (err) {
         return res.status(500).json(['User data not saved']);
       }
-
-      console.log(createdUser);
       
-
       const userData = {
         id: createdUser._id,
         name: createdUser.name,
@@ -318,7 +315,7 @@ exports.login = (req, res) => {
     }
     // If no user found
     if (!user) {
-      return res.status(404).json({
+      return res.status(400).json({
         error: 'Username or Password Incorrect'
       });
     }
@@ -329,6 +326,12 @@ exports.login = (req, res) => {
       };
       // Create token
       const token = jwt.sign(userData, process.env.SECRET, { expiresIn: '5h' });
+      // return res.status(200).json({
+      //   token,
+      //   message: 'Successfully SignIn',
+      // });
+
+      
       return res.status(200).json({
         token,
         message: 'Successfully SignIn',
