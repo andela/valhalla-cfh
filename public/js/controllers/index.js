@@ -93,6 +93,13 @@ angular.module('mean.system')
             $('#closeSecondModal').click();
             $scope.showSuccessMessage = response.data.message
             $('#openSuccessModal').click();
+
+            $scope.user = null;
+        document.getElementById('toggle-button').innerHTML = "Signup";
+
+            setTimeout(() => {
+              $('#close-sucess-dialog').click();
+            }, 10000);
           }
         },
         (response) => {
@@ -114,6 +121,7 @@ angular.module('mean.system')
       }
       
       document.getElementById('has-error').classList.add('hide');
+      document.getElementById('toggle-button').innerHTML = "processing...";
       if (imageFile) {
         const formData = new FormData();
         formData.append('file', imageFile);
@@ -152,13 +160,7 @@ angular.module('mean.system')
             $scope.showOptions = false;
             $('#closeLogin').click();
             toastr.options = {
-              "closeButton": false,
-              "debug": false,
-              "newestOnTop": false,
-              "progressBar": false,
-              "positionClass": "toast-top-right",
-              "preventDuplicates": false,
-              "onclick": null,
+              "closeButton": true,
               "showDuration": "100",
               "hideDuration": "1000",
               "timeOut": "50000",
@@ -172,7 +174,7 @@ angular.module('mean.system')
         }
       },
       (errors) => {
-        $scope.hasError = errors.data;
+        $scope.hasError = {'error': 'Username or Password is Incorrect'};
       }
 );
     };
