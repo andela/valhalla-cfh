@@ -31,13 +31,18 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   // Route to register a user.
   app.post(
-    '/api/auth/signup',
+    '/api/validator',
     signupValidator.userSignup,
-    users.registerUser
+    users.validator
+  );
+
+  app.post(
+    '/api/auth/signup',
+    users.finishUserSignup
   );
 
   // Login Route
-  app.post('/api/auth/login', validator.signin, users.login);
+  // app.post('/api/auth/login', validator.signin, users.login);
 
   // Route to search for users
   app.post('/api/search/users', users.search);
@@ -48,10 +53,9 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   // Donation Routes
   app.post('/donations', users.addDonation);
 
-  app.post('/users/session', passport.authenticate('local', {
-    failureRedirect: '/signin',
-    failureFlash: 'Invalid email or password.'
-  }), users.session);
+  app.post('/api/auth/login', validator.signin, passport.authenticate('local', {
+    // failureRedirect: '/signin',
+  }), users.login);
 
   app.get('/users/me', users.me);
   app.get('/users/:userId', users.show);
