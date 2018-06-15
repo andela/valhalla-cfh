@@ -23,6 +23,28 @@ angular.module('mean.system')
         })
     };
 
+    $scope.getUser = () => {
+      const token = localStorage.token;
+      let user = [];
+      $http({
+        method: 'GET',
+        url: `/api/profile`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        $scope.user = response.data.user;
+        $scope.players = response.data.players;
+        console.log('user response', user.email);
+        console.log(response.data.user);
+      }, (response) => {
+        console.log(response.data.error);
+      });
+
+    }
+    $scope.getUser();
     $scope.previewImage = () => {
       // collect image chosen from the signup form
       const imageFile = $('#userImage').prop('files')[0];

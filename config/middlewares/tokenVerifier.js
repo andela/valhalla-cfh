@@ -12,7 +12,7 @@ exports.tokenVerification = (req, res, next) => {
       error: true
     });
   }
-  jwt.verify(token, process.env.SECRET, (error) => {
+  jwt.verify(token, process.env.SECRET, (error, decoded) => {
     if (error) {
       // Error with token
       return res.status(401).json({
@@ -20,6 +20,7 @@ exports.tokenVerification = (req, res, next) => {
         error: error.message
       });
     }
+    req.decoded = decoded;
     next();
   });
 };

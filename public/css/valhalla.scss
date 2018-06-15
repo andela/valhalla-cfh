@@ -4,6 +4,37 @@ $little-gray: #f5f5f5;
 $white: #ffffff;
 $teal-green: #00978b;
 
+body{
+  background: #EFF7FE;
+padding-top: 15px;
+}
+.main-section{
+background-color: #fff;
+}
+.profile-header{
+background-color: #707274;
+height:150px;
+}
+.user-detail{
+margin:-50px 0px 30px 0px;
+}
+.user-detail img{
+height:100px;
+width:100px;
+}
+.user-detail h5{
+margin:15px 0px 5px 0px;
+}
+.user-social-detail{
+padding:15px 0px;
+background-color: #707274;
+}
+.user-social-detail a i{
+color:#fff;
+font-size:23px;
+padding: 0px 5px;
+}
+
 body {
   background-color: $grayish-white;
   font-family: 'Lobster Two', cursive;
