@@ -37,8 +37,6 @@ angular.module('mean.system')
       }).then((response) => {
         $scope.user = response.data.user;
         $scope.players = response.data.players;
-        console.log('user response', user.email);
-        console.log(response.data.user);
       }, (response) => {
         console.log(response.data.error);
       });

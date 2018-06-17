@@ -3,7 +3,7 @@
 <head>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Cabin|Lobster" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Cabin" rel="stylesheet">
 </head>
 <style>
   .bg-custom {
@@ -29,7 +29,7 @@ body{
             <a class="nav-link" href="/">Home</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="/#!/#how-to-play">Start Game</a>
+              <span ng-click="startGameModal()" class="nav-link pointer">Start Game</span>
           </li>
        
         </ul>
@@ -43,7 +43,7 @@ body{
           </div>
           <div class="row user-detail">
               <div class="col-lg-12 col-sm-12 col-12">
-                  <img src="{{user.avatar}}" class="rounded-circle img-thumbnail" style="width: 12%; height: 30%; margin-top:-25px">
+                  <img src="{{user.avatar}}" class="rounded-circle img-thumbnail" style="width: 12%; height: 10rem; margin-top:-25px">
                   <h5>{{user.name}}</h5>
                   <p>{{user.email}}</p>
                   <p>
@@ -72,13 +72,33 @@ body{
                       </tbody>
                     </table>
                   </div>
-                  <div ng-show="!players">
+                  <div ng-show="players.length <= 0">
                   <h3 style="color: #cc5403">No Game Log</h3>
                   </div>
               </div>
           </div>
       </div>
     </div>
+
+    <!-- modal start -->
+  <div id="infoModal" class="modal fade" role="dialog" style="padding: 50px;" ng-controller="IndexController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="button" style="text-align:center">
+          </div>
+          <div class="modal-footer">
+            
+          </div>
+        </div>
+      </div>
+  </div>
+  <!-- end of modal -->
+
   </div>
 </body>
 </html>
