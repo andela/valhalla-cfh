@@ -1,24 +1,29 @@
-<div id="question-container-inner">
-  <div class="card longBlack bg-primary">
+<div>
+  <!-- QUESTION AND INFO DISPLAY -->
+  <div class="card d-flex flex-column text-center timer-height">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
 
-    <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
+    <!-- NOTIFICATION -->
+    <div style="height: 3rem">
+      <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}} </div>
+    </div>
+    <!-- NOTIFICATION -->
 
+    <!-- INITIAL PAGE DISPLAY -->
     <div id="startGame" ng-show="game.state === 'awaiting players'">
-      <div id="finding-players">Finding Players</div>
-      <div id="player-count-container">
-        <div id="player-count">{{game.players.length}} / 12 </div>
-        <div id="the-word-players"> Players </div>
-      </div>
-      <div id="loading-container">
-        <div id="loading-gif"><img ng-src="../img/loader.gif"/></div>
+      <div>Searching For Players</div>
+      <div class="">
+        <img style="width: 100px;" ng-src="https://cdn.dribbble.com/users/338744/screenshots/2886346/load-dribbble.gif"/>
+        <span id="player-count">{{game.players.length}} / 12 Players</span>
       </div>
       <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride)">
-        <div class="pointer btn btn-secondary mb-2" id='start-game-button'>
-          Start Game</br>with {{game.players.length}} players
+        <div class="pointer btn nav-action-btn text-white" id='start-game-button'>
+          Start Game with {{game.players.length}} player(s)
         </div>
       </div>
     </div>
+    <!-- INITIAL PAGE DISPLAY -->
+
     <!-- Game Over Stuff -->
     <div id="game-end-info">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -33,14 +38,17 @@
         That makes you a loser, unfortunately.
       </div>
     </div>
+    <!-- Game Over Stuff -->
+    
   </div>
+  <!-- QUESTION AND INFO DISPLAY -->
 
   <!-- modal for cant start a game message -->
   <div class="modal" id="cantStartGame" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" style="color:red">Alert!!!</h5>
+          <h5 class="modal-title text-danger">Alert!!!</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -55,7 +63,6 @@
       </div>
     </div>
   </div>
-
-  <!-- End of the modal -->
+  <!-- End of modal for cant start a game message -->
 </div>
 
