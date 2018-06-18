@@ -88,16 +88,20 @@ angular.module('mean.system')
       const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white" style="background: red">Close</button>';
       // call the modal and append their attributes
       const infoModal = $('#infoModal');
-      infoModal.find('.modal-title')
-        .text('Info!!!');
-      infoModal.find('.modal-body')
-        .text('You are about to start a new game. Click button to start');
+      // infoModal.find('.modal-body')
+      //   .text('You are about to start a new game. Click button to start');
 
       if (term === 'custom') {
+        infoModal.find('.modal-body')
+        .text('You are about to start a new game. Click button to start');
+
         $('.button').empty();
         infoModal.find('.button').append(idStartButton, closeModal);
       }
       if (term === undefined) {
+        infoModal.find('.modal-body')
+        .text('Click on start to continue and wait for people to join the game. Can\'t wait? Signup/Signin to invite and play with friends.');
+
         $('.button').empty();
         infoModal.find('.button').append(startButton, closeModal);
       }
