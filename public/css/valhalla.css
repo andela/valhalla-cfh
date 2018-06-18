@@ -1,6 +1,10 @@
 body {
   background-color: #dcdcdc;
-  font-family: georgia, sans-serif; }
+  font-family: 'Mate', helvetica ,sans-serif; }
+
+.custom-container {
+  width: 70%;
+  margin: 0 auto; }
 
 .pointer {
   cursor: pointer; }
@@ -12,35 +16,43 @@ a:hover {
   background: url("https://images.unsplash.com/photo-1525900732548-63510d8d4fca?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2b0f98d5876886314918126deafb3af0&auto=format&fit=crop&w=1567&q=80") no-repeat fixed center;
   background-size: cover;
   letter-spacing: 2px;
-  height: 80vh; }
+  height: 70vh; }
+  .introduction h1 {
+    margin: 0 auto; }
   .introduction .introduction-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     height: 100%; }
-  .introduction h1 {
-    font-family: 'Open Sans', cursive; }
-  .introduction a {
-    font-family: 'Open Sans', cursive; }
 
 .how-to-play {
-  background-color: #f5f5f5;
-  padding-top: 30px; }
-  .how-to-play .card {
-    border-radius: 15px; }
-  .how-to-play .card-body {
-    border-radius: 15px;
-    font-family: 'Open Sans', cursive;
-    font-size: 1.2rem; }
-    .how-to-play .card-body:hover {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
-  .how-to-play .card-properties {
-    height: 400px;
-    margin: 0 auto;
-    max-width: 350px; }
-  .how-to-play .play-steps {
-    font-size: 1.2rem; }
+  background-color: #f5f5f5; }
   .how-to-play h1 {
     color: #BF360C;
     font-family: 'Monoton', cursive; }
+  .how-to-play #about-game {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.3rem; }
+  .how-to-play .card-properties {
+    display: table-cell;
+    height: 200px;
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    padding: 20px;
+    transition-property: transform;
+    transition-duration: 1s;
+    cursor: pointer; }
+    .how-to-play .card-properties:nth-child(1) {
+      border: 2px solid #b3a77e; }
+    .how-to-play .card-properties:nth-child(2) {
+      border: 2px solid #BF360C; }
+    .how-to-play .card-properties:nth-child(3) {
+      border: 2px solid #1B5E20; }
+    .how-to-play .card-properties:nth-child(4) {
+      border: 2px solid #b3a77e; }
+    .how-to-play .card-properties:hover {
+      transform: scale(1.2); }
 
 .charity {
   background-color: #dcdcdc; }
@@ -60,7 +72,7 @@ a:hover {
     .team img:hover {
       transform: scale(1.2); }
   .team h1 {
-    color: #cc5500;
+    color: #BF360C;
     font-family: 'Monoton', cursive; }
 
 .image {
@@ -68,13 +80,13 @@ a:hover {
   width: 100%; }
 
 .signup-button {
-  background: #cc5500;
+  background: #BF360C;
   color: #ffffff;
   font-size: 1.2rem;
   padding: 20px 30px; }
   .signup-button:hover {
     background: #ffffff;
-    color: #cc5500; }
+    color: #BF360C; }
 
 .donate-button {
   background: #1B5E20;
@@ -274,4 +286,34 @@ hr {
 
 @media (min-width: 300px) {
   .navbar {
-    background-color: #707274; } }
+    background-color: #BF360C; } }
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes shake {
+  0% {
+    top: 0px; }
+  50% {
+    top: 5px; }
+  100% {
+    top: 0px; } }
+
+/* Standard syntax */
+@keyframes shake {
+  0% {
+    top: 0px; }
+  50% {
+    top: 5px; }
+  100% {
+    top: 0px; } }
+
+#donate-button {
+  -webkit-animation: shake 0.5s infinite;
+  /* Safari 4.0 - 8.0 */
+  animation: shake 0.5s infinite;
+  position: relative; }
+
+.cfh-card:hover {
+  -webkit-animation: shake 0.3s infinite;
+  /* Safari 4.0 - 8.0 */
+  animation: shake 0.3s infinite;
+  position: relative; }

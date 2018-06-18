@@ -1,12 +1,17 @@
 $grayish-white : #dcdcdc;
-$burnt-orange: #cc5500;
+$burnt-orange: #BF360C;
 $little-gray: #f5f5f5;
 $white: #ffffff;
-$teal-green: #00978b;
+$teal-green: #1B5E20;
 
 body {
   background-color: $grayish-white;
-  font-family: georgia, sans-serif;
+  font-family: 'Mate', helvetica ,sans-serif;
+}
+
+.custom-container {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .pointer {
@@ -21,54 +26,63 @@ a:hover {
   background: url("https://images.unsplash.com/photo-1525900732548-63510d8d4fca?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2b0f98d5876886314918126deafb3af0&auto=format&fit=crop&w=1567&q=80") no-repeat fixed center;
   background-size: cover;
   letter-spacing: 2px;
-  height: 80vh;
+  height: 70vh;
+
+  h1 {
+    margin: 0 auto;
+  }
 
   .introduction-overlay {
     background-color: rgba(0 ,0, 0, 0.5);
     height: 100%;
   }
-
-  h1 {
-    font-family: 'Open Sans', cursive;
-  }
-
-  a {
-    font-family: 'Open Sans', cursive;
-  }
 }
 
 .how-to-play {
   background-color: $little-gray;
-  padding-top: 30px;
 
-  .card {
-    border-radius: 15px;
+  h1 {
+    color: $burnt-orange;
+    font-family: 'Monoton', cursive;
   }
 
-  .card-body {
-    border-radius: 15px;
-    font-family: 'Open Sans', cursive;
-    font-size: 1.2rem;
-
-    &:hover{
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
+  #about-game {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.3rem;
   }
 
   .card-properties {
-    height: 400px;
-    margin: 0 auto;
-    max-width: 350px;
-  }
+    display: table-cell;
+    height: 200px;
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    padding: 20px;
+    transition-property: transform;
+    transition-duration: 1s;
+    cursor: pointer;
 
-  .play-steps {
-    font-size: 1.2rem;
-  }
+    &:nth-child(1) {
+      border: 2px solid #b3a77e;
+    }
 
-  h1 {
-    color: #BF360C;
-    // color:$burnt-orange;
-    font-family: 'Monoton', cursive;
+    &:nth-child(2) {
+      border: 2px solid $burnt-orange;
+    }
+
+    &:nth-child(3) {
+      border: 2px solid $teal-green;
+    }
+
+    &:nth-child(4) {
+      border: 2px solid #b3a77e;
+    }
+
+    &:hover {
+      transform: scale(1.2);
+    }
   }
 }
 
@@ -76,7 +90,7 @@ a:hover {
   background-color: $grayish-white;
 
   h1 {
-    color: #BF360C;
+    color: $burnt-orange;
     font-family: 'Monoton', cursive;
   }
 }
@@ -121,20 +135,15 @@ a:hover {
 }
 
 .donate-button {
-  background: #1B5E20;
+  background: $teal-green;
   color: $white;
   font-size: 1.2rem;
   padding: 15px 20px;
   border-radius: 5px;
-
-  // &:hover {
-  //   background: $white;
-  //   color: $teal-green;
-  // }
 }
 
 .bg-custom {
-  background-color: #BF360C;
+  background-color: $burnt-orange;
   font-size: 16px;
 }
 
@@ -192,35 +201,35 @@ a:hover {
     background: #fff;
 }
 .btn-gg {
-    background: #e64522;
+  background: #e64522;
 }
 .btn-gg:before {
-    font-family: "FontAwesome";
-    content: "\f0d5";
+  font-family: "FontAwesome";
+  content: "\f0d5";
 }
 .btn-gg:hover {
-    color: #e64522;
-    background: #fff;
+  color: #e64522;
+  background: #fff;
 }
 .btn-ig {
-    background: #cb2027;
+  background: #cb2027;
 }
 .btn-ig:before {
-    font-family: "FontAwesome";
-    content: "\f16d";
+  font-family: "FontAwesome";
+  content: "\f16d";
 }
 .btn-ig:hover {
-    color: #cb2027;
-    background: #fff;
+  color: #cb2027;
+  background: #fff;
 }
 
 .social-buttons a {
-    margin: 12px 0;
-    width: 49%;
+  margin: 12px 0;
+  width: 49%;
 }
 #social {
-    margin: 20px 10px;
-    text-align: center;
+  margin: 20px 10px;
+  text-align: center;
 }
 
 #king {
@@ -293,6 +302,7 @@ a:hover {
 #select-option {
   margin-bottom: 20px;
 }
+
 .new_button {
   color: #fff;
   cursor: pointer;
@@ -309,6 +319,7 @@ a:hover {
     margin: 0 1em 2em;
   }
 }
+
 .home_btn {
   border: 0 solid;
   box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);  
@@ -317,7 +328,7 @@ a:hover {
   outline-offset: 0px;
   text-shadow: none;
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
-} 
+}
 
 .home_btn:hover {
   border: 1px solid;
@@ -337,15 +348,43 @@ hr {
 }
 
 .nav-action-btn{
-  background: #1B5E20;
+  background:$teal-green;
   color: white;
 }
+
 .btn-login {
   color: white;
-  background-color: #1B5E20;
+  background-color: $teal-green;
 }
+
 .navbar{
   @media(min-width: 300px) {
-    background-color: #707274;
+    background-color: $burnt-orange;
   }
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes shake {
+  0%   {top: 0px;}
+  50% {top: 5px;}
+  100% {top: 0px;}
+}
+
+/* Standard syntax */
+@keyframes shake {
+  0%   {top: 0px;}
+  50% {top: 5px;}
+  100% {top: 0px;}
+}
+
+#donate-button {
+  -webkit-animation: shake 0.5s infinite; /* Safari 4.0 - 8.0 */
+  animation: shake 0.5s infinite;
+  position: relative;
+}
+
+.cfh-card:hover {
+  -webkit-animation: shake 0.3s infinite; /* Safari 4.0 - 8.0 */
+  animation: shake 0.3s infinite;
+  position: relative;
 }

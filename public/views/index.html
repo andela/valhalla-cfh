@@ -1,8 +1,28 @@
 <script type="text/javascript">
-  $(document).ready(function() {
+  $(document).ready(() => {
     new WOW().init();
+    if($(window).width() <= 991) {
+      $('#fixed-nav').css('background-color', '#BF360C');    
+    } else {
+      $(window).on("scroll", () => {
+        // show and hide the static donation div
+        if ($(window).scrollTop() < 110) {
+          $('#static-donate').css('visibility', 'hidden');
+        } else {
+          $('#static-donate').css('visibility', 'visible');
+        }
+
+        // show and hide the navbar
+        if ($(window).scrollTop() >= 100) {
+          $('#fixed-nav').css('background-color', '#BF360C');
+        } else {
+          $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
+        }
+      });
+    }
   });
 </script>
+
 <div landing ng-controller="IndexController">
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="fixed-nav" style="background-color: rgba(255, 255, 255, 0)">
@@ -45,7 +65,7 @@
   <div id="introduction" class="introduction">
     <div class="introduction-overlay d-flex">
       <div class="container text-center text-white align-self-center">
-        <h1 class="text-white pt-5 wow slideInLeft">
+        <h1 class="text-white pt-5 w-75 text-center wow slideInLeft">
           A game for horrible people desperately trying to do good
         </h1>
         <div ng-show="showOptions" class="py-5 justify-content-center wow slideInRight">
@@ -63,39 +83,39 @@
 
   <!-- HOW TO PLAY -->
   <div id="how-to-play" class="how-to-play">
-    <div class="container text-center pb-3">
+    <div class="custom-container pb-3 text-center">
       <h1 class="pt-5 pb-4">HOW TO PLAY</h1>
-      <hr>
-      <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
-          <div class="card card-properties wow bounceInLeft">
-            <div class="card-body py-0">
-              <img class="image" src="https://seunzone.github.io/cfh-demo/spade1.png" alt="step-1">
-              <p class="play-steps">Each player begins with, and will always have, 10 white answer cards.</p>
+      <div id="about-game" class="pb-4">
+        Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.
+      </div>
+      <div>
+        <div class="d-flex justify-content-around flex-wrap">
+          <div style="max-width: 200px; height: 250px; border: 1px solid black; background: white; border-radius: 10px;" class="mb-5 p-3 cfh-card pointer">
+            <p style="height: 190px;">Each player begins with, and will always have, 10 white answer cards.</p>
+            <div class="small d-flex">
+              <img style="height: 20px; width: 20px;" src="../img/card_clip.png" alt="">
+              <span>Cards For Humanity</span>
             </div>
           </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
-          <div class="card card-properties wow bounceInUp">
-            <div class="card-body py-0">
-              <img class="image" src="https://seunzone.github.io/cfh-demo/spade2.png" alt="step-2">
-              <p class="play-steps">For each round, one player is randomly chosen as the Card Czar.</p>
+          <div style="max-width: 200px; height: 250px; border: 1px solid black; background: black; color: white; border-radius: 10px;" class="mb-5 p-3 cfh-card pointer">
+            <p style="height: 190px;">For each round, one player is randomly chosen as the Card Czar.</p>
+            <div class="small d-flex">
+              <img style="height: 20px; width: 20px;" src="../img/card_clip.png" alt="">
+              <span>Cards For Humanity</span>
             </div>
           </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
-          <div class="card card-properties wow slideInDown">
-            <div class="card-body py-0">
-              <img class="image" src="https://seunzone.github.io/cfh-demo/spade3.png" alt="">
-              <p class="play-steps">Everyone else answers the black question card by clicking on the answer card they want to use.</p>
+          <div style="max-width: 200px; height: 250px; border: 1px solid black; background: white; border-radius: 10px;" class="mb-5 p-3 cfh-card pointer">
+            <p style="height: 190px;">Everyone else answers the black question card by clicking on the answer card they want to use.</p>
+            <div class="small d-flex">
+              <img style="height: 20px; width: 20px;" src="../img/card_clip.png" alt="">
+              <span>Cards For Humanity</span>
             </div>
           </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-3 pb-5">
-          <div class="card card-properties wow bounceInRight">
-            <div class="card-body py-0">
-              <img class="image" src="https://seunzone.github.io/cfh-demo/spade4.png" alt="">
-              <p class="play-steps">The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</p>
+          <div style="max-width: 200px; height: 250px; border: 1px solid black; background: black; color: white; border-radius: 10px;" class="mb-5 p-3 cfh-card pointer">
+            <p style="height: 190px;" class="text-center">The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</p>
+            <div class="small d-flex">
+              <img style="height: 20px; width: 20px;" src="../img/card_clip.png" alt="">
+              <span>Cards For Humanity</span>
             </div>
           </div>
         </div>
@@ -110,10 +130,10 @@
 
   <!-- CHARITY -->
   <div id="charity" class="charity">
-    <div class="container pb-5">
+    <div class="custom-container pb-5">
       <div class="text-center">
         <h1 class="pt-5 pb-4">CHARITY</h1>
-        <blockquote>
+        <blockquote style="font-size: 1.3rem;">
           "If you don't give back, no one will like you™" - crowdrise.com
         </blockquote>
         <hr>
@@ -129,7 +149,7 @@
           </p>
 
           <div class="text-center py-0">
-            <button class="w-100 donate-button wow rubberBand pointer donate-button">Donate</button>
+            <button class="w-100 donate-button pointer" id="donate-button">Donate</button>
           </div>
 
         </div>
@@ -138,9 +158,17 @@
   </div>
   <!-- CHARITY -->
 
+  <!-- STATIC DONATION BUTTON -->
+  <div id="static-donate" style="visibility: hidden; width: 150px; border: 2px solid #cc5500; position: fixed; bottom: 165px; left: 0; border-radius: 10px; font-family: 'Oswald';" class="text-center mx-3 py-2">
+    <div style="font-family: 'Halant';">MAKE AN IMPACT</div>
+    <div style="font-weight: bold; font-size: 1.3rem;">$746 Raised</div>
+    <span class="btn btn-success">Donate now</span>
+  </div>
+  <!-- STATIC DONATION BUTTON -->
+
   <!-- ABOUT THE TEAM -->
   <div id="team" class="team">
-    <div class="container text-center pb-4">
+    <div class="custom-container text-center pb-4">
       <h1>THE TEAM</h1><br/><br/>
       <div class="d-flex justify-content-around flex-wrap">
         <div class="wow zoomInDown">
@@ -193,7 +221,7 @@
   <div class="footer bg-custom text-white py-3">
     <div class="container text-center">
       <p>
-          This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA). Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license of the Cards Against Humanity card game, all proceeds from donations go directly to charity, as managed by crowdrise.
+        This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA). Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license of the Cards Against Humanity card game, all proceeds from donations go directly to charity, as managed by crowdrise.
       </p>
       <!-- <p>
         Made By Team Valhalla
@@ -204,20 +232,19 @@
 
   <!-- modal start -->
   <div id="infoModal" class="modal fade" role="dialog" style="padding: 50px;" ng-controller="IndexController">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title"></h4>
-          </div>
-          <div class="modal-body">
-          </div>
-          <div class="button" style="text-align:center">
-          </div>
-          <div class="modal-footer">
-            
-          </div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="button" style="text-align:center">
+        </div>
+        <div class="modal-footer">
         </div>
       </div>
+    </div>
   </div>
   <!-- end of modal -->
 
@@ -250,9 +277,9 @@
             <div class="form-group">
               <label for="control-label">Email</label>
               <input type="text" class="form-control" name="email" ng-model="email" placeholder="email address">
-                <div ng-show="hasError" class="text-danger">
-                  {{hasError.email}}
-                </div>
+              <div ng-show="hasError" class="text-danger">
+                {{hasError.email}}
+              </div>
             </div>
             <div class="form-group">
               <label for="control-label">Password</label>
@@ -278,117 +305,114 @@
 
   <div id="signUpModal" class="modal fade text-dark">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 id="contactModalTitle" class="modal-title">
-                    Signup
-                </h5>
-                <button type="button" class="close"  id="closeSignUp" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="social">
-                    <a href="/auth/facebook" class="btn-fb socy">
-                    </a>
-                    <a href="/auth/twitter" class="btn-tw socy">
-                    </a>
-                    <a href="/auth/google" class="btn-gg socy">
-                    </a>
-                </div>
-                <p class="text-center">OR</p>
-                <form ng-submit="validator()">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                              <label for="control-label">Fullname</label>
-                                <input type="text" class="form-control" id="name" placeholder="full name" name="name" ng-model="user.name">
-                                <div ng-show="hasError" class="text-danger">
-                                    {{hasError.name}}
-                                </div>
-                            </div>
-                            <label for="control-label">Email</label>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="email" placeholder="email address" name="email" ng-model="user.email">
-                                <div ng-show="hasError" class="text-danger">
-                                  {{hasError.emailConflict}}
-                                  {{hasError.email}}
-                                </div>
-                            </div>
-                            <label for="control-label">Password</label>
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="password" placeholder="password" name="password" ng-model="user.password">
-                                <div ng-show="hasError" class="text-danger">
-                                    {{hasError.password}}
-                                </div>
-                              </div>
-                            <hr>
-                            <button class="btn btn-login btn-lg btn-block">
-                                Next
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="contactModalTitle" class="modal-title">
+            Signup
+          </h5>
+          <button type="button" class="close"  id="closeSignUp" data-dismiss="modal">&times;</button>
         </div>
+        <div class="modal-body">
+          <div id="social">
+            <a href="/auth/facebook" class="btn-fb socy">
+            </a>
+            <a href="/auth/twitter" class="btn-tw socy">
+            </a>
+            <a href="/auth/google" class="btn-gg socy">
+            </a>
+          </div>
+          <p class="text-center">OR</p>
+          <form ng-submit="validator()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="control-label">Fullname</label>
+                  <input type="text" class="form-control" id="name" placeholder="full name" name="name" ng-model="user.name">
+                  <div ng-show="hasError" class="text-danger">
+                      {{hasError.name}}
+                  </div>
+                </div>
+                <label for="control-label">Email</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="email" placeholder="email address" name="email" ng-model="user.email">
+                  <div ng-show="hasError" class="text-danger">
+                    {{hasError.emailConflict}}
+                    {{hasError.email}}
+                  </div>
+                </div>
+                <label for="control-label">Password</label>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="password" placeholder="password" name="password" ng-model="user.password">
+                  <div ng-show="hasError" class="text-danger">
+                    {{hasError.password}}
+                  </div>
+                </div>
+                <hr>
+                <button class="btn btn-login btn-lg btn-block">
+                    Next
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
   <!-- Start of Second Signup Modal -->
   <div id="secondSignUpModal" class="modal fade text-dark">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="contactModalTitle" class="modal-title">
-                    Upload an image or Select an avatar
-                </h4>
-                <button type="button" class="close" data-dismiss="modal" id="closeSecondModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <select ng-change="toggleImageSelect()" class="form-control" id="select-option" ng-model="user.option">
-                    <option value="">choose image upload or select avatar</option>
-                    <option>Upload image</option>
-                    <option>Select Avatar</option>
-                </select>
-                <form ng-submit="signup()">
-                    <div class="row">
-                        <div ng-show="hasError" class="text-danger text-center" id="has-error">
-                            {{hasError.error}}
-                          </div>
-                        <div class="col-md-6 offset-md-3 hide" id="image-upload">
-                            <label id="addHide" class="btn btn-default rounded-circle" style="height: 150px; width: 150px; background-color: rgb(175, 168, 168)">
-                              <div>
-                                <div>
-                                  <i class="fa fa-picture-o fa-3x" aria-hidden="true" style="padding-top: 30px;"></i>
-                                  <p>choose image</p>
-                                </div>
-                                
-                              </div>
-                              <input type="file" name="userImage" id="userImage" ng-change="previewImage()" ng-model="user.userImage" accept="image/*" hidden >
-                            </label>
-                            <img ng-src="{{imagePreview}}" id="removeHide" height="150px" width="150px" class="hide" >
-
-                        </div>
-                        <div class="col-md-6 offset-md-3 contain-avatars hide" id="avatar-select">
-                            <ul ng-controller="IndexController" class="avatar-list">
-                              <li ng-repeat="avatar in avatars" class="avatars ng-scope">
-                                <input name="avatar" ng-model="user.avatar" type='radio' value="{{$index}}">
-                                <img ng-src="{{avatar}}" width="40px" height="40px">
-                                </input>
-                              </li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-login btn-lg btn-block finish-signup-button hide" ng-click="signup()" id="toggle-button">
-                          Signup
-                        </button>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="contactModalTitle" class="modal-title">
+            Upload an image or Select an avatar
+          </h4>
+          <button type="button" class="close" data-dismiss="modal" id="closeSecondModal">&times;</button>
         </div>
+        <div class="modal-body">
+          <select ng-change="toggleImageSelect()" class="form-control" id="select-option" ng-model="user.option">
+            <option value="">choose image upload or select avatar</option>
+            <option>Upload image</option>
+            <option>Select Avatar</option>
+          </select>
+          <form ng-submit="signup()">
+            <div class="row">
+              <div ng-show="hasError" class="text-danger text-center" id="has-error">
+                {{hasError.error}}
+              </div>
+              <div class="col-md-6 offset-md-3 hide" id="image-upload">
+                <label id="addHide" class="btn btn-default rounded-circle" style="height: 150px; width: 150px; background-color: rgb(175, 168, 168)">
+                  <div>
+                    <i class="fa fa-picture-o fa-3x" aria-hidden="true" style="padding-top: 30px;"></i>
+                    <p>choose image</p>
+                  </div>
+                  <input type="file" name="userImage" id="userImage" ng-change="previewImage()" ng-model="user.userImage" accept="image/*" hidden >
+                </label>
+                <img ng-src="{{imagePreview}}" id="removeHide" height="150px" width="150px" class="hide" >
+              </div>
+              <div class="col-md-6 offset-md-3 contain-avatars hide" id="avatar-select">
+                  <ul ng-controller="IndexController" class="avatar-list">
+                    <li ng-repeat="avatar in avatars" class="avatars ng-scope">
+                      <input name="avatar" ng-model="user.avatar" type='radio' value="{{$index}}">
+                      <img ng-src="{{avatar}}" width="40px" height="40px">
+                      </input>
+                    </li>
+                  </ul>
+              </div>
+              <button class="btn btn-login btn-lg btn-block finish-signup-button hide" ng-click="signup()" id="toggle-button">
+                Signup
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
   <button data-toggle="modal" data-target="#successModal" class="btn btn-login btn-lg btn-block" id="openSuccessModal" hidden>
     open modal
   </button>
+
   <!-- Start of Second Signup Modal -->
   <div id="successModal" class="modal fade">
     <div class=" success-modal">
@@ -406,19 +430,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  $(document).ready(function() {
-      if($(window).width() <= 991) {
-        $('#fixed-nav').css('background-color', '#BF360C')      
-      } else {
-        $(window).on("scroll", function() {
-          if ($(window).scrollTop() >= 100) {
-            $('#fixed-nav').css('background-color', '#707274')
-          } else {
-            $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
-          }
-        });
-      }
-  });
-</script>
