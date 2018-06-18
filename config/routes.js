@@ -2,6 +2,8 @@
 const validator = require('./middlewares/signinValidator');
 // signup validator
 const signupValidator = require('./middlewares/signupValidator');
+// password reset validator
+const passwordResetValidator = require('./middlewares/passwordResetValidator');
 // User Routes
 const users = require('../app/controllers/users');
 // Answer Routes
@@ -31,18 +33,19 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   // Route to register a user.
   app.post(
-    '/api/validator',
+    '/api/auth/signup',
     signupValidator.userSignup,
-    users.validator
+    users.registerUser
   );
 
-  app.post(
-    '/api/auth/signup',
-    users.finishUserSignup
+  app.put(
+    '/api/auth/passwordreset',
+    passwordResetValidator.resetPassword,
+    users.resetPassword
   );
 
   // Login Route
-  // app.post('/api/auth/login', validator.signin, users.login);
+  app.post('/api/auth/login', validator.signin, users.login);
 
   // Route to search for users
   app.post('/api/search/users', users.search);
@@ -53,9 +56,10 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   // Donation Routes
   app.post('/donations', users.addDonation);
 
-  app.post('/api/auth/login', validator.signin, passport.authenticate('local', {
-    // failureRedirect: '/signin',
-  }), users.login);
+  app.post('/users/session', passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: 'Invalid email or password.'
+  }), users.session);
 
   app.get('/users/me', users.me);
   app.get('/users/:userId', users.show);
