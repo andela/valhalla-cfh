@@ -15,9 +15,9 @@ body{
 }
 </style>
 <body>
-  <div class="container-fluid" ng-controller="IndexController">
+  <div ng-controller="IndexController">
     <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-custom fixed-top">
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-custom fixed-top">
       <a class="navbar-brand" href="/">Cards For Humanity</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -33,6 +33,25 @@ body{
           </li>
        
         </ul>
+      </div>
+    </nav> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+      <div class="container">
+        <a class="navbar-brand" href="/"><img src="../img/logo.png" height="40px" width="180px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active pointer">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="pointer nav-link btn nav-action-btn text-white" id="start-game" data-toggle="modal" data-target="#myModal" ng-click="startGameModal()">
+               Start Game
+            </li>&nbsp;&nbsp;
+          </ul>
+        </div>
       </div>
     </nav>
     <!-- NAVBAR -->

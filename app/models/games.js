@@ -15,7 +15,7 @@ const GameSchema = new Schema({
     trim: true
   },
   gamePlayers: {
-    type: Object,
+    type: Array,
     default: ''
   },
   date: Date

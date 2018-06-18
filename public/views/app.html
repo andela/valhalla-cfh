@@ -16,9 +16,9 @@
           <li class="pointer nav-link btn nav-action-btn text-white" id='abandon-game-button' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()">
               Invite Friends
           </li>&nbsp;&nbsp;
-          <li class="nav-link pointer">
-            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-        </li>
+          <li ng-hide="showOptions" class="nav-item pointer">
+            <a class="nav-link" href="/#!/profile">Profile</a>
+          </li>
         </ul>
       </div>
     </div>

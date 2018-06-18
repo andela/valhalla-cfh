@@ -318,7 +318,7 @@ exports.login = (req, res) => {
     // If no user found
     if (!user) {
       return res.status(400).json({
-        error: 'Username or Password Incorrect'
+        error: 'No user found!'
       });
     }
     // Compare password from user to database
@@ -327,7 +327,7 @@ exports.login = (req, res) => {
         id: user.id
       };
       // Create token
-      const token = jwt.sign(userData, process.env.SECRET, { expiresIn: '5h' });
+      const token = jwt.sign(userData, process.env.SECRET);
       // return res.status(200).json({
       //   token,
       //   message: 'Successfully SignIn',

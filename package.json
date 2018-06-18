@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node server.js",
     "start:dev": "node node_modules/gulp-cli/bin/gulp",
-    "test": "node node_modules/gulp-cli/bin/gulp test",
+    "test": "node node_modules/gulp-cli/bin/gulp test --timeout 20000",
     "postinstall": "node node_modules/gulp-cli/bin/gulp install",
     "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
   },

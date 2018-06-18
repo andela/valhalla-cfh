@@ -50,6 +50,12 @@ angular.module('mean.system')
   }
   }
 
+  $scope.showOptions = true;
+
+  if (window.localStorage.token) {
+    $scope.showOptions = false;
+  }
+
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -224,9 +230,7 @@ angular.module('mean.system')
           url: `/api/games/${gameID}/start`,
           data: {
             gameId: gameID,
-            gamePlayers: {
-              players: result
-            },
+            gamePlayers: result,
             gameWinner: nameOfWinner,
             gameCzar: gameStarter,
           },
