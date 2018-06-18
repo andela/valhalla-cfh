@@ -243,7 +243,27 @@ exports.user = (req, res, next, id) => {
 * @param {Object} res
 * @return {Object} registration object
 */
-exports.registerUser = (req, res) => {
+exports.validator = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  }).exec((err, existingUser) => {
+    if (existingUser) {
+      return res.status(409).json({
+        emailConflict: 'Email is taken'
+      });
+    }
+
+    return res.status(200).json(['okay']);
+  });
+};
+
+/**
+* Register a new user
+* @param {Object} req
+* @param {Object} res
+* @return {Object} registration object
+*/
+exports.finishUserSignup = (req, res) => {
   User.findOne({
     email: req.body.email
   }).exec((err, existingUser) => {
@@ -257,19 +277,23 @@ exports.registerUser = (req, res) => {
       if (err) {
         return res.status(500).json(['User data not saved']);
       }
-
+      
       const userData = {
         id: createdUser._id,
-        username: createdUser.name,
+        name: createdUser.name,
         email: createdUser.email
       };
 
       const token = jwt.sign(userData, process.env.SECRET);
 
-      return res.status(201).json({
-        message: 'User successfully registered',
-        token,
-        userData
+      req.login(createdUser, (err) => {
+        if (err) return next(err);
+      
+        return res.status(201).json({
+          message: `Welcome, ${createdUser.name}`,
+          token,
+          userData
+        });
       });
     });
   });
@@ -294,7 +318,7 @@ exports.login = (req, res) => {
     // If no user found
     if (!user) {
       return res.status(400).json({
-        error: 'User Not Found'
+        error: 'Username or Password Incorrect'
       });
     }
     // Compare password from user to database
@@ -304,13 +328,19 @@ exports.login = (req, res) => {
       };
       // Create token
       const token = jwt.sign(userData, process.env.SECRET, { expiresIn: '5h' });
+      // return res.status(200).json({
+      //   token,
+      //   message: 'Successfully SignIn',
+      // });
+
+      
       return res.status(200).json({
         token,
         message: 'Successfully SignIn',
       });
     }
     return res.status(400).json({
-      error: 'Username or Password Incorrect'
+      error: 'Username or Password is Incorrect'
     });
   });
 };
