@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Cabin" rel="stylesheet">
+</head>
+<style>
+  .bg-custom {
+    background-color: #707274;
+}
+body{
+  font-family: 'Cabin', sans-serif !important;
+  font-size: 18px;
+}
+</style>
+<body>
+  <div ng-controller="IndexController">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+      <div class="container">
+        <a class="navbar-brand" href="/"><img src="../img/logo.png" height="40px" width="180px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active pointer">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="pointer nav-link btn nav-action-btn text-white" id="start-game" data-toggle="modal" data-target="#myModal" ng-click="startGameModal()">
+               Start Game
+            </li>&nbsp;&nbsp;
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- NAVBAR -->
+    <div class="row">
+      <div class="col-lg-12 col-sm-6 col-12 main-section text-center">
+          <div class="row">
+              <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
+          </div>
+          <div class="row user-detail">
+              <div class="col-lg-12 col-sm-12 col-12">
+                  <img src="{{user.avatar}}" class="rounded-circle img-thumbnail" style="width: 12%; height: 10rem; margin-top:-25px">
+                  <h5>{{user.name}}</h5>
+                  <p>{{user.email}}</p>
+                  <p>
+                    <!-- {user.points.length > 0 ? user.points}} : No } Round(s) won</p> -->
+                    {{user.points ? user.points + ' Round(s) Won' : 'No Rounds Won'}}</p>
+                  <hr><br>
+
+                  <div class="offset-lg-2 col-lg-8 col-sm-6">
+                    <div ng-show="players">
+                  <h3 style="color: #cc5403">My Game Log</h3>
+                  <table class="table table-striped" >
+                      <thead>
+                        <tr>
+                          <th>Game Id</th>
+                          <th>Winner</th>
+                          <th>Players</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="player in players">
+                          <td>{{player.gameId}}</td>
+                          <td>{{player.gameWinner}}</td>
+                          <td>{{player.gamePlayers.toString()}}</td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                  <div ng-show="players.length <= 0">
+                  <h3 style="color: #cc5403">No Game Log</h3>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- modal start -->
+  <div id="infoModal" class="modal fade" role="dialog" style="padding: 50px;" ng-controller="IndexController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="button" style="text-align:center">
+          </div>
+          <div class="modal-footer">
+            
+          </div>
+        </div>
+      </div>
+  </div>
+  <!-- end of modal -->
+
+  </div>
+</body>
+</html>

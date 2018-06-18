@@ -9,6 +9,8 @@ const avatars = require('./avatars').all();
 const nodemailer = require('nodemailer');
 
 const User = mongoose.model('User');
+const Game = mongoose.model('Game');
+
 require('dotenv').config();
 
 /**
@@ -316,7 +318,7 @@ exports.login = (req, res) => {
     // If no user found
     if (!user) {
       return res.status(400).json({
-        error: 'Username or Password Incorrect'
+        error: 'No user found!'
       });
     }
     // Compare password from user to database
@@ -325,7 +327,7 @@ exports.login = (req, res) => {
         id: user.id
       };
       // Create token
-      const token = jwt.sign(userData, process.env.SECRET, { expiresIn: '5h' });
+      const token = jwt.sign(userData, process.env.SECRET);
       // return res.status(200).json({
       //   token,
       //   message: 'Successfully SignIn',
@@ -405,3 +407,45 @@ exports.invites = function (req, res) {
     }
   });
 };
+
+exports.profile = function (req, res) {
+  const { decoded } = req;
+  let getPlayers = '';
+
+  User.findOne({
+    _id: decoded.id
+  }).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    // No user found
+    if (!user) {
+      return res.status(400).json({
+        error: 'No user found'
+      });
+    }
+
+    Game.find({ gamePlayers: user.name }).exec((err, players) => {
+      if (err) {
+        return res.status(500).json({
+          message: 'Internal server error'
+        });
+      }
+      if (!players) {
+        return res.status(404).json({
+          message: 'No players found',
+          error: true
+        })
+      }
+
+      getPlayers = players;
+      return res.status(200).json({
+        message: 'User found!',
+        user,
+        players
+      });
+    });
+  });
+}

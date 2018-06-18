@@ -10,6 +10,8 @@ const { expect } = require('chai');
 
 const request = supertest(app);
 
+let authToken;
+
 describe('User authenticator', () => {
   const userDetails = {
     email: 'jeremiaholufayo@gmail.com',
@@ -39,11 +41,9 @@ describe('User authenticator', () => {
         password: 'olufayo'
       })
       .end((err, res) => {
-        expect(res.statusCode).to.equal(404);
-        expect(res.body).to.have.property('error')
-          .eql('Your Email Address is required');
-        // expect(res.body[0].message).to.equal('Your Email Address is required');
-        // expect(res.body[1].message).to.equal('Provide a valid Email Address');
+        expect(res.statusCode).to.equal(400);
+        expect(res.body).to.have.property('email')
+          .eql('Provide a valid Email Address');
         done();
       });
   });
@@ -55,11 +55,9 @@ describe('User authenticator', () => {
         email: 'jeremiaholufayo@gmail.com'
       })
       .end((err, res) => {
-        expect(res.statusCode).to.equal(404);
-        expect(res.body).to.have.property('error')
+        expect(res.statusCode).to.equal(400);
+        expect(res.body).to.have.property('password')
           .eql('Your Password is required');
-        // expect(res.body).to.be.an('array');
-        // expect(res.body[0].message).to.equal('Your Password is required')
         done();
       });
   });
@@ -71,11 +69,11 @@ describe('User authenticator', () => {
         email: 'jeremiaholufayogmail.com'
       })
       .end((err, res) => {
-        expect(res.statusCode).to.equal(404);
-        expect(res.body).to.have.property('error')
+        expect(res.statusCode).to.equal(400);
+        expect(res.body).to.have.property('email')
           .eql('Provide a valid Email Address');
-        // expect(res.body).to.be.an('array');
-        // expect(res.body).to.equal('Provide a valid Email Address')
+        expect(res.body).to.have.property('password')
+          .eql('Your Password is required');
         done();
       });
   });
@@ -88,8 +86,7 @@ describe('User authenticator', () => {
         password: 'jerry'
       })
       .end((err, res) => {
-        expect(res.statusCode).to.equal(400);
-        expect(res.body.error).to.equal('Username or Password Incorrect');
+        expect(res.statusCode).to.equal(401);
         done();
       });
   });
@@ -105,6 +102,7 @@ describe('User authenticator', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Successfully SignIn');
         expect(res.body.token).to.not.equal(null);
+        authToken = res.body.token;
         done();
       });
   });
@@ -119,7 +117,7 @@ describe('User authenticator', () => {
       })
       .end((err, res) => {
         expect(res.statusCode).to.equal(201);
-        expect(res.body.message).to.equal('User successfully registered');
+        expect(res.body.message).to.equal('Welcome, i sam');
         expect(res.body.token).to.not.equal(null);
         done();
       });
@@ -129,7 +127,6 @@ describe('User authenticator', () => {
     request
       .post('/api/auth/signup')
       .send({
-        name: null,
         email: 'isam@gmail.com',
         password: 'olufayo'
       })
@@ -210,6 +207,38 @@ describe('User authenticator', () => {
       })
       .end((err, res) => {
         expect(res.statusCode).to.equal(400);
+        done();
+      });
+  });
+
+  it('should not get user profile page without token', (done) => {
+    request
+      .get('/api/profile')
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(401);
+        expect(res.body.message).to.equal('Kindly sign in');
+        done();
+      });
+  });
+
+  it('should not get user profile page with wrong token', (done) => {
+    request
+      .get('/api/profile')
+      .set('Authorization', 'wrongToken')
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(401);
+        expect(res.body.message).to.equal('Please sign in');
+        done();
+      });
+  });
+
+  it('should get user profile page when logged in', (done) => {
+    request
+      .get('/api/profile')
+      .set('Authorization', authToken)
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.message).to.equal('User found!');
         done();
       });
   });

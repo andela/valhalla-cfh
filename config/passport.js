@@ -99,7 +99,7 @@ module.exports = (passport) => {
       clientID: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
       callbackURL: process.env.FB_CALLBACK_URL,
-      profileFields: ['id', 'displayName', 'email', 'gender', 'picture.width(200).height(200)', 'link', 'locale', 'name', 'timezone'],
+      profileFields: ['id', 'displayName', 'email', 'gender', 'picture.width(200).height(200)', 'link', 'locale', 'name', 'zone'],
       enableProof: true
     },
     ((accessToken, refreshToken, profile, done) => {

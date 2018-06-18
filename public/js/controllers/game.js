@@ -51,6 +51,12 @@ angular.module('mean.system')
   }
   }
 
+  $scope.showOptions = true;
+
+  if (window.localStorage.token) {
+    $scope.showOptions = false;
+  }
+
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -69,6 +75,24 @@ angular.module('mean.system')
         }
       }
     };
+
+    $scope.shuffleCards = () => {
+      const card = $(`#${event.target.id}`);
+      setTimeout(() => {
+
+      $scope.startNextRound();
+       $('#start-modal').modal('hide');
+      }, 500);
+    };
+
+    $scope.startNextRound = () => {
+      // playTone('newRound');
+      if ($scope.isCzar()) {
+        console.log('am @ here');
+        game.startNextRound();
+      }
+    };
+
 
     $scope.pointerCursorStyle = function() {
       if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
@@ -195,8 +219,10 @@ angular.module('mean.system')
         const {
           players, gameID, gameWinner, round
         } = game;
+        console.log('index of the game winner', gameWinner);
+        
         const gameStarter = players[0].username;
-        const nameOfWinner = 'jherey';
+        const nameOfWinner = players[gameWinner].username;
         const result = players.map(player => player.username);
         const token = localStorage.getItem('token'); 
 
@@ -205,9 +231,7 @@ angular.module('mean.system')
           url: `/api/games/${gameID}/start`,
           data: {
             gameId: gameID,
-            gamePlayers: {
-              players: result
-            },
+            gamePlayers: result,
             gameWinner: nameOfWinner,
             gameCzar: gameStarter,
           },
@@ -220,7 +244,22 @@ angular.module('mean.system')
           console.log(response.data.message);
         }, (response) => {
           console.log(response.data.error);
-        })
+        });
+
+      }
+
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+        const myModal = $('#start-modal');
+        myModal.modal('show');
+      }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+      if (game.state === 'game dissolved') {
+        playTone('error', 0.4);
+        $('#start-modal').modal('hide');
+      }
+
+      if (game.state !== 'czar pick card' && game.state !== 'awaiting players' && game.state !== 'game dissolve') {
+        $scope.czarHasDrawn = '';
       }
     });
 

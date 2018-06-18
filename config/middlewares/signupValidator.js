@@ -6,7 +6,7 @@
  * @return {*} error, void
  */
 exports.userSignup = (req, res, next) => {
-  req.check('name', 'Username is required').notEmpty();
+  req.check('name', 'Name is required').notEmpty();
   req.check('email', 'Email cannot be empty or invalid').isEmail().trim();
   req.check('password', 'Minimun password length should be 6 characters')
     .isLength({ min: 6 }).trim();

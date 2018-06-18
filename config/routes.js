@@ -37,7 +37,7 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   );
 
   app.post(
-    '/api/auth/signup',
+    '/api/auth/signup', signupValidator.userSignup,
     users.finishUserSignup
   );
 
@@ -139,6 +139,9 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   // play the game
   app.get('/play', index.play);
+
+  // User profile route
+  app.get('/api/profile', authorization.tokenVerification, users.profile);
 
   // index route
   app.get('/', index.render);
