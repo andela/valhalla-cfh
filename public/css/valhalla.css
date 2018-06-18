@@ -1,7 +1,10 @@
 body {
   background-color: #dcdcdc;
-  font-family: 'Lobster Two', cursive;
-  font-size: 1.3rem; }
+  font-family: 'Mate', helvetica ,sans-serif; }
+
+.custom-container {
+  width: 70%;
+  margin: 0 auto; }
 
 .pointer {
   cursor: pointer; }
@@ -13,43 +16,54 @@ a:hover {
   background: url("https://images.unsplash.com/photo-1525900732548-63510d8d4fca?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2b0f98d5876886314918126deafb3af0&auto=format&fit=crop&w=1567&q=80") no-repeat fixed center;
   background-size: cover;
   letter-spacing: 2px;
-  height: 60vh; }
+  height: 70vh; }
+  .introduction h1 {
+    margin: 0 auto; }
   .introduction .introduction-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     height: 100%; }
-  .introduction h1 {
-    font-family: 'Lobster Two', cursive; }
-  .introduction a {
-    font-family: 'Lobster Two', cursive; }
 
 .how-to-play {
   background-color: #f5f5f5; }
-  .how-to-play .card {
-    border-radius: 15px; }
-  .how-to-play .card-body {
-    border-radius: 15px;
-    font-family: 'Marck Script', cursive;
-    font-size: 1.2rem; }
-    .how-to-play .card-body:hover {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
-  .how-to-play .card-properties {
-    height: 400px;
-    margin: 0 auto;
-    max-width: 350px; }
-  .how-to-play .play-steps {
-    font-size: 1.3rem; }
   .how-to-play h1 {
-    color: #cc5500;
+    color: #BF360C;
     font-family: 'Monoton', cursive; }
+  .how-to-play #about-game {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.3rem; }
+  .how-to-play .card-properties {
+    display: table-cell;
+    height: 200px;
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    padding: 20px;
+    transition-property: transform;
+    transition-duration: 1s;
+    cursor: pointer; }
+    .how-to-play .card-properties:nth-child(1) {
+      border: 2px solid #b3a77e; }
+    .how-to-play .card-properties:nth-child(2) {
+      border: 2px solid #BF360C; }
+    .how-to-play .card-properties:nth-child(3) {
+      border: 2px solid #1B5E20; }
+    .how-to-play .card-properties:nth-child(4) {
+      border: 2px solid #b3a77e; }
+    .how-to-play .card-properties:hover {
+      transform: scale(1.2); }
 
 .charity {
   background-color: #dcdcdc; }
   .charity h1 {
-    color: #cc5500;
+    color: #BF360C;
     font-family: 'Monoton', cursive; }
 
 .team {
-  background-color: #f5f5f5; }
+  background-color: #f5f5f5;
+  margin-top: 50px;
+  padding-top: 80px; }
   .team img {
     height: 150px;
     transition-property: transform;
@@ -58,7 +72,7 @@ a:hover {
     .team img:hover {
       transform: scale(1.2); }
   .team h1 {
-    color: #cc5500;
+    color: #BF360C;
     font-family: 'Monoton', cursive; }
 
 .image {
@@ -66,25 +80,24 @@ a:hover {
   width: 100%; }
 
 .signup-button {
-  background: #cc5500;
+  background: #BF360C;
   color: #ffffff;
   font-size: 1.2rem;
   padding: 20px 30px; }
   .signup-button:hover {
     background: #ffffff;
-    color: #cc5500; }
+    color: #BF360C; }
 
-.guest-play-button {
-  background: #00978b;
+.donate-button {
+  background: #1B5E20;
   color: #ffffff;
   font-size: 1.2rem;
-  padding: 20px 30px; }
-  .guest-play-button:hover {
-    background: #ffffff;
-    color: #00978b; }
+  padding: 15px 20px;
+  border-radius: 5px; }
 
 .bg-custom {
-  background-color: #cc5500; }
+  background-color: #BF360C;
+  font-size: 16px; }
 
 #time {
   font-size: 5em; }
@@ -157,10 +170,6 @@ a:hover {
   color: #cb2027;
   background: #fff; }
 
-.btn-login {
-  color: white;
-  background-color: #cc5500; }
-
 .social-buttons a {
   margin: 12px 0;
   width: 49%; }
@@ -174,3 +183,137 @@ a:hover {
   -webkit-transform: rotate(-28deg);
   margin-bottom: -30px;
   margin-left: -15px; }
+
+#contain-avatars {
+  margin-top: 25px; }
+
+.avatar-list {
+  overflow: hidden;
+  padding-left: 0px;
+  margin-left: 3%; }
+
+.avatar-list img {
+  max-width: 60%; }
+
+.avatars {
+  position: relative;
+  float: left;
+  margin: 2px 5px;
+  border-radius: 8px; }
+
+.finish-signup-button {
+  margin-top: 35px; }
+
+.hide {
+  display: none; }
+
+.success-modal {
+  width: 100%;
+  max-width: 250px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%; }
+
+.check-mark {
+  height: 100px;
+  width: 100px;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px; }
+
+.btn-outline-success {
+  margin-top: 15px;
+  width: 40%;
+  display: block;
+  margin-right: auto;
+  margin-left: auto; }
+
+.rounded-circle {
+  margin-left: 20px; }
+
+#select-option {
+  margin-bottom: 20px; }
+
+.new_button {
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 45px;
+  margin: 0 0 2em;
+  max-width: 250px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%; }
+  @media (min-width: 600px) {
+    .new_button {
+      margin: 0 1em 2em; } }
+
+.home_btn {
+  border: 0 solid;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  outline: 1px solid;
+  outline-color: rgba(255, 255, 255, 0.5);
+  outline-offset: 0px;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1); }
+
+.home_btn:hover {
+  border: 1px solid;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388; }
+
+hr {
+  padding-bottom: 20px; }
+
+.charity-text {
+  font-size: 18px;
+  padding-left: 10px; }
+
+.nav-action-btn {
+  background: #1B5E20;
+  color: white; }
+
+.btn-login {
+  color: white;
+  background-color: #1B5E20; }
+
+@media (min-width: 300px) {
+  .navbar {
+    background-color: #495057; } }
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes shake {
+  0% {
+    top: 0px; }
+  50% {
+    top: 5px; }
+  100% {
+    top: 0px; } }
+
+/* Standard syntax */
+@keyframes shake {
+  0% {
+    top: 0px; }
+  50% {
+    top: 5px; }
+  100% {
+    top: 0px; } }
+
+#donate-button {
+  -webkit-animation: shake 0.5s infinite;
+  /* Safari 4.0 - 8.0 */
+  animation: shake 0.5s infinite;
+  position: relative; }
+
+.cfh-card:hover {
+  -webkit-animation: shake 0.3s infinite;
+  /* Safari 4.0 - 8.0 */
+  animation: shake 0.3s infinite;
+  position: relative; }

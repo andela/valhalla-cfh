@@ -4,7 +4,7 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
     <div class="container">
-      <a class="navbar-brand" href="/">Cards For Humanity</a>
+      <a class="navbar-brand" href="/"><img src="../img/logo.png" height="40px" width="180px"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -17,9 +17,12 @@
           <li class="nav-link pointer" id='abandon' ng-click="abandonGame()">
               Abandon Game
           </li>
-          <li class="nav-link pointer" id='invite-players' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()" style="background-color: #7ce5e9 !important; color:black">
+          <li class="pointer nav-link btn nav-action-btn text-white" id='invite-players' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()">
               Invite Friends
-          </li>
+          </li>&nbsp;&nbsp;
+          <li class="nav-link pointer">
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+        </li>
         </ul>
       </div>
     </div>
