@@ -10,17 +10,16 @@ angular.module('mean.system')
       $scope.hasError = {};
       // send the post request to the server
       $http.post('/api/validator', userDetails)
-        .then(
-          (response) => {
-            // toggle modal if action is successful
-            $('#closeSignUp').click();
-            $('#openSecondSignUp').click();
+        .then((response) => {
+          // toggle modal if action is successful
+          $('#closeSignUp').click();
+          $('#openSecondSignUp').click();
           },
           (errors) => {
           // display errors if input is empty or invalid
             $scope.hasError = errors.data
           }
-);
+        );
     };
 
     $scope.previewImage = () => {
@@ -152,8 +151,8 @@ angular.module('mean.system')
       $http.post('api/auth/login', {
         email: $scope.email,
         password: $scope.password
-      }).then(
-(         response) => {
+      })
+        .then((response) => {
           const token = response.data.token;
           if (token) {
             localStorage.setItem('token', token);
@@ -171,12 +170,11 @@ angular.module('mean.system')
               "hideMethod": "fadeOut"
             }
             toastr.success('Successfully signed in');
-        }
-      },
-      (errors) => {
-        $scope.hasError = {'error': 'Username or Password is Incorrect'};
-      }
-);
+          }
+        },
+        (errors) => {
+          $scope.hasError = {'error': 'Username or Password is Incorrect'};
+        });
     };
 
     $scope.playAsGuest = function () {
@@ -198,18 +196,18 @@ angular.module('mean.system')
         $scope.avatars = data;
       });
 
-      $scope.showOptions = true;
+    $scope.showOptions = true;
 
-      if (window.localStorage.token) {
-        $scope.showOptions = false;
-      }
-      
-      $scope.signOut = function () {
-        $http.get('/signout').then(
-          () => {
-            window.localStorage.removeItem('token');
-            $scope.showOptions = true;
-          }
-        )
-      }
+    if (window.localStorage.token) {
+      $scope.showOptions = false;
+    }
+    
+    $scope.signOut = function () {
+      $http.get('/signout').then(
+        () => {
+          window.localStorage.removeItem('token');
+          $scope.showOptions = true;
+        }
+      )
+    }
   }]);
