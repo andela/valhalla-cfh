@@ -2,7 +2,7 @@
   $(document).ready(() => {
     new WOW().init();
     if($(window).width() <= 991) {
-      $('#fixed-nav').css('background-color', '#BF360C');    
+      $('#fixed-nav').css('background-color', '#495057');    
     } else {
       $(window).on("scroll", () => {
         // show and hide the static donation div
@@ -14,7 +14,7 @@
 
         // show and hide the navbar
         if ($(window).scrollTop() >= 100) {
-          $('#fixed-nav').css('background-color', '#BF360C');
+          $('#fixed-nav').css('background-color', '#495057');
         } else {
           $('#fixed-nav').css('background-color', 'rgba(0, 0, 0, 0)');
         }
