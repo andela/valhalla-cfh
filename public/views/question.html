@@ -1,6 +1,6 @@
 <div>
   <!-- QUESTION AND INFO DISPLAY -->
-  <div class="card d-flex flex-column text-center timer-height">
+  <div class="card d-flex flex-column text-center timer-height" id="question-box">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
 
     <!-- NOTIFICATION -->
@@ -17,8 +17,10 @@
         <span id="player-count">{{game.players.length}} / 12 Players</span>
       </div>
       <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride)">
-        <div class="pointer btn nav-action-btn text-white" id='start-game-button'>
+
+        <div class="pointer btn nav-action-btn text-white" id='start-game'>
           Start Game with {{game.players.length}} player(s)
+
         </div>
       </div>
     </div>
@@ -48,13 +50,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-danger">Alert!!!</h5>
+          <h5 class="modal-title" style="color:red"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p> You need minimum number of 3 players to Start the game.</p>
+          <p> You need minimum number of 3 players to Start the game, click on invite friends button to invite players</p>
         </div>
         <div class="modal-footer">
         

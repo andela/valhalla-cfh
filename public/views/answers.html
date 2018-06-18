@@ -1,4 +1,4 @@
-<div class="mt-4 card rounded p-3 answer-height">
+<div class="mt-4 card rounded p-3 answer-height" id="instructions-row">
   <div ng-cloak ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
     <div id="cards" class='hand'>
   
@@ -24,6 +24,7 @@
   </div>
   
   <!-- HOW TO PLAY -->
+  <div>
   <div ng-show="game.state === 'awaiting players'">
     <h1 class="text-center">How To Play</h1>
     <ol id="oh-el">
@@ -33,6 +34,7 @@
       <li>The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</li>
       <li>*Want to adorn your avatar with a glorious crown? Donate to charity after the game!</li>
     </ol>
+  </div>
   </div>
   <!-- HOW TO PLAY -->
   
