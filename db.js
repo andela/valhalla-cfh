@@ -1,6 +1,6 @@
 const MongoCLient = require('mongodb').MongoClient;
 
-MongoCLient.connect('mongodb://localhost/CFHLocal', (err, db) => {
+MongoCLient.connect('mongodb://cards:humanity5@ds163300.mlab.com:63300/cfh-development-db', (err, db) => {
     if (err) return console.log('Unable to connect to Mongo drivers');
     console.log('Connected to the drivers');
 
@@ -4410,7 +4410,7 @@ MongoCLient.connect('mongodb://localhost/CFHLocal', (err, db) => {
         }
       ]
 
-    // const myDB = db.db('CFHLocal');
+    const myDB = db.db('CFHLocal');
     db.collection('questions').insertMany(questions, (err, result) => {
         if (err) return console.log('Unable to post to database', err);
         console.log(JSON.stringify(result.ops))

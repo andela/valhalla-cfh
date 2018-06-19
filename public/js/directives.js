@@ -4,7 +4,10 @@ angular.module('mean.directives', [])
       restrict: 'EA',
       templateUrl: '/views/player.html',
       link: function(scope, elem, attr){
-        scope.colors = ['#7CE4E8', '#FFFFa5', '#FC575E', '#F2ADFF', '#398EC4', '#8CFF95'];
+        scope.colors = [
+          '#7CE4E8', '#FFFFa5', '#FC575E', '#F2ADFF', '#398EC4', '#8CFF95',
+          '#F06292', '#DD2C00', '#AB47BC', '#3949AB', '#AEEA00', '#F57C00'
+        ];
       }
     };
   }).directive('answers', function() {
@@ -69,16 +72,6 @@ angular.module('mean.directives', [])
     return {
       restrict: 'EA',
       link: function(scope, elem, attr) {
-        scope.showOptions = true;
-
-        if (window.localStorage.token) {
-          scope.showOptions = false;
-        }
-        
-        scope.signOut = function () {
-          window.localStorage.removeItem('token');
-          scope.showOptions = true;
-        }
       }
     };
   });

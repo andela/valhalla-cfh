@@ -149,7 +149,6 @@ Game.prototype.startGame = function () {
   this.shuffleCards(this.questions);
   this.shuffleCards(this.answers);
   // this.stateChoosing(this);
-
   this.changeCzar(this);
   this.sendUpdate();
 };
@@ -242,6 +241,7 @@ Game.prototype.stateResults = function (self) {
     if (winner !== -1) {
       self.stateEndGame(winner);
     } else {
+      // self.stateChoosing(self);
       self.changeCzar(self);
     }
   }, self.timeLimits.stateResults * 1000);

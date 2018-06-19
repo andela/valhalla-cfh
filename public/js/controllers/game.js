@@ -11,6 +11,7 @@ angular.module('mean.system')
     $scope.makeAWishFact = makeAWishFacts.pop();
     $scope.totalInvites = 0;
     $scope.showAppModal = true;
+    $scope.gameTour = introJs();
 
     // handle search change 
     $scope.handleSearch = function(){
@@ -50,6 +51,12 @@ angular.module('mean.system')
   }
   }
 
+  $scope.showOptions = true;
+
+  if (window.localStorage.token) {
+    $scope.showOptions = false;
+  }
+
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -68,6 +75,24 @@ angular.module('mean.system')
         }
       }
     };
+
+    $scope.shuffleCards = () => {
+      const card = $(`#${event.target.id}`);
+      setTimeout(() => {
+
+      $scope.startNextRound();
+       $('#start-modal').modal('hide');
+      }, 500);
+    };
+
+    $scope.startNextRound = () => {
+      // playTone('newRound');
+      if ($scope.isCzar()) {
+        console.log('am @ here');
+        game.startNextRound();
+      }
+    };
+
 
     $scope.pointerCursorStyle = function() {
       if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
@@ -194,8 +219,10 @@ angular.module('mean.system')
         const {
           players, gameID, gameWinner, round
         } = game;
+        console.log('index of the game winner', gameWinner);
+        
         const gameStarter = players[0].username;
-        const nameOfWinner = 'jherey';
+        const nameOfWinner = players[gameWinner].username;
         const result = players.map(player => player.username);
         const token = localStorage.getItem('token'); 
 
@@ -204,9 +231,7 @@ angular.module('mean.system')
           url: `/api/games/${gameID}/start`,
           data: {
             gameId: gameID,
-            gamePlayers: {
-              players: result
-            },
+            gamePlayers: result,
             gameWinner: nameOfWinner,
             gameCzar: gameStarter,
           },
@@ -219,7 +244,22 @@ angular.module('mean.system')
           console.log(response.data.message);
         }, (response) => {
           console.log(response.data.error);
-        })
+        });
+
+      }
+
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+        const myModal = $('#start-modal');
+        myModal.modal('show');
+      }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+      if (game.state === 'game dissolved') {
+        playTone('error', 0.4);
+        $('#start-modal').modal('hide');
+      }
+
+      if (game.state !== 'czar pick card' && game.state !== 'awaiting players' && game.state !== 'game dissolve') {
+        $scope.czarHasDrawn = '';
       }
 
       if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
@@ -285,4 +325,76 @@ angular.module('mean.system')
         game.startNextRound();
       }
     };
+    // taking a tour
+    $scope.gameTour.setOptions({
+      exitOnOverlayClick: false,
+      steps: [{
+        intro: '<h3 class="text-center">Welcome to card 4 humanity</h3> <br/> I would like to take you on a quick tour of how this game is played.<br/>'
+      },
+      {
+        element: '#player-card',
+        intro: 'This shows the current player(s) in the game session with their pictures and points'
+      },
+      {
+        element: '#question-box',
+        intro: 'This panel shows the number of players that have joined the game, provides button with which you can start the game and displays the question when the game has started '
+      },
+      {
+        element: '#start-game',
+        intro: 'This is the button to start the game'
+      },
+      {
+        element: '#invite-players',
+        intro: 'This button allows you invite your friends to play the game.'
+      },
+      {
+        element: '#counter',
+        intro: 'A game session last for 20 seconds. This panel shows the number of seconds left '
+      },
+      {
+        element: '#instructions-row',
+        intro: 'This panel shows the instructions of the game. When the game starts, the answers to the question in the <strong>question box</strong> above will be shown here.',
+      },
+      // {
+      //   element: '#chat-icon-container',
+      //   intro: 'Feel like chatting with players in this game session? Here is the place to chat. Just click on this button and voila! the chat begins.',
+      //   position: 'top'
+      // },
+      {
+        element: '#abandon',
+        intro: 'Click on this button to leave the game.'
+      },
+      {
+        element: '#takeTourBtn',
+        intro: 'If you feel like taking this tour again, you can always click here.'
+      },
+
+      {
+        intro: 'YES! We have come to the end the tour. Enjoy the game!'
+       
+      },
+      ]
+    });
+
+    // Take tour method: This will run on ng-init
+    // $scope.takeTour = () => {
+    //   // $scope.gameTour.start();
+      
+    //   // const tourStatus = localStorage.getItem('tour_status') || localStorage.getItem('guests_tour_status');
+    //   // if (tourStatus === 'true') {
+    //   //   const timeout = setTimeout(() => {
+    //   //     $scope.gameTour.start();
+    //   //     clearTimeout(timeout);
+    //   //   }, 2000);
+    //   //   // localStorage.removeItem('tour_status') || localStorage.removeItem('guests_tour_status');
+    //   // }
+    // };
+
+    // Repeate tour method:
+    // This will run on click of take tour button on game screen
+    $scope.repeatTour = () => {
+      $scope.gameTour.start();
+    };
+
+
 }]);

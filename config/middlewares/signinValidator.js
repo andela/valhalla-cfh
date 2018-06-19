@@ -27,14 +27,12 @@ class Validator {
     });
     const errors = req.validationErrors();
     if (errors) {
-      const allErrors = [];
+      const allErrors = {};
       errors.forEach((error) => {
-        allErrors.push({
-          error: error.msg
-        });
+        allErrors[error.param] = error.msg;
       });
-      return res.status(404)
-        .json(allErrors[0]);
+      return res.status(400)
+        .json(allErrors);
     }
 
     next();

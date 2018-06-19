@@ -20,6 +20,7 @@ const UserSchema = new Schema({
   provider: String,
   avatar: String,
   profile_image: String,
+  points: Number,
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)
   donations: [],
   hashed_password: String,

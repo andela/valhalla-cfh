@@ -1,22 +1,31 @@
-<div id="question-container-inner">
-  <div class="card longBlack bg-primary">
+<div>
+  <!-- QUESTION AND INFO DISPLAY -->
+  <div class="card d-flex flex-column text-center timer-height" id="question-box">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
-    <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
-    <div id="startGame" ng-show="game.state === 'awaiting players'" style="height: 230px;">
-      <div id="finding-players">Finding Players</div>
-      <div id="player-count-container">
-        <div id="player-count">{{game.players.length}} / 12 </div>
-        <div id="the-word-players"> Players </div>
-      </div>
-      <div id="loading-container">
-        <div id="loading-gif"><img ng-src="../img/loader.gif"/></div>
+
+    <!-- NOTIFICATION -->
+    <div style="height: 3rem">
+      <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}} </div>
+    </div>
+    <!-- NOTIFICATION -->
+
+    <!-- INITIAL PAGE DISPLAY -->
+    <div id="startGame" ng-show="game.state === 'awaiting players'">
+      <div>Searching For Players</div>
+      <div class="">
+        <img style="width: 100px;" ng-src="https://cdn.dribbble.com/users/338744/screenshots/2886346/load-dribbble.gif"/>
+        <span id="player-count">{{game.players.length}} / 12 Players</span>
       </div>
       <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride)">
-        <div class="pointer btn btn-secondary mb-2" id='start-game-button'>
-          Start Game</br>with {{game.players.length}} players
+
+        <div class="pointer btn nav-action-btn text-white" id='start-game'>
+          Start Game with {{game.players.length}} player(s)
+
         </div>
       </div>
     </div>
+    <!-- INITIAL PAGE DISPLAY -->
+
     <!-- Game Over Stuff -->
     <div id="game-end-info">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -31,19 +40,23 @@
         That makes you a loser, unfortunately.
       </div>
     </div>
+    <!-- Game Over Stuff -->
+    
   </div>
+  <!-- QUESTION AND INFO DISPLAY -->
+
   <!-- modal for cant start a game message -->
   <div class="modal" id="cantStartGame" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" style="color:red">Alert!!!</h5>
+          <h5 class="modal-title" style="color:red"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p> You need minimum number of 3 players to Start the game.</p>
+          <p> You need minimum number of 3 players to Start the game, click on invite friends button to invite players</p>
         </div>
         <div class="modal-footer">
         
@@ -56,15 +69,15 @@
   <div id="start-modal" class="modal fade center" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content" style="margin-left: auto; margin-right: auto">
-        <div class="modal-header" style="background-color: #cc5403; color: #FFF;">
+        <div class="modal-header" style="background-color: #495057; color: #FFF;">
           <h5 class="modal-title" style="text-align: center; margin: auto;">Cards For Humanity</h5>
         </div>
-            <div class="modal-body" style="min-height: 250px; margin: auto;">
+            <div class="modal-body" style="min-height: 240px; margin: auto;">
                 <h6 id="shuffleText" style="color: rgb(0, 0, 0); text-align: center;">You are the Czar - Click card to pick question</h6>
                   <div class="center" style="margin: auto;">
                     <div class="shuffle" ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style="margin: auto; cursor: pointer;">
-                    <img src="../img/card4hum.png" style="width: 100px;" class="animated flipInX" id="shufflecard1">
-                    <img src="../img/card4hum.png" style="width: 100px;" class="animated flipInX" id="shufflecard2">
+                    <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard1">
+                    <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard2">
                     <img src="../img/card4hum.png" style="width: 100px;" class="animated flipInX" id="shufflecard3">
                     <img src="../img/card4hum.png" style="width: 100px;" class="animated flipInX" id="shufflecard4">
                     </div>

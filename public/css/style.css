@@ -1,3 +1,82 @@
+.cardd {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 17.5%;
+  height: 215px;
+  padding: 1%;
+  margin: 1%;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  color: #256188;
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: top; }
+  @media (max-width: 520px) {
+    .cardd {
+      font-size: 14px;
+      height: 115px;
+      word-wrap: break-word; } }
+  .cardd.how-to {
+    font-size: 1.4rem; }
+  .cardd #selection-number {
+    position: absolute;
+    bottom: 1px;
+    left: 7px;
+    font-size: 18px; }
+  .cardd.black {
+    background: #252525;
+    border-color: white;
+    color: white; }
+  .cardd.longBlack {
+    font-family: 'Bangla MN';
+    background: #FFF;
+    border-radius: 12px;
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+    border-color: white;
+    color: #256188;
+    height: 100%;
+    width: 35.5em;
+    padding-left: 2%;
+    padding-right: 2%; }
+  .cardd.smallest {
+    background: url(../img/card-bg.png);
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+    font-size: 0.750em;
+    text-align: center;
+    vertical-align: middle; }
+    @media (max-width: 520px) {
+      .cardd.smallest {
+        font-size: 10px; } }
+  .cardd u {
+    position: relative;
+    content: '';
+    display: inline-block;
+    width: 25%;
+    text-decoration: none;
+    height: 1em;
+    border-bottom: 0.125em solid #256188;
+    margin-bottom: -0.125em; }
+    .cardd u .small {
+      width: 25%; }
+    .cardd u .big {
+      width: 75%; }
+    .cardd u .end:after {
+      position: absolute;
+      right: -0.357em;
+      display: inline-block;
+      content: '.'; }
+
+#cardss {
+        width: 100%;
+        height: 100%;
+        font-size: 18px;
+        padding-left: 5px;
+    }
  .clear {
    clear:both;
  }
@@ -1254,4 +1333,20 @@
    .row {
       margin: 0 0 0 4px;
    }
+   #takeTourBtn {
+    background-color: #d95450 !important;
+    color: #fff !important;
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 16px;
+    margin-right: 10px;
+  }
+  
+  #tourTourBtn:hover {
+    border-top: 1px solid #43bf06;
+    border-bottom:  1px solid #43bf06;
+    border-radius: 5px;
+    color: #43bf06 !important;
+    background-color: white !important;
+  }
  }

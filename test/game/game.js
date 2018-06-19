@@ -75,13 +75,13 @@ describe('Game Server', () => {
     const expectStartGame = () => {
       client1.emit('startGame');
       client1.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar pick card');
       });
       client2.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar pick card');
       });
       client3.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar pick card');
       });
       setTimeout(disconnect, 200);
     };
