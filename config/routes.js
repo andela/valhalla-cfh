@@ -2,6 +2,8 @@
 const validator = require('./middlewares/signinValidator');
 // signup validator
 const signupValidator = require('./middlewares/signupValidator');
+// password reset validator
+const passwordResetValidator = require('./middlewares/passwordResetValidator');
 // User Routes
 const users = require('../app/controllers/users');
 // Answer Routes
@@ -39,6 +41,12 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   app.post(
     '/api/auth/signup', signupValidator.userSignup,
     users.finishUserSignup
+  );
+
+  app.put(
+    '/api/auth/passwordreset',
+    passwordResetValidator.resetPassword,
+    users.resetPassword
   );
 
   // Login Route

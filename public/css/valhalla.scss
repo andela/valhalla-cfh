@@ -6,6 +6,7 @@ $teal-green: #1B5E20;
 
 body{
   background: #EFF7FE;
+// padding-top: 15px;
 }
 .main-section{
 background-color: #fff;
@@ -173,7 +174,7 @@ a:hover {
 }
 
 .bg-custom {
-  background-color: #707274;
+  background-color: rgb(73, 80, 87);
   font-size: 16px;
 }
 
@@ -418,4 +419,25 @@ hr {
   -webkit-animation: shake 0.3s infinite; /* Safari 4.0 - 8.0 */
   animation: shake 0.3s infinite;
   position: relative;
+}
+
+.forgot-password {
+  font-size: 17px;
+  padding-top: 10px;
+}
+
+.text-danger {
+  font-size: 17px;
+}
+
+.spinner {
+  font-size: 50px;
+  width: 100%;
+  max-width: 150px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  left: 50%;
+  top: 100%;
+  color: rgb(73, 80, 87);
 }

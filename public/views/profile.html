@@ -29,7 +29,7 @@ body{
             <li class="nav-item active pointer">
               <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="pointer nav-link btn nav-action-btn text-white" id="start-game" data-toggle="modal" data-target="#myModal" ng-click="startGameModal()">
+            <li class="pointer nav-link btn nav-action-btn text-white" id="start-game" data-toggle="modal" data-target="#myModal" ng-click="startGameModal('custom')">
                Start Game
             </li>&nbsp;&nbsp;
           </ul>
@@ -45,13 +45,13 @@ body{
           <div class="row user-detail">
               <div class="col-lg-12 col-sm-12 col-12">
                   <img src="{{user.avatar}}" class="rounded-circle img-thumbnail" style="width: 12%; height: 10rem; margin-top:-25px">
+                  <div class="spinner"><i class="fa fa-circle-o-notch fa-spin" ng-show="loading" aria-hidden="true"></i></div>
                   <h5>{{user.name}}</h5>
                   <p>{{user.email}}</p>
                   <p>
                     <!-- {user.points.length > 0 ? user.points}} : No } Round(s) won</p> -->
                     {{user.points ? user.points + ' Round(s) Won' : 'No Rounds Won'}}</p>
                   <hr><br>
-
                   <div class="offset-lg-2 col-lg-8 col-sm-6">
                     <div ng-show="players">
                   <h3 style="color: #cc5403">My Game Log</h3>

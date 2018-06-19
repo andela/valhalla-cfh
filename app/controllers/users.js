@@ -345,6 +345,63 @@ exports.login = (req, res) => {
   });
 };
 
+/**
+* Method to reset User password
+* @param {Object} req
+* @param {Object} res
+* @return {Object} logged in object
+*/
+exports.resetPassword = (req, res) => {
+  // Destructure from req.body
+  const { email, password, confirmPassword } = req.body;
+  // Find email
+  User.findOne({ email }).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    // If no user found
+    if (!user) {
+      return res.status(400).json({
+        emailError: 'Sorry user with email provided does not exist'
+      });
+    }
+    
+    // Compare password from user
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        passwordMismatch: 'Passwords do not match'
+      });
+    }
+
+    user.password = password; 
+    user.save((err, updatedUser) => {
+      if (err) {
+        return res.status(500).json(['Sorry password update failed']);
+      }
+      
+      const userData = {
+        id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email
+      };
+
+      const token = jwt.sign(userData, process.env.SECRET);
+
+      req.login(updatedUser, (err) => {
+        if (err) return next(err);
+      
+        return res.status(200).json({
+          message: `Welcome, ${updatedUser.name}`,
+          token,
+          userData
+        });
+      });
+    });
+  });
+};
+
 exports.search = function (req, res) {
   const { searchTerm } = req.body;
   const escapeRegex = searchTerm.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
