@@ -365,3 +365,24 @@ hr {
   left: 50%;
   top: 100%;
   color: #495057; }
+
+.chat-notify {
+  background: red;
+  position: relative;
+  top: -60px;
+  font-size: 1rem; }
+
+.hidden-chat {
+  position: fixed;
+  bottom: 50px;
+  right: 70px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  border-radius: 50%; }
+
+.open-chat {
+  position: fixed;
+  width: 300px;
+  bottom: 0;
+  right: 70px; }
