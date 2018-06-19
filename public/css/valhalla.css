@@ -135,7 +135,8 @@ a:hover {
   height: 215px; }
 
 .answer-height {
-  min-height: 350px; }
+  min-height: 350px;
+  padding-top: 3rem !important; }
 
 .socy {
   display: inline-block;

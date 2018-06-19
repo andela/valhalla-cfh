@@ -261,6 +261,20 @@ angular.module('mean.system')
       if (game.state !== 'czar pick card' && game.state !== 'awaiting players' && game.state !== 'game dissolve') {
         $scope.czarHasDrawn = '';
       }
+
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+        const myModal = $('#start-modal');
+        myModal.modal('show');
+      }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+      if (game.state === 'game dissolved') {
+        playTone('error', 0.4);
+        $('#start-modal').modal('hide');
+      }
+
+      if (game.state !== 'czar pick card' && game.state !== 'awaiting players' && game.state !== 'game dissolve') {
+        $scope.czarHasDrawn = '';
+      }
     });
 
     $scope.$watch('game.gameID', function() {
@@ -295,6 +309,22 @@ angular.module('mean.system')
       game.joinGame();
     }
 
+    $scope.shuffleCards = () => {
+      const card = $(`#${event.target.id}`);
+      setTimeout(() => {
+
+      $scope.startNextRound();
+       $('#start-modal').modal('hide');
+      }, 500);
+    };
+
+    $scope.startNextRound = () => {
+      // playTone('newRound');
+      if ($scope.isCzar()) {
+        console.log('am @ here');
+        game.startNextRound();
+      }
+    };
     // taking a tour
     $scope.gameTour.setOptions({
       exitOnOverlayClick: false,
