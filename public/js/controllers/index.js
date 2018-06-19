@@ -23,6 +23,7 @@ angular.module('mean.system')
     };
 
     $scope.getUser = () => {
+      $scope.loading = true;
       const token = localStorage.token;
       let user = [];
       $http({
@@ -34,10 +35,10 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
-        $scope.user = response.data.user;
+        const { user } = response.data;
+        $scope.user = user;
         $scope.players = response.data.players;
-        console.log('user', response.data.user);
-        console.log('players', response.data.players);
+        $scope.loading = false;
       }, (response) => {
         console.log(response.data.error);
       });
@@ -136,7 +137,6 @@ angular.module('mean.system')
       // collect user details from the signup form
       const userDetails = $scope.user;
       const { name, email, password, avatar, userImage } = userDetails;
-
       // collect image chosen from the signup form
       const imageFile = $('#userImage').prop('files')[0];
       let imageUrl;
@@ -203,6 +203,41 @@ angular.module('mean.system')
         });
     };
 
+    // reset user password
+    $scope.resetPassword = function () {
+      $http.put('api/auth/passwordreset', {
+        email: $scope.email,
+        password: $scope.password,
+        confirmPassword: $scope.confirmPassword,
+      }).then(
+(         response) => {
+          const token = response.data.token;
+          if (token) {
+            localStorage.setItem('token', token);
+            $scope.showOptions = false;
+            $('#closeLogin').click();
+            toastr.options = {
+              "closeButton": true,
+              "showDuration": "100",
+              "hideDuration": "1000",
+              "timeOut": "50000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            toastr.success('Successfully updated password');
+            $('#closeResetModal').click();
+            $scope.hasError = {};
+        }
+      },
+      (errors) => {
+        $scope.hasError = errors.data;
+      }
+);
+    };
+
     $scope.playAsGuest = function () {
       game.joinGame();
       $location.path('/app');
@@ -235,5 +270,9 @@ angular.module('mean.system')
           $scope.showOptions = true;
         }
       )
+    }
+
+    $scope.toggleResetModal = function() {
+      document.getElementById('closeLogin').click();
     }
   }]);

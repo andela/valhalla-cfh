@@ -101,7 +101,7 @@
               <span>Cards For Humanity</span>
             </div>
           </div>
-          <div style="max-width: 200px; height: 250px; border: 1px solid black; background: #1B5E20; color: white; border-radius: 10px;" class="mb-5 p-3 cfh-card pointer">
+          <div style="max-width: 200px; height: 250px; border: 1px solid black; background: #bf370e; color: white; border-radius: 10px;" class="mb-5 p-3 cfh-card pointer">
             <p style="height: 190px;">For each round, one player is randomly chosen as the Card Czar.</p>
             <div class="small d-flex">
               <img style="height: 20px; width: 20px;" src="../img/card_clip.png" alt="">
@@ -130,6 +130,7 @@
       </p>
     </div>
   </div>
+
   <!-- HOW TO PLAY -->
 
   <!-- CHARITY -->
@@ -281,9 +282,9 @@
             <div class="form-group">
               <label for="control-label">Email</label>
               <input type="text" class="form-control" name="email" ng-model="email" placeholder="email address">
-              <div ng-show="hasError" class="text-danger">
-                {{hasError.email}}
-              </div>
+                <div ng-show="hasError" class="text-danger">
+                  {{hasError.email}}
+                </div>
             </div>
             <div class="form-group">
               <label for="control-label">Password</label>
@@ -295,6 +296,56 @@
             <hr>
             <button class="btn btn-login btn-lg btn-block" type="submit">
               Sign In
+            </button>
+            <span ng-click="toggleResetModal()" class="pointer nav-link text-center forgot-password" data-toggle="modal" data-target="#resetModal">forgot password?</span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of login Modal -->
+
+  <!-- Start of Password reset Modal -->
+  <div id="resetModal" class="modal fade text-dark">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="contactModalTitle" class="modal-title">
+            Reset password 
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" id="closeResetModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div ng-show="hasError" class="text-danger text-center">
+            {{hasError.emailError}}
+          </div>
+          <form ng-submit="resetPassword()">
+            <div class="form-group">
+              <label for="control-label">Email</label>
+              <input type="text" class="form-control" name="email" ng-model="email" placeholder="email address">
+                <div ng-show="hasError" class="text-danger">
+                  {{hasError.email}}
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="control-label">Password</label>
+              <input type="password" class="form-control" name="password" ng-model="password" placeholder="password">
+              <div ng-show="hasError" class="text-danger">
+                {{hasError.passwordMismatch}}
+                {{hasError.password}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="control-label">Confirm Password</label>
+              <input type="password" class="form-control" name="password" ng-model="confirmPassword" placeholder="password">
+              <div ng-show="hasError" class="text-danger">
+                {{hasError.passwordMismatch}}
+                {{hasError.confirmPassword}}
+              </div>
+            </div>
+            <hr>
+            <button class="btn btn-login btn-lg btn-block" type="submit">
+              Reset password
             </button>
           </form>
         </div>
@@ -397,7 +448,7 @@
               <div class="col-md-6 offset-md-3 contain-avatars hide" id="avatar-select">
                   <ul ng-controller="IndexController" class="avatar-list">
                     <li ng-repeat="avatar in avatars" class="avatars ng-scope">
-                      <input name="avatar" ng-model="user.avatar" type='radio' value="{{$index}}">
+                      <input name="avatar" ng-model="user.avatar" type='radio' value="{{avatar}}">
                       <img ng-src="{{avatar}}" width="40px" height="40px">
                       </input>
                     </li>
