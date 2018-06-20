@@ -250,7 +250,6 @@ angular.module('mean.system')
         $('#closeResetModal').click();
 
         $scope.showSuccessMessage = response.data.message;
-        localStorage.setItem('userEmail', $scope.email);
         $('#openSuccessModal').click();
 
         setTimeout(() => {
@@ -271,15 +270,15 @@ angular.module('mean.system')
     }
     // reset user password
     $scope.resetPassword = function () {
-      const email = localStorage.getItem('userEmail')
-      const { password, confirmPassword } = $scope;
+      $scope.appLink = $location.absUrl();
+      
+      const { password } = $scope;
 
       document.getElementById('reset-password').innerHTML = "processing...";
 
       $http.put('api/auth/passwordreset', {
-        email,
-        password,
-        confirmPassword
+        token: $scope.appLink,
+        password
       }).then(
           (response) => {
           const token = response.data.token;
