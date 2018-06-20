@@ -294,7 +294,7 @@
               </div>
             </div>
             <hr>
-            <button class="btn btn-login btn-lg btn-block" type="submit">
+            <button class="btn btn-login btn-lg btn-block" type="submit" id="login-button">
               Sign In
             </button>
             <span ng-click="toggleResetModal()" class="pointer nav-link text-center forgot-password" data-toggle="modal" data-target="#resetModal">forgot password?</span>
@@ -306,7 +306,7 @@
   <!-- End of login Modal -->
 
   <!-- Start of Password reset Modal -->
-  <div id="resetModal" class="modal fade text-dark">
+  <div id="resetModal" class="modal fade text-dark reset-modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -319,32 +319,16 @@
           <div ng-show="hasError" class="text-danger text-center">
             {{hasError.emailError}}
           </div>
-          <form ng-submit="resetPassword()">
+          <form ng-submit="sendResetLink()">
             <div class="form-group">
               <label for="control-label">Email</label>
-              <input type="text" class="form-control" name="email" ng-model="email" placeholder="email address">
+              <input type="text" class="form-control" ng-model="email" placeholder="email address">
                 <div ng-show="hasError" class="text-danger">
                   {{hasError.email}}
                 </div>
             </div>
-            <div class="form-group">
-              <label for="control-label">Password</label>
-              <input type="password" class="form-control" name="password" ng-model="password" placeholder="password">
-              <div ng-show="hasError" class="text-danger">
-                {{hasError.passwordMismatch}}
-                {{hasError.password}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="control-label">Confirm Password</label>
-              <input type="password" class="form-control" name="password" ng-model="confirmPassword" placeholder="password">
-              <div ng-show="hasError" class="text-danger">
-                {{hasError.passwordMismatch}}
-                {{hasError.confirmPassword}}
-              </div>
-            </div>
             <hr>
-            <button class="btn btn-login btn-lg btn-block" type="submit">
+            <button class="btn btn-login btn-lg btn-block" type="submit" id="reset-password">
               Reset password
             </button>
           </form>
@@ -382,14 +366,14 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="control-label">Fullname</label>
-                  <input type="text" class="form-control" id="name" placeholder="full name" name="name" ng-model="user.name">
+                  <input type="text" class="form-control" id="name" placeholder="full name" ng-model="user.name">
                   <div ng-show="hasError" class="text-danger">
                       {{hasError.name}}
                   </div>
                 </div>
                 <label for="control-label">Email</label>
                 <div class="form-group">
-                  <input type="text" class="form-control" id="email" placeholder="email address" name="email" ng-model="user.email">
+                  <input type="text" class="form-control" id="email" placeholder="email address" ng-model="user.email">
                   <div ng-show="hasError" class="text-danger">
                     {{hasError.emailConflict}}
                     {{hasError.email}}
@@ -397,7 +381,7 @@
                 </div>
                 <label for="control-label">Password</label>
                 <div class="form-group">
-                  <input type="password" class="form-control" id="password" placeholder="password" name="password" ng-model="user.password">
+                  <input type="password" class="form-control" id="password" placeholder="password" ng-model="user.password">
                   <div ng-show="hasError" class="text-danger">
                     {{hasError.password}}
                   </div>
