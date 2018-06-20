@@ -45,13 +45,10 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   app.put(
     '/api/auth/passwordreset',
+    checkResetToken.resetToken,
     passwordResetValidator.resetPassword,
     users.resetPassword
   );
-
-  // Login Route
-  // app.post('/api/auth/login', validator.signin, users.login);
-
   // Route to search for users
   app.post('/api/search/users', users.search);
 
@@ -91,15 +88,6 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
     successRedirect: '/play',
     failureRedirect: '/signin'
   }), users.authCallback);
-
-  // // Setting the github oauth routes
-  // app.get('/auth/github', passport.authenticate('github', {
-  //   failureRedirect: '/signin'
-  // }), users.signin);
-
-  // app.get('/auth/github/callback', passport.authenticate('github', {
-  //   failureRedirect: '/signin'
-  // }), users.authCallback);
 
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
