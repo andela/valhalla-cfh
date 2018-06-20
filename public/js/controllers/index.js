@@ -6,7 +6,7 @@ angular.module('mean.system')
     // Run validation on user input
     $scope.validator = () => {
       const userDetails = $scope.user;
-      const { name, email, password } = userDetails;
+      const { name, email, password, security_question, security_answer } = userDetails;
       $scope.hasError = {};
       // send the post request to the server
       $http.post('/api/validator', userDetails)
@@ -174,6 +174,8 @@ angular.module('mean.system')
 
     // login a user
     $scope.login = function () {
+      document.getElementById('login-button').innerHTML = "processing...";
+
       $http.post('api/auth/login', {
         email: $scope.email,
         password: $scope.password
@@ -181,61 +183,21 @@ angular.module('mean.system')
         .then((response) => {
           const token = response.data.token;
           if (token) {
+            document.getElementById('login-button').innerHTML = "Sign in";
             localStorage.setItem('token', token);
             $scope.showOptions = false;
             $('#closeLogin').click();
-            toastr.options = {
-              "closeButton": true,
-              "showDuration": "100",
-              "hideDuration": "1000",
-              "timeOut": "50000",
-              "extendedTimeOut": "1000",
-              "showEasing": "swing",
-              "hideEasing": "linear",
-              "showMethod": "fadeIn",
-              "hideMethod": "fadeOut"
-            }
-            toastr.success('Successfully signed in');
+            $scope.showSuccessMessage = response.data.message
+            $('#openSuccessModal').click();
+            setTimeout(() => {
+              $('#close-sucess-dialog').click();
+            }, 10000);
           }
         },
         (errors) => {
           $scope.hasError = {'error': 'Username or Password is Incorrect'};
+          document.getElementById('login-button').innerHTML = "Sign in";
         });
-    };
-
-    // reset user password
-    $scope.resetPassword = function () {
-      $http.put('api/auth/passwordreset', {
-        email: $scope.email,
-        password: $scope.password,
-        confirmPassword: $scope.confirmPassword,
-      }).then(
-(         response) => {
-          const token = response.data.token;
-          if (token) {
-            localStorage.setItem('token', token);
-            $scope.showOptions = false;
-            $('#closeLogin').click();
-            toastr.options = {
-              "closeButton": true,
-              "showDuration": "100",
-              "hideDuration": "1000",
-              "timeOut": "50000",
-              "extendedTimeOut": "1000",
-              "showEasing": "swing",
-              "hideEasing": "linear",
-              "showMethod": "fadeIn",
-              "hideMethod": "fadeOut"
-            }
-            toastr.success('Successfully updated password');
-            $('#closeResetModal').click();
-            $scope.hasError = {};
-        }
-      },
-      (errors) => {
-        $scope.hasError = errors.data;
-      }
-);
     };
 
     $scope.playAsGuest = function () {
@@ -274,5 +236,87 @@ angular.module('mean.system')
 
     $scope.toggleResetModal = function() {
       document.getElementById('closeLogin').click();
+    }
+
+    // sends password reset link
+    $scope.sendResetLink = function(user){
+      $scope.appLink = $location.absUrl();
+      
+      document.getElementById('reset-password').innerHTML = "sending...";
+      $http.post('/api/sendresetlink', {
+        email: $scope.email,
+        appLink: $scope.appLink
+      }).then((response) => {
+        $('#closeResetModal').click();
+
+        $scope.showSuccessMessage = response.data.message;
+        localStorage.setItem('userEmail', $scope.email);
+        $('#openSuccessModal').click();
+
+        setTimeout(() => {
+          $('#close-sucess-dialog').click();
+        }, 10000);
+        document.getElementById('reset-password').innerHTML = "Reset password";
+      }, (errors) => {
+        $scope.hasError = errors.data;
+        document.getElementById('reset-password').innerHTML = "Reset password";
+      }) 
+    }
+
+    $scope.closeSuccessDialog = function() {
+      setTimeout(function(){
+        $('#closeSuccessModal').click();
+        $location.path('/#!/');
+      });
+    }
+    // reset user password
+    $scope.resetPassword = function () {
+      const email = localStorage.getItem('userEmail')
+      const { password, confirmPassword } = $scope;
+
+      document.getElementById('reset-password').innerHTML = "processing...";
+
+      $http.put('api/auth/passwordreset', {
+        email,
+        password,
+        confirmPassword
+      }).then(
+          (response) => {
+          const token = response.data.token;
+          if (token) {
+            document.getElementById('reset-password').innerHTML = "Reset password";
+            localStorage.setItem('token', token);
+            
+            $scope.showSuccessMessage = response.data.message
+            $('#openSuccessModal').click();
+            setTimeout(() => {
+              $scope.closeSuccessDialog();;
+            }, 10000);
+            $scope.showOptions = false;
+            $scope.hasError = {};
+            localStorage.removeItem('userEmail')
+          }
+      },
+      (errors) => {
+        document.getElementById('reset-password').innerHTML = "Reset password";
+        $scope.hasError = errors.data;
+      }
+);
+    };
+
+    $scope.togglePasswordVisibility = function() {
+      const togglePasswordType = document.getElementById('password');
+      const showVisibleIcon = document.getElementById('remove-hide');
+      const hideIcon = document.getElementById('add-hide');
+
+      if(togglePasswordType.type === 'password') {
+        togglePasswordType.type = 'text';
+        showVisibleIcon.classList.remove('hide')
+        hideIcon.classList.add('hide')
+      } else {
+        togglePasswordType.type = 'password';
+        showVisibleIcon.classList.add('hide')
+        hideIcon.classList.remove('hide')
+      }
     }
   }]);
