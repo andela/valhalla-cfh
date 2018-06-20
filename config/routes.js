@@ -4,6 +4,8 @@ const validator = require('./middlewares/signinValidator');
 const signupValidator = require('./middlewares/signupValidator');
 // password reset validator
 const passwordResetValidator = require('./middlewares/passwordResetValidator');
+// password reset token validator
+const checkResetToken = require('./middlewares/verifyResetToken');
 // User Routes
 const users = require('../app/controllers/users');
 // Answer Routes
@@ -24,13 +26,11 @@ const authorization = require('./middlewares/tokenVerifier');
 module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-vars
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
-  app.get('/chooseavatars', users.checkAvatar);
+  app.get('/chooseavatars/', users.checkAvatar);
   app.get('/signout', users.signout);
-
   // Setting up the users api
   app.post('/users', users.create);
   app.post('/users/avatars', users.avatars);
-
   // Route to register a user.
   app.post(
     '/api/validator',
@@ -57,6 +57,18 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   // Route to send invites
   app.post('/api/invite/users', users.invites);
+  // Route to send password reset link
+  app.post(
+    '/api/sendresetlink', passwordResetValidator.sendResetLink,
+    users.sendResetMail
+  );
+  // Route to reset password
+  app.get(
+    '/resetpassword/:token',
+    checkResetToken.verifyResetToken,
+    users.resetCallback,
+    users.resetPassword
+  );
 
   // Donation Routes
   app.post('/donations', users.addDonation);
