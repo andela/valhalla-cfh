@@ -28,8 +28,9 @@ exports.authCallback = function(req, res, next) {
  * @param {Object} res
  * @return {Object} webpage
  */
-exports.resetCallback = (req, res, next) => {
-  res.redirect('/#!/resetpassword');
+exports.resetCallback = (req, res) => {
+
+  res.redirect(`/#!/resetpassword?${req.decoded}`);
 };
 
 /**
@@ -461,7 +462,8 @@ exports.profile = function (req, res) {
 */
 exports.sendResetMail = function (req, res) {
   const { email, appLink } = req.body;
-  const link = appLink.slice(0, -4);
+  // const link = appLink.slice(0, -4);
+  const link = appLink.split('/#!/')[0];
 
   User.findOne({ email }).exec((err, user) => {
     if (err) {
@@ -506,7 +508,8 @@ exports.sendResetMail = function (req, res) {
         });
       } else {
         res.status(200).json({
-          message: `Check your mailbox for password reset link`,
+          message: `Check your mailbox for password reset link.
+          This email is valid for 1hour`,
           token
         });
       }
@@ -522,44 +525,44 @@ exports.sendResetMail = function (req, res) {
 */
 exports.resetPassword = (req, res) => {
   // Destructure from req.body
-  const { email, password, confirmPassword } = req.body;
+  const { password } = req.body;
   // Find email
-  User.findOne({ email }).exec((err, user) => {
-    if (err) {
-      return res.status(500).json({
-        error: 'Internal Server Error'
-      });
-    }
-    // If no user found
-    if (!user) {
-      return res.status(400).json({
-        emailError: 'Sorry, an error occurred please use the forgot password section'
-      });
-    }
-
-    user.password = password; 
-    user.save((err, updatedUser) => {
+  User.findOne({ email: req.decoded.email }).exec((err, user) => {
       if (err) {
-        return res.status(500).json(['Sorry password update failed']);
+        return res.status(500).json({
+          error: 'Internal Server Error'
+        });
       }
-      
-      const userData = {
-        id: updatedUser._id,
-        name: updatedUser.name,
-        email: updatedUser.email
-      };
-
-      const token = jwt.sign(userData, process.env.SECRET);
-
-      req.login(updatedUser, (err) => {
-        if (err) return next(err);
-      
-        return res.status(200).json({
-          message: `Welcome, password reset successful`,
-          token,
-          userData
+      // If no user found
+      if (!user) {
+        return res.status(400).json({
+          message: 'Sorry, an error occurred please use the forgot password section'
+        });
+      }
+  
+      user.password = password; 
+      user.save((err, updatedUser) => {
+        if (err) {
+          return res.status(500).json(['Sorry password update failed']);
+        }
+        
+        const userData = {
+          id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email
+        };
+  
+        const token = jwt.sign(userData, process.env.SECRET);
+  
+        req.login(updatedUser, (err) => {
+          if (err) return next(err);
+        
+          return res.status(200).json({
+            message: `Welcome, password reset successful`,
+            token,
+            userData
+          });
         });
       });
-    });
   });
 };
