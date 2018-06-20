@@ -29,7 +29,6 @@ exports.authCallback = function(req, res, next) {
  * @return {Object} webpage
  */
 exports.resetCallback = (req, res) => {
-
   res.redirect(`/#!/resetpassword?${req.decoded}`);
 };
 
