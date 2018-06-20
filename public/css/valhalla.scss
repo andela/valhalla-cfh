@@ -441,3 +441,26 @@ hr {
   top: 100%;
   color: rgb(73, 80, 87);
 }
+
+.reset-modal {
+  width: 100%;
+  max-width: 500px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.action-btn {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-group-btn {
+  position: absolute;
+  top: 39%;
+  right: 3%;
+}
