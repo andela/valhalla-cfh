@@ -3,11 +3,26 @@ script.
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
       g.src='//www.google-analytics.com/ga.js';
       s.parentNode.insertBefore(g,s)}(document,'script'));
-script(type='text/javascript', src='/lib/jquery/jquery.js')
-script(type='text/javascript', src='/lib/underscore/underscore-min.js')
+script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js')
 
 //Bootstrap
-script(type='text/javascript', src='/lib/bootstrap/dist/js/bootstrap.js')
+script(type='text/javascript', src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js')
+
+script.
+      $('.dropdown-toggle').dropdown('toggle')
+
+script(type='text/javascript', src='/lib/underscore/underscore-min.js')
+
+
+<!-- jQuery library -->
+//- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+//- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+//- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
 //AngularJS
 script(type='text/javascript', src='https://code.angularjs.org/1.1.5/angular.js')
@@ -46,5 +61,9 @@ script(type='text/javascript', src='/socket.io/socket.io.js')
 
 script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js')
 
+//- script();
+//- <script>
+//-    $('.dropdown-toggle').dropdown('');
+//- </script>
 //Livereload script rendered
 //script(type='text/javascript', src='https://localhost:35729/livereload.js')

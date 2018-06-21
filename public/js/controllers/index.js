@@ -2,7 +2,7 @@ angular.module('mean.system')
   .controller('IndexController', ['$scope', '$http', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, $http, Global, $location, socket, game, AvatarService) {
     $scope.global = Global;
     $scope.gameWithCustom = 'false';
-
+    
     // Run validation on user input
     $scope.validator = () => {
       const userDetails = $scope.user;
@@ -22,7 +22,9 @@ angular.module('mean.system')
         );
     };
 
-    $scope.getUser = () => {
+    
+    $scope.getUser = (term) => {
+       console.log(term);
       $scope.loading = true;
       const token = localStorage.token;
       let user = [];
@@ -35,9 +37,11 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
-        const { user } = response.data;
+        const { user , players} = response.data;
         $scope.user = user;
+        // $scope.myArray = ['1', '2', '3', '4', '5', '6'];
         $scope.players = response.data.players;
+        // console.log(players);
         $scope.loading = false;
       }, (response) => {
         console.log(response.data.error);

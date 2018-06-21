@@ -151,6 +151,8 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   // User profile route
   app.get('/api/profile', authorization.tokenVerification, users.profile);
 
+  app.get('/api/userprofile', authorization.tokenVerification, users.getUser);
+
   // index route
   app.get('/', index.render);
 

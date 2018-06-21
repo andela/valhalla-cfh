@@ -467,10 +467,95 @@ exports.invites = function (req, res) {
 
 exports.profile = function (req, res) {
   const { decoded } = req;
+  const { username } = req.query;
   let getPlayers = '';
+
+  if(username){
+    const { username } = req.query;
+    let getPlayers = '';
+  
+    User.findOne({
+      name: username
+    }).exec((err, user) => {
+      if (err) {
+        return res.status(500).json({
+          error: 'Internal Server Error'
+        });
+      }
+      // No user found
+      if (!user) {
+        return res.status(400).json({
+          error: 'No user found'
+        });
+      }
+  
+      Game.find({ gamePlayers: user.name }).exec((err, players) => {
+        if (err) {
+          return res.status(500).json({
+            message: 'Internal server error'
+          });
+        }
+        if (!players) {
+          return res.status(404).json({
+            message: 'No players found',
+            error: true
+          })
+        }
+  
+        getPlayers = players;
+        return res.status(200).json({
+          message: 'User found!',
+          user,
+          players
+        });
+      });
+    });
+  }
 
   User.findOne({
     _id: decoded.id
+  }).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    // No user found
+    if (!user) {
+      return res.status(400).json({
+        error: 'No user found'
+      });
+    }
+
+    Game.find({ gamePlayers: user.name }).exec((err, players) => {
+      if (err) {
+        return res.status(500).json({
+          message: 'Internal server error'
+        });
+      }
+      if (!players) {
+        return res.status(404).json({
+          message: 'No players found',
+          error: true
+        })
+      }
+
+      getPlayers = players;
+      return res.status(200).json({
+        message: 'User found!',
+        user,
+        players
+      });
+    });
+  });
+}
+
+exports.getUser = function (req, res) {
+  const { username } = req.query;
+  let getPlayers = '';
+
+  User.findOne({
+    name: username
   }).exec((err, user) => {
     if (err) {
       return res.status(500).json({
