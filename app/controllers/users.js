@@ -509,7 +509,7 @@ exports.profile = function (req, res) {
   });
 }
 
-exports.firends = (req, res) => {
+exports.friends = (req, res) => {
   const { decoded } = req;
 
   User.find({
@@ -574,8 +574,7 @@ exports.deleteFriend = (req, res) => {
         message: 'No user found'
       });
     }
-    res.status(200).json({
-      message: 'Friend removed sucessfully!'
-    });
+    
+    next();
   });
 };
