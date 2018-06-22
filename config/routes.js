@@ -160,9 +160,9 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   app.post('/api/games/:id/start', authorization.tokenVerification, games.saveGameResults);
 
   // Friends routes
-  app.get('/api/users/friends', authorization.tokenVerification, users.firends);
+  app.get('/api/users/friends', authorization.tokenVerification, users.friends);
   app.put('/api/users/friends', authorization.tokenVerification, users.addFriend);
-  app.delete('/api/users/friends/:email', authorization.tokenVerification, users.deleteFriend);
+  app.delete('/api/users/friends/:email', authorization.tokenVerification, users.deleteFriend, users.friends);
 
   // Notification routes
   app.post('/api/notifications', authorization.tokenVerification, notifications.newNotification);
