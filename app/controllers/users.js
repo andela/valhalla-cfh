@@ -324,7 +324,9 @@ exports.login = (req, res) => {
     // Compare password from user to database
     if (bcrypt.compareSync(password, user.hashed_password)) {
       const userData = {
-        id: user.id
+        id: user.id,
+        name: user.name,
+        email: createdUser.email
       };
       // Create token
       const token = jwt.sign(userData, process.env.SECRET);
@@ -506,3 +508,74 @@ exports.profile = function (req, res) {
     });
   });
 }
+
+exports.firends = (req, res) => {
+  const { decoded } = req;
+
+  User.find({
+    _id: decoded.id
+  }).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    return res.status(200).json({
+      message: 'User found',
+      friends: user[0].friends
+    });
+  });
+};
+
+exports.addFriend = (req, res) => {
+  const { decoded } = req;
+  const { name, email } = req.body;
+
+  User.findOneAndUpdate(
+    { _id: decoded.id },
+    { $push: {friends: {name, email}} }
+  ).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    res.status(200).json({
+      message: 'Added Friend Succesfully'
+    });
+  });
+};
+
+exports.deleteFriend = (req, res) => {
+  const { decoded } = req;
+  const { email } = req.params;
+  User.findOneAndUpdate(
+    { _id: decoded.id },
+    { $pull: {friends: { email }} },
+    { multi: true }
+  ).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    res.status(200).json({
+      message: 'Friend removed sucessfully!'
+    });
+  });
+};
