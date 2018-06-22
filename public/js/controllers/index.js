@@ -28,9 +28,17 @@ angular.module('mean.system')
       $scope.loading = true;
       const token = localStorage.token;
       let user = [];
+      let url;
+      if(term){
+        url = `/api/profile?username=${term}`;
+      }
+      else{
+        url = '/api/profile';
+      }
+      
       $http({
         method: 'GET',
-        url: `/api/profile`,
+        url: url,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `${token}`,
@@ -39,16 +47,23 @@ angular.module('mean.system')
       }).then((response) => {
         const { user , players} = response.data;
         $scope.user = user;
-        // $scope.myArray = ['1', '2', '3', '4', '5', '6'];
         $scope.players = response.data.players;
-        // console.log(players);
         $scope.loading = false;
       }, (response) => {
+        $scope.loading = false;
+        const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white" style="background: red">Close</button>';        
+        const infoModal = $('#infoModal');
+        infoModal.find('.modal-body').empty();
+        infoModal.find('.modal-body')
+        .append(`<div class="text-center">Sorry, ${term} is not a registered user</div>`);
+        $('.button').empty();
+        infoModal.find('.button').append(closeModal);
+        infoModal.modal('show')
         console.log(response.data.error);
       });
 
     }
-    $scope.getUser();
+    // $scope.getUser();
     $scope.previewImage = () => {
       // collect image chosen from the signup form
       // const imageFile = '';

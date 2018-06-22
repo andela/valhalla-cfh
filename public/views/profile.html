@@ -24,7 +24,7 @@
     </div>
   </nav>
   <!-- NAVBAR -->
-  <div class="row">
+  <div class="row" ng-init="getUser()">
     <div class="col-lg-12 col-sm-6 col-12 main-section text-center">
       <div class="row">
         <div class="col-lg-12 col-sm-12 col-12 profile-header" style="background-color: #495056;"></div>
@@ -40,6 +40,7 @@
           <p>
             <!-- {user.points.length > 0 ? user.points}} : No } Round(s) won</p> -->
             {{user.points ? user.points + ' Round(s) Won' : 'No Rounds Won'}}</p>
+            
           <hr>
           <br>
           <div class="row">
@@ -73,8 +74,9 @@
                             <div class="card card-body">
                               <table class="table">
                                 <tbody>
-                                  <tr ng-repeat="onePlayer in player.gamePlayers">
-                                    <td>{{onePlayer}}</td>
+                                  <tr ng-repeat="onePlayer in player.gamePlayers | filter : '!{{user.name}}'">
+                                    <td>
+                                      <span>{{ onePlayer }}</span></td>
                                     <td>
                                       <button type="button" class="btn btn-secondary" ng-click="getUser('{{onePlayer}}')">Profile</button>
                                       <button type="button" class="btn btn-success">Invite</button>
@@ -97,11 +99,11 @@
               </div>
             </div>
             <div class="col-lg-2">
-              <div class="card" style="width: 18rem;">
+              <div class="card mt-5" style="width: 18rem;">
                 <div class="card-body">
-                  <h5 class="card-title">Friends</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Donate</a>
+                  <h5 class="card-title">Donated</h5>
+                  <p class="card-text"><span style="font-size: 70px; text-shadow: #495055 0 0 10px, #cc5403 5px 5px 5px;">$100</span></p>
+                  <a href="#" id="donate-button" class="btn btn-primary" style="background: #1d5d21; border-color: #1d5d21">Donate More</a>
                 </div>
               </div>
             </div>

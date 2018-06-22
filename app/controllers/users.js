@@ -511,7 +511,7 @@ exports.profile = function (req, res) {
       });
     });
   }
-
+else{
   User.findOne({
     _id: decoded.id
   }).exec((err, user) => {
@@ -548,6 +548,7 @@ exports.profile = function (req, res) {
       });
     });
   });
+}
 }
 
 exports.getUser = function (req, res) {
