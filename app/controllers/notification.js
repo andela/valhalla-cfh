@@ -4,14 +4,14 @@ const Notification = mongoose.model('Notification');
 
 
 exports.newNotification = (req, res) => {
-  const { receiverName, gameLink } = req.body;
+  const { receiverName, link } = req.body;
   const { decoded } = req;
 
   const notification = new Notification({
     sender: decoded.name,
     receiver: receiverName,
     message: `${decoded.name} invited you to a game`,
-    gameLink,
+    link,
     status: 0
   });
 
@@ -22,7 +22,8 @@ exports.newNotification = (req, res) => {
       });
     }
     res.status(200).json({
-      message: 'Notification sent!'
+      message: 'Notification sent!',
+      notification
     });
   });
 };
