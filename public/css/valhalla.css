@@ -365,3 +365,33 @@ hr {
   left: 50%;
   top: 100%;
   color: #495057; }
+
+.friend-loader {
+  font-size: 50px;
+  width: 20%;
+  display: block;
+  margin: 40px auto;
+  color: #495057; }
+
+.invite-header {
+  padding: 0 !important;
+  padding-left: 10px !important;
+  padding-top: 10px !important;
+  padding-right: 20px !important; }
+
+.table td {
+  border-top: 0 !important; }
+
+.nav-tabs a {
+  color: black; }
+
+#tab-button {
+  background: #1B5E20;
+  color: white; }
+
+.chat-notify {
+  background: red;
+  position: relative;
+  top: -15px;
+  left: -15px;
+  font-size: 0.7rem; }
