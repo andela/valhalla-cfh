@@ -161,7 +161,9 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   // Friends routes
   app.get('/api/users/friends', authorization.tokenVerification, users.friends);
-  app.put('/api/users/friends', authorization.tokenVerification, users.addFriend);
+  app.put('/api/users/friends/send', authorization.tokenVerification, users.sendFriendRequest);
+  app.put('/api/users/friends/accept', authorization.tokenVerification, users.acceptFriendRequest);
+  app.put('/api/users/friends/reject', authorization.tokenVerification, users.rejectFriendRequest);
   app.delete('/api/users/friends/:email', authorization.tokenVerification, users.deleteFriend, users.friends);
 
   // Notification routes
