@@ -192,7 +192,10 @@ angular.module('mean.system')
 
     $scope.abandonGame = function() {
       game.leaveGame();
-      $location.path('/');
+      setTimeout(() => {
+        $("#closeAbandonModal").click();
+        $location.path('/');
+      })
     };
 
     // Catches changes to round to update when no players pick card
