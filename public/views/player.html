@@ -1,5 +1,5 @@
-<div ng-repeat="player in game.players" class="d-flex p-2 rounded-bottom" style="background-color:{{colors[player.color]}}">
-  
+<div id="player-card" ng-repeat="player in game.players" class="d-flex p-2 rounded-bottom" ng-style="{'background-color': colors[player.color]}">
+
   <!-- USER AVATAR -->
   <div>
     <!-- CROWN FOR USER THAT HAVE DONATED -->
@@ -12,10 +12,10 @@
 
   </div>
   <!-- USER AVATAR -->
-
+  
   <!-- SHOW USER DETAILS DURING GAME -->
   <div class="w-100">
-    <h5 class="my-0 font-weight-bold">{{player.username | upperFirstLetter}}</h5>
+    <h4 class="my-0">{{player.username | upperFirstLetter}}</h4>
     <div class="d-flex justify-content-between">
       <h4>{{player.points}}/{{game.pointLimit}}</h4>
       <span ng-show="currentCzar($index)">CZAR</span>
@@ -23,5 +23,5 @@
     </div>
   </div>
   <!-- SHOW USER DETAILS DURING GAME -->
-
+  
 </div>
