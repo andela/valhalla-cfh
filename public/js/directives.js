@@ -74,4 +74,11 @@ angular.module('mean.directives', [])
       link: function(scope, elem, attr) {
       }
     };
-  });
+  })
+  .directive('chatbox', function(){
+    return{
+      restrict: 'EA',
+      templateUrl: '/views/chat.html',
+      link: function(scope, elem, attr){}
+    };
+  });;
