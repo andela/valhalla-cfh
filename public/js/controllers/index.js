@@ -40,6 +40,15 @@ angular.module('mean.system')
         $scope.players = response.data.players;
         $scope.loading = false;
       }, (response) => {
+        $scope.loading = false;
+        const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white mb-4" style="background: red">Close</button>';        
+        const infoModal = $('#infoModal');
+        infoModal.find('.modal-body').empty();
+        infoModal.find('.modal-body')
+        .append(`<div class="text-center">Sorry, ${term} is not a registered user</div>`);
+        $('.button').empty();
+        infoModal.find('.button').append(closeModal);
+        infoModal.modal('show')
         console.log(response.data.error);
       });
 

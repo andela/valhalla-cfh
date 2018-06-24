@@ -40,42 +40,67 @@ body{
     <div class="row">
       <div class="col-lg-12 col-sm-6 col-12 main-section text-center">
           <div class="row">
-              <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
-          </div>
-          <div class="row user-detail">
-              <div class="col-lg-12 col-sm-12 col-12">
-                  <img src="{{user.avatar}}" class="rounded-circle img-thumbnail" style="width: 12%; height: 10rem; margin-top:-25px">
-                  <div class="spinner"><i class="fa fa-circle-o-notch fa-spin" ng-show="loading" aria-hidden="true"></i></div>
-                  <h5>{{user.name}}</h5>
-                  <p>{{user.email}}</p>
-                  <p>
-                    <!-- {user.points.length > 0 ? user.points}} : No } Round(s) won</p> -->
-                    {{user.points ? user.points + ' Round(s) Won' : 'No Rounds Won'}}</p>
-                  <hr><br>
-                  <div class="offset-lg-2 col-lg-8 col-sm-6">
-                    <div ng-show="players">
-                  <h3 style="color: #cc5403">My Game Log</h3>
-                  <table class="table table-striped" >
-                      <thead>
-                        <tr>
-                          <th>Game Id</th>
-                          <th>Winner</th>
-                          <th>Players</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr ng-repeat="player in players">
-                          <td>{{player.gameId}}</td>
-                          <td>{{player.gameWinner}}</td>
-                          <td>{{player.gamePlayers.toString()}}</td>
-                        </tr>
-                        
-                      </tbody>
-                    </table>
-                  </div>
-                  <div ng-show="players.length <= 0">
-                  <h3 style="color: #cc5403">No Game Log</h3>
-                  </div>
+            <div class="offset-1 col-lg-8 col-sm-6">
+              <div ng-show="players">
+                <h3 style="color: #cc5403">My Game Log</h3>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Game Id</th>
+                      <th>Winner</th>
+                      <th>Players</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="player in players">
+                      <td>{{player.gameId}}</td>
+                      <td>{{player.gameWinner}}</td>
+                      <td>
+                        <span style="float:left; width:50%; word-wrap: break-word">
+                          <span ng-repeat="(key, onePlayer) in player.gamePlayers">
+                              {{onePlayer}}<span ng-show="{{key + 1}} != player.gamePlayers.length">,</span>
+                          </span>
+                        </span>
+                        <span>
+                            <a class="btn btn-secondary mb-2" data-toggle="collapse" href="#{{player.gameId}}" role="button" aria-expanded="false" aria-controls="{{player.gameId}}">
+                              Action
+                            </a>
+
+                          <div class="collapse w-100" id={{player.gameId}}>
+                            <div class="card card-body w-100">
+                              <table class="table">
+                                <tbody>
+                                  <tr ng-repeat="onePlayer in player.gamePlayers | filter : '!{{user.name}}'">
+                                    <td>
+                                      <span>{{ onePlayer }}</span></td>
+                                    <td>
+                                      <button type="button" class="btn btn-secondary" ng-click="getUser('{{onePlayer}}')">Profile</button>
+                                      <button type="button" class="btn btn-success">Invite</button>
+                                      <button type="button" class="btn btn-info">Add as Friend</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </span>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              <div ng-show="players.length <= 0">
+                <h3 style="color: #cc5403">No Game Log</h3>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="card mt-5" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Donated</h5>
+                  <p class="card-text"><span style="font-size: 70px; text-shadow: #495055 0 0 10px, #cc5403 5px 5px 5px;">$100</span></p>
+                  <a href="#" id="donate-button" class="btn btn-primary" style="background: #1d5d21; border-color: #1d5d21">Donate More</a>
+                </div>
               </div>
           </div>
       </div>
