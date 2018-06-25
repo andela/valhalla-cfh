@@ -4,15 +4,19 @@ const Notification = mongoose.model('Notification');
 
 
 exports.newNotification = (req, res) => {
-  const { receiverName, link } = req.body;
+  const {
+    link, message, requestStatus, receiver
+  } = req.body;
   const { decoded } = req;
 
   const notification = new Notification({
     sender: decoded.name,
-    receiver: receiverName,
-    message: `${decoded.name} invited you to a game`,
+    receiver,
+    senderEmail: decoded.email,
+    message,
     link,
-    status: 0
+    status: 0,
+    friendRequest: parseInt(requestStatus, 10)
   });
 
   notification.save((err) => {
@@ -49,10 +53,7 @@ exports.getNotifications = (req, res) => {
 
 exports.readNotification = (req, res) => {
   const { id } = req.body;
-  Notification.findOneAndUpdate(
-    { _id: id },
-    { $set: { status: 1 } }
-  ).exec((err) => {
+  Notification.findOneAndRemove({ _id: id }).exec((err) => {
     if (err) {
       return res.status(500).json({
         error: 'Internal Server Error'
