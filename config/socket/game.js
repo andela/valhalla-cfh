@@ -351,7 +351,8 @@ Game.prototype.pickCards = function (thisCardArray, thisPlayer) {
         if (tableCard.length === this.curQuestion.numAnswers) {
           this.table.push({
             card: tableCard,
-            player: this.players[playerIndex].socket.id
+            player: this.players[playerIndex].socket.id,
+            playerIndex
           });
         }
         console.log('final table object', this.table);

@@ -1,24 +1,27 @@
-
 <div ng-controller="GameController" ng-init="takeTour()" id="app-container">
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
     <div class="container">
-      <a class="navbar-brand" href="/"><img src="../img/logo.png" height="40px" width="180px"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="/">
+        <img src="../img/logo.png" height="40px" width="180px">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-link pointer" id="takeTourBtn" ng-click="repeatTour()">
-                Take a Tour
-            </li>
-          <li class="nav-link pointer" id='abandon' ng-click="abandonGame()">
-              Abandon Game
+          <li class="nav-link pointer" id="takeTourBtn" ng-click="repeatTour()">
+            Take a Tour
           </li>
-          <li class="pointer nav-link btn nav-action-btn text-white" id='invite-players' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()">
-              Invite Friends
+          <li class="nav-link pointer" data-toggle="modal" data-target="#abandonGameModal">
+            Abandon Game
+          </li>
+          <li class="pointer nav-link btn nav-action-btn text-white" id='invite-players' data-toggle="modal" data-target="#myModal"
+            ng-click="inviteModal()">
+            Invite Friends
           </li>&nbsp;&nbsp;
           <li ng-hide="showOptions" class="nav-item pointer">
             <a class="nav-link" href="/#!/profile">Profile</a>
@@ -28,6 +31,7 @@
     </div>
   </nav>
   <!-- NAVBAR -->
+  
   <!-- MAIN CONTENT -->
   <div>
     <div class="container">
@@ -43,16 +47,22 @@
           </div>
           <answers></answers>
         </div>
-        <div class="col-sm-12 col-md-3 mt-3 card p-0" style="max-height: 100%;overflow: auto;">
-          <h2 class="text-center sticky-top bg-white">Current Players</h2>
-          <div id="player-card">
-          <player></player>
+        <div class="col-sm-12 col-md-3 mt-3 p-0">
+          <div class="card" style="overflow-y: scroll; max-height: 580px;">
+            <h2 class="text-center sticky-top bg-custom text-white mb-0">Current Players</h2>
+            <player></player>
           </div>
         </div>
       </div>
     </div>
   </div>
   <!-- MAIN CONTENT -->
+
+  <!-- CHAT -->
+  <div>
+    <chatbox></chatbox>
+  </div>
+  <!-- CHAT -->
 
   <!-- Modal for searching for users -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -65,9 +75,10 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          
+
           <span class="searchfield">
-            <input type="text" class="form-control" ng-change="handleSearch()" ng-model="searchValue" placeholder="Search For Players"/>
+            <input type="text" class="form-control" ng-change="handleSearch()" ng-model="searchValue" placeholder="Search For Players"
+            />
           </span>
 
           <table class="table" ng-show="inviteUser">
@@ -82,7 +93,9 @@
               <tr ng-repeat="user in inviteUser">
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
-                <td> <button type="button" ng-click="sendInvites(user)" >Invite</button></td>
+                <td>
+                  <button type="button" ng-click="sendInvites(user)">Invite</button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -116,12 +129,47 @@
           <p> Maximun number of players reached. Sorry, You need to start a new game.</p>
         </div>
         <div class="modal-footer">
-        
+
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
   <!-- End of the modal -->
+
+  <!-- Start of Abandon game modal -->
+  <div id="abandonGameModal" class="modal fade text-dark">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>
+            <img src="../img/crying.gif" height="40px" width="40px">
+            <br/> We'll miss you if you leave
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" id="closeAbandonModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="" style="text-align:center">
+            <button class="btn nav-action-btn text-white" data-dismiss="modal" id="closeAbandonModal">
+              Stay in the game
+            </button>
+            <button class="btn btn-danger" id='abandon' ng-click="abandonGame()">
+              Yes, I'm sure I want to leave
+            </button>
+            <br/>
+            <br/>
+            <br/>
+            <!-- STATIC DONATION BUTTON -->
+              <div style="font-family: 'Halant';">MAKE AN IMPACT</div>
+              <div style="font-weight: bold; font-size: 1.3rem;">$746 Raised</div>
+              <span class="btn btn-success">Donate now</span>
+            <!-- STATIC DONATION BUTTON -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End of Abandon game Modal -->
 
 </div>

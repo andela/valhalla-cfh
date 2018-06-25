@@ -460,8 +460,7 @@ exports.profile = function (req, res) {
 * @return {Object} logged in object
 */
 exports.sendResetMail = function (req, res) {
-  const { email, appLink } = req.body;
-  // const link = appLink.slice(0, -4);
+  const { name, email, appLink } = req.body;
   const link = appLink.split('/#!/')[0];
 
   User.findOne({ email }).exec((err, user) => {
@@ -495,10 +494,15 @@ exports.sendResetMail = function (req, res) {
     const mailOptions = {
       from: 'valhallacfh@gmail.com',
       to: email,
-      subject: 'CFH - Reset password-CFH',
-      html: `<p>Hello ${email}, </p>
-            <p>Click <a href=${link}/resetpassword/${token}>here<a/> to reset your password</p>
-            <p>This link is valid for an hour</p>`
+      subject: 'CFH - Password reset help is here',
+      html: `<div style="background-color:#495057; width:400px; display:block; margin-left:auto; margin-right:auto;
+            border-radius:7px; padding-top: 10px; padding-bottom: 10px; padding-left:30px; color:white">
+            <p>Hi ${name}, </p>
+            <p>Click the button below to reset your password</p>
+            <a style="text-decoration: none; width:60px; padding:10px; background-color:#1B5E20; border-radius:5px; color:white;" href="${link}/resetpassword/${token}"><strong>Reset</strong><a/>
+            <p style="color:white"><em><strong>Ignore this email if you didn't request for it.</em></strong></p>
+            <p style="color:white"><strong>NB:</strong>This link is valid for an hour.</p>
+            </div>`
     };
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
