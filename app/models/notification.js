@@ -25,6 +25,9 @@ const NotificationSchema = new Schema({
   friendRequest: {
     type: Number
   },
+  requestAccepted: {
+    type: Number
+  },
   status: {
     type: Number
   }
