@@ -4,10 +4,6 @@ $little-gray: #f5f5f5;
 $white: #ffffff;
 $teal-green: #1B5E20;
 
-body{
-  background: #EFF7FE;
-// padding-top: 15px;
-}
 .main-section{
 background-color: #fff;
 }
@@ -82,39 +78,6 @@ a:hover {
     margin: 0 auto;
     font-size: 1.3rem;
   }
-
-  .card-properties {
-    display: table-cell;
-    height: 200px;
-    width: 200px;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 50%;
-    padding: 20px;
-    transition-property: transform;
-    transition-duration: 1s;
-    cursor: pointer;
-
-    &:nth-child(1) {
-      border: 2px solid #b3a77e;
-    }
-
-    &:nth-child(2) {
-      border: 2px solid $burnt-orange;
-    }
-
-    &:nth-child(3) {
-      border: 2px solid $teal-green;
-    }
-
-    &:nth-child(4) {
-      border: 2px solid #b3a77e;
-    }
-
-    &:hover {
-      transform: scale(1.2);
-    }
-  }
 }
 
 .charity {
@@ -175,11 +138,6 @@ a:hover {
 
 .bg-custom {
   background-color: rgb(73, 80, 87);
-  font-size: 16px;
-}
-
-#time {
-  font-size: 5em;
 }
 
 .timer-height {
@@ -187,8 +145,7 @@ a:hover {
 }
 
 .answer-height {
-  min-height: 350px;
-  padding-top: 3rem !important;
+  height: 350px;
 }
 
 .socy {
@@ -267,6 +224,7 @@ a:hover {
 #king {
   max-width: 80%;
   -webkit-transform: rotate(-28deg);
+  transform: rotate(-28deg);
   margin-bottom: -30px;
   margin-left: -15px;
 }
@@ -421,6 +379,24 @@ hr {
   position: relative;
 }
 
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes popout {
+  0%   {transform: scale(1);}
+  50% {transform: scale(2);}
+  100% {transform: scale(1);}
+}
+
+/* Standard syntax */
+@keyframes popout {
+  0%   {transform: scale(1);}
+  50% {transform: scale(2);}
+  100% {transform: scale(1);}
+}
+
+#time {
+  font-size: 5em;
+}
+
 .forgot-password {
   font-size: 17px;
   padding-top: 10px;
@@ -453,4 +429,43 @@ a{
 
 a:hover {
   color:white;
+.chat-notify {
+  background:red;
+  position:relative;
+  top: -60px;
+  font-size: 1rem;
+}
+
+.hidden-chat {
+  position: fixed;
+  bottom: 50px;
+  right: 70px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.open-chat {
+  position: fixed;
+  width: 300px;
+  bottom: 0;
+  right: 70px;
+}
+
+.alt-card {
+
+  &:nth-child(odd) {
+    background-color: #BF360C;
+  }
+
+  &:nth-child(even) {
+    background-color: gray;
+  }
+
+  &:hover {
+    -webkit-animation: shake 0.3s infinite; /* Safari 4.0 - 8.0 */
+    animation: shake 0.3s infinite;
+    position: relative;
+  }
 }

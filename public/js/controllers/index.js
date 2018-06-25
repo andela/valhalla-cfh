@@ -172,13 +172,23 @@ angular.module('mean.system')
         $('.button').empty();
         infoModal.find('.button').append(idStartButton, closeModal);
       }
-      if (term === undefined) {
+      if (term === 'guest') {
+        infoModal.find('.modal-body').empty();
         infoModal.find('.modal-body')
-        .text('Click on start to continue and wait for people to join the game. Can\'t wait? Signup/Signin to invite and play with friends.');
+        .append('<div class="">Click on start to continue and wait for people to join the game.<br/> Can\'t wait? <br/>Signup/Signin to invite and play with friends.</div>');
 
         $('.button').empty();
         infoModal.find('.button').append(startButton, closeModal);
       }
+      if (term === 'Strangers') {
+        infoModal.find('.modal-body').empty();
+        infoModal.find('.modal-body')
+        .append('<div class="">Click on start to continue and wait for people to join the game.</div>');
+
+        $('.button').empty();
+        infoModal.find('.button').append(startButton, closeModal);
+      }
+      
       infoModal.modal('show');
     };
     

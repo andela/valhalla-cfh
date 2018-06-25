@@ -1,24 +1,46 @@
 .introjs-fixedTooltip, .introjs-helperLayer {
   /* background-color: rgba(0, 0, 0, 0.4) !important; */
-  border: 2px solid red !important;
+  border: 2px solid #bf370e !important;
 }
 
 .introjs-bullets a.active {
-  background: red !important;
+  background: #bf370e !important;
 }
 
 .introjs-tooltiptext {
-  color: orange !important;
+  color: black !important;
 }
 
 .introjs-tooltipbuttons {
   text-align: center !important;
 }
 .introjs-tooltipbuttons button {
-  background: #43bf06 !important;
+  background: #1d5d21 !important;
+  /* border: 0 solid !important;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2) !important;
+  outline: 1px solid !important;
+  outline-color: rgba(255, 255, 255, 0.5) !important;
+  outline-offset: 0px !important;
+  text-shadow: none !important;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1) !important; */
 }
 
 .introjs-helperNumberLayer {
-  background: green !important;
+  background: #1d5d21 !important;
 }
+.introjs-button, .introjs-nextbutton, .introjs-skipbutton {
+  border: 0 solid !important;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2) !important;
+  outline: 1px solid !important;
+  outline-color: rgba(255, 255, 255, 0.5) !important;
+  outline-offset: 0px !important;
+  text-shadow: none !important;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1) !important;
+  background-color: green !important;
+  margin: 100px;
+}
+
+
+
+
 

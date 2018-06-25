@@ -77,10 +77,10 @@
         </h1>
         <div ng-show="showOptions" class="py-5 justify-content-center wow slideInRight">
           <span data-toggle="modal" data-target="#signUpModal" class="new_button home_btn col-sm-12 col-md-6 mb-3 p-3">Sign Up</span>
-          <span ng-click="startGameModal()" class="new_button home_btn col-sm-12 col-md-6 mb-3 p-3">Play As Guest</span>
+          <span ng-click="startGameModal('guest')" class="new_button home_btn col-sm-12 col-md-6 mb-3 p-3">Play As Guest</span>
         </div>
         <div ng-hide="showOptions" class="py-5 justify-content-center wow slideInRight">
-          <span ng-click="startGameModal()" class="new_button home_btn col-sm-12 col-md-6 mb-3 d-inline-block">Play with Strangers</span>
+          <span ng-click="startGameModal('Strangers')" class="new_button home_btn col-sm-12 col-md-6 mb-3 d-inline-block">Play with Strangers</span>
           <span ng-click="startGameModal('custom')" class="new_button home_btn col-sm-12 col-md-6 mb-3 d-inline-block">Play with Friends</span>
         </div>
         <!-- Logo -->
