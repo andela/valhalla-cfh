@@ -683,12 +683,37 @@ exports.rejectFriendRequest = (req, res) => {
 
 exports.deleteFriend = (req, res, next) => {
   const { decoded } = req;
-  const { senderEmail } = req.params;
+  const { receiverEmail } = req.body;
+  const senderEmail = decoded.email;
+  // console.log({senderEmail, receiverEmail}, {receiverEmail, senderEmail});
+  return console.log(email);
+  
+
   User.findOneAndUpdate(
     { _id: decoded.id },
-    { $pull: {friends: { senderEmail }} },
-    { multi: true }
+    { $pull: {friends: { receiverEmail }} },
+    // { multi: true }
   ).exec((err, user) => {
+    console.log(user);
+    
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }    
+  });
+
+  User.findOneAndUpdate(
+    { email: senderEmail },
+    { $pull: {friends: { receiverEmail }} },
+    // { multi: true }
+  ).exec((err, user) => {
+    console.log(user);
     if (err) {
       return res.status(500).json({
         error: 'Internal Server Error'
@@ -700,6 +725,6 @@ exports.deleteFriend = (req, res, next) => {
       });
     }
     
-    next();
+    next();    
   });
 };
