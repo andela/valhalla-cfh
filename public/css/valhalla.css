@@ -365,3 +365,11 @@ hr {
   left: 50%;
   top: 100%;
   color: #495057; }
+
+.nav-tabs .nav-link {
+  background: #d2745e;
+  padding: 20px; }
+
+a {
+  color: black;
+  font-weight: bolder; }

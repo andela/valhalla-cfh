@@ -21,34 +21,116 @@
     </nav>
     <!-- NAVBAR -->
 
-    <div class="container p-t-md">
-        <div class="row pt-5 text-center">
+    <div class="container p-t-md mt-5">
+        <div class="row pt-5">
             <div class="col-md-12 text-center">
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#currentPreferences">Current Preferences</a>
+                        <a class="nav-link active" data-toggle="tab" href="#currentPreferences">Game</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#alternative"> Alternative </a>
+                        <a class="nav-link" data-toggle="tab" href="#alternative"> LeaderBoard </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#link">Link</a>
+                        <a class="nav-link" data-toggle="tab" href="#link">Donations</a>
                     </li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="currentPreferences">
+                </ul><br><br>
+                <div class="tab-content" style="background: white">
+                    <div role="tabpanel" class="tab-pane active" id="currentPreferences"><br/>
                         <ul class="list-group media-list media-list-stream">
-                            <p>Pref</p>
+                            <h4 class="text-center p-3">Game History</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Winner</th>
+                                    <th>Players</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Doe</td>
+                                    <td>john@example.com</td>
+                                  </tr>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>Moe</td>
+                                    <td>mary@example.com</td>
+                                  </tr>
+                                  <tr>
+                                    <td>3</td>
+                                    <td>Dooley</td>
+                                    <td>july@example.com</td>
+                                  </tr>
+                                </tbody>
+                              </table>
                         </ul>
                     </div>
-                    <div role="tabpanel" class="tab-pane fade in" id="alternative">
+                    <div role="tabpanel" class="tab-pane fade in" id="alternative"><br/>
                         <ul class="list-group media-list media-list-stream">
-                            <p>Test</p>
+                                <h4 class="text-center p-3">LeaderBoard</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Rounds won</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Doe</td>
+                                    <td>7</td>
+                                  </tr>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>Moe</td>
+                                    <td>5</td>
+                                  </tr>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>Dooley</td>
+                                    <td>3</td>
+                                  </tr>
+                                </tbody>
+                              </table>
                         </ul>
                     </div>
-                     <div role="tabpanel" class="tab-pane fade in" id="link">
+                     <div role="tabpanel" class="tab-pane fade in" id="link"><br/>
                         <ul class="list-group media-list media-list-stream">
-                            <p>Link</p>
+                                <h4 class="text-center p-3">Donations</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Avatar</th>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Doe</td>
+                                    <td>Doe</td>
+                                    <td>$100</td>
+                                  </tr>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>Moe</td>
+                                    <td>Doe</td>
+                                    <td>$50</td>
+                                  </tr>
+                                  <tr>
+                                    <td>3</td>
+                                    <td>Dooley</td>
+                                    <td>Doe</td>
+                                    <td>$10</td>
+                                  </tr>
+                                </tbody>
+                              </table>
                         </ul>
                     </div>
                 </div>
