@@ -534,7 +534,10 @@ exports.friends = (req, res) => {
 
 exports.sendFriendRequest = (req, res) => {
   const { decoded } = req;
-  const { senderName, senderEmail, receiverName, receiverEmail } = req.body;
+  const { receiverName, receiverEmail } = req.body;
+  
+  const senderName = decoded.name;
+  const senderEmail = decoded.email;
 
   User.findOneAndUpdate(
     { _id: decoded.id },
@@ -550,6 +553,7 @@ exports.sendFriendRequest = (req, res) => {
   User.findOneAndUpdate(
     { email: receiverEmail },
     { $push: {friendRequests: {senderName, senderEmail}} }
+    // { $push: {friendRequests: {senderName, senderEmail}} }
   ).exec((err, user) => {
     if (err) {
       return res.status(500).json({
@@ -569,39 +573,53 @@ exports.sendFriendRequest = (req, res) => {
 
 exports.acceptFriendRequest = (req, res) => {
   const { decoded } = req;
-  const { senderName, senderEmail, receiverName, receiverEmail } = req.body;
+  const { senderName, senderEmail } = req.body;
+  const receiverName = decoded.name;
+  const receiverEmail = decoded.email;
 
   User.findOneAndUpdate(
     { _id: decoded.id },
     { $pull: {friendRequests: { senderName }} }
-  ).exec((err) => {
+  ).exec((err, user) => {
+    console.log(user);
     if (err) {
       return res.status(500).json({
         error: 'Internal Server Error receiver end'
       });
     }
+
+    console.log('pull from 1');
+    
   });
 
   User.findOneAndUpdate(
     { email: senderEmail },
-    { $pull: {friendRequests: { receiverEmail }} }
-  ).exec((err) => {
+    { $pull: {friendRequests: { receiverEmail }} } 
+  ).exec((err, user) => {
+    console.log(user);
     if (err) {
       return res.status(500).json({
         error: 'Internal Server Error'
       });
     }
+    console.log('pull from 2');
+
   });
 
   User.findOneAndUpdate(
     { _id: decoded.id },
     { $push: {friends: {senderName, senderEmail}} }
-  ).exec((err) => {
+  ).exec((err, user) => {
+    console.log(user);
+    
     if (err) {
       return res.status(500).json({
         error: 'Internal Server Error'
       });
     }
+
+    console.log('error from 1');
+
   });
 
   User.findOneAndUpdate(
@@ -618,6 +636,8 @@ exports.acceptFriendRequest = (req, res) => {
         message: 'No user found'
       });
     }
+    console.log('error from 2');
+
     res.status(200).json({
       message: 'Friend Request Accepted!'
     });
@@ -626,7 +646,9 @@ exports.acceptFriendRequest = (req, res) => {
 
 exports.rejectFriendRequest = (req, res) => {
   const { decoded } = req;
-  const { senderName, senderEmail, receiverName, receiverEmail } = req.body;
+  const senderName = decoded.name;
+  const senderEmail = decoded.email;
+  const { receiverEmail } = req.body;
 
   User.findOneAndUpdate(
     { _id: decoded.id },
@@ -659,12 +681,12 @@ exports.rejectFriendRequest = (req, res) => {
   });
 }
 
-exports.deleteFriend = (req, res) => {
+exports.deleteFriend = (req, res, next) => {
   const { decoded } = req;
-  const { email } = req.params;
+  const { senderEmail } = req.params;
   User.findOneAndUpdate(
     { _id: decoded.id },
-    { $pull: {friends: { email }} },
+    { $pull: {friends: { senderEmail }} },
     { multi: true }
   ).exec((err, user) => {
     if (err) {
