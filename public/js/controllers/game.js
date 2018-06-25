@@ -13,8 +13,33 @@ angular.module('mean.system')
     $scope.showAppModal = true;
     $scope.gameTour = introJs();
 
+    $scope.timerStyle = () =>({
+      'background-color': '#495057',
+      'color': 'white'
+    });
+
+    $scope.gameTimerStyle = () => {
+      if (game.state ==='winner has been chosen') {
+        return {
+          'color': '#1B5E20',
+          '-webkit-animation': 'popout 1.0s infinite',
+          'animation': 'popout 1.0s infinite',
+          'position': 'relative'
+        };
+      } else if (game.time < 10 && game.state === 'waiting for players to pick') {
+        return {
+          'color': 'red',
+          '-webkit-animation': 'popout 1.0s infinite',
+          'animation': 'popout 1.0s infinite',
+          'position': 'relative'
+        };
+      } else if (game.state === 'waiting for czar to decide') {
+        return {'color': '#BF360C'};
+      }
+    };
+
     // handle search change 
-    $scope.handleSearch = function(){
+    $scope.handleSearch = function() {
       $scope.global.authenticated = true;
       $scope.global.user = window.user;
       $http.post(`/api/search/users`, {searchTerm: $scope.searchValue}).then((response) => {
@@ -22,11 +47,11 @@ angular.module('mean.system')
         
         $scope.inviteUser = response.data.foundUsers.filter(user => user.name !== window.user.name);
       },
-    (response) => {
-      $scope.inviteUser = '';
-      $scope.inviteError = response.data.error;
-    })
-  }
+      (response) => {
+        $scope.inviteUser = '';
+        $scope.inviteError = response.data.error;
+      });
+    }
 
   // sends invites to players
   $scope.sendInvites = function(user){
@@ -41,11 +66,13 @@ angular.module('mean.system')
       username: user.name,
       gameLink: $scope.gameLink
     }).then((response) => {
-      toastr.success(response.data.message);
+      $("#openSuccessModal").click();
+      $scope.showSuccessMessage = response.data.message;
       $scope.totalInvites = $scope.totalInvites + 1;
       document.getElementById("closeModal").click();
     }, (response) => {
-      toastr.success(response.data.error);
+      $("#openSuccessModal").click();
+      $scope.showSuccessMessage = response.data.error;
     }) 
   }
   }
@@ -93,9 +120,19 @@ angular.module('mean.system')
     };
 
 
-    $scope.pointerCursorStyle = function() {
+    $scope.pointerCursorStyle = (winningSet) => {
       if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
         return {'cursor': 'pointer'};
+      } else if (game.state === 'winner has been chosen') {
+        /*
+        * change the card background to the colors representing the players
+        * and stop animation
+        */
+        return {
+          'background-color': $scope.colors[winningSet.playerIndex],
+          '-webkit-animation': 'none',
+          'animation': 'none',
+        }
       } else {
         return {};
       }
@@ -191,7 +228,10 @@ angular.module('mean.system')
 
     $scope.abandonGame = function() {
       game.leaveGame();
-      $location.path('/');
+      $("#closeAbandonModal").click();
+      setTimeout(() => {
+        $location.path('/');
+      })
     };
 
     // Catches changes to round to update when no players pick card
@@ -448,7 +488,7 @@ angular.module('mean.system')
       });
     }
 
-    $scope.sendInviteToFriend = (user, message, requestAccepted) => {
+    $scope.sendInviteToFriend = (user, message, requestAccepted, gameInvite) => {
       if(requestAccepted) {        
         $scope.gameLink = null;
         $scope.requestStatus = 0;
@@ -494,8 +534,10 @@ angular.module('mean.system')
         $("#openSuccessModal").click();
         const { notification } = response.data;
 
-        if(requestAccepted !== 1) {
+        if(requestAccepted !== 1 && gameInvite !== 1) {
           $scope.showSuccessMessage = 'Friend request sent successfully';
+        } else if (gameInvite === 1) {
+          $scope.showSuccessMessage = 'Game invite sent successfully';
         } else {
           $scope.showSuccessMessage = response.data.message;
         }

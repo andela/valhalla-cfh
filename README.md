@@ -1,4 +1,5 @@
 Cards for Humanity - [http://cfh.io](http://cfh.io)
+View Demo: [Here](https://valhalla-cfh.herokuapp.com/)
 ===========
 [![Build Status](https://travis-ci.org/andela/valhalla-cfh.svg?branch=develop)](https://travis-ci.org/andela/valhalla-cfh)
 [![Coverage Status](https://coveralls.io/repos/github/andela/valhalla-cfh/badge.svg?branch=develop)](https://coveralls.io/github/andela/valhalla-cfh?branch=develop)

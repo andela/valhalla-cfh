@@ -5,7 +5,7 @@ angular.module('mean.directives', [])
       templateUrl: '/views/player.html',
       link: function(scope, elem, attr){
         scope.colors = [
-          '#7CE4E8', '#FFFFa5', '#FC575E', '#F2ADFF', '#398EC4', '#8CFF95',
+          '#7CE4E8', '#698B69', '#FC575E', '#F2ADFF', '#398EC4', '#8CFF95',
           '#F06292', '#DD2C00', '#AB47BC', '#3949AB', '#AEEA00', '#F57C00'
         ];
       }
@@ -74,4 +74,11 @@ angular.module('mean.directives', [])
       link: function(scope, elem, attr) {
       }
     };
-  });
+  })
+  .directive('chatbox', function(){
+    return{
+      restrict: 'EA',
+      templateUrl: '/views/chat.html',
+      link: function(scope, elem, attr){}
+    };
+  });;

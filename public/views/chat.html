@@ -1,0 +1,46 @@
+<div ng-controller="ChatController">
+  <!-- OPEN CHAT BOX -->
+  <div ng-show="displayChat" class="small card open-chat">
+    <div class="bg-custom text-center text-white pointer py-2" ng-click="toggleChatBox()" title="close">
+      <h3 class="d-inline">CHATS</h3>
+      <h3 class="d-inline pull-right pr-3 m-0">&times;</h3>
+    </div>
+    <div scroll-glue style="height: 350px;overflow-y: scroll" class="px-2 pt-1">
+      <!-- EACH CHAT -->
+      <div ng-repeat="message in messages" class=" d-flex p-0">
+        <div>
+          <img ng-src="{{message.avatar}}" alt="avatar" style="width: 40px; height: 40px;" class="rounded-circle ml-0">
+        </div>
+        <div class="w-100 pt-2 pl-2">
+          <div class="d-flex justify-content-between">
+            <h6 class="font-weight-bold">{{message.username}}</h6>
+            <div am-time-ago="message.date"></div>
+          </div>
+          <div>
+            <p class="my-1">{{message.message}}</p>
+          </div>
+          <hr class="my-0">
+        </div>
+      </div>
+      <!-- EACH CHAT -->
+    </div>
+
+    <!-- CHAT INPUT FORM -->
+    <form class="d-flex" ng-submit="sendMessage()">
+      <input class="col-9 py-2 px-1" type="text" name="message" id="chatInput" ng-model="message" placeholder="Type your message" autofocus />
+      <button class="col-3 pointer" type='submit'>Send</button>
+    </form>
+    <!-- CHAT INPUT FORM -->
+    
+  </div>
+  <!-- OPEN CHAT BOX -->
+  
+  <!-- CLOSED CHAT BOX -->
+  <div ng-hide="displayChat" title="Chat" class="pointer bg-custom pt-2 text-white hidden-chat" ng-click="toggleChatBox()">
+    <i class="fa fa-comments-o" style="font-size: 2.5rem;" aria-hidden="true"></i>
+    <span ng-hide="messageAlert === 0" class="badge chat-notify rounded-circle">
+      {{messageAlert}}
+    </span>
+  </div>
+  <!-- CLOSED CHAT BOX -->
+</div>
