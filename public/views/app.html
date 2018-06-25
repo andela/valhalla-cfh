@@ -115,6 +115,7 @@
                       </tr>
                     </tbody>
                   </table>
+                  <p ng-show="totalFriends">Friends: {{totalFriends}}</p>
                 </div>
             </div>
           </div>
@@ -169,7 +170,8 @@
             <tbody>
               <tr ng-repeat="notif in notifications">
                 <td>{{notif.message}}</td>
-                <td ng-if="notif.friendRequest == 0"><a target="_blank" href="{{notif.link}}"><button class="btn" id="tab-button" ng-click="acceptInvite(notif)">join</button></a></td>
+                <td ng-if="notif.requestAccepted == 1"><a target="_blank" href="{{notif.link}}"><button class="btn" id="tab-button" ng-click="deleteNotification(notif)">Remove</button></a></td>
+                <td ng-if="notif.friendRequest == 0 && notif.requestAccepted == 0"><a target="_blank" href="{{notif.link}}"><button class="btn" id="tab-button" ng-click="acceptGameInvite(notif)">join</button></a></td>
                 <td ng-if="notif.friendRequest == 1"> <button type="button" class="btn" id="tab-button" ng-click="acceptFriendRequest(notif)" >Accept</button></td>
                 <td ng-if="notif.friendRequest == 1"> <button type="button" class="btn" id="tab-button" ng-click="rejectFriendRequest(notif)" >Reject</button></td>
               </tr>
@@ -184,5 +186,26 @@
     </div>
   </div>
   <!-- End of the modal -->
+
+  <button data-toggle="modal" data-target="#successModal" class="btn btn-login btn-lg btn-block" id="openSuccessModal" hidden>
+      open modal
+    </button>
+  
+    <!-- Start of Second Signup Modal -->
+    <div id="successModal" class="modal fade">
+      <div class=" success-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <img src="../img/icons/checkmark-64.png" class="check-mark" alt="" height="100px" width="100px">
+              <div ng-show="showSuccessMessage" class="text-center">
+                {{showSuccessMessage}}
+              </div>
+              <button type="button" class="btn btn-outline-success" data-dismiss="modal" id="close-sucess-dialog">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </div>
