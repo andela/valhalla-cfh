@@ -72,7 +72,7 @@
            <ul class="nav nav-tabs" role="tablist">
              <li class="nav-item"><a href="#searchTab" ng-click="getFriendList()" class="nav-link active" aria-controls="searchTab" role="tab" data-toggle="tab">Search</a>
              </li>
-             <li class="nav-item"><a href="#friendsTab" ng-click="getFriendList()" class="nav-link" aria-controls="friendsTab" role="tab" data-toggle="tab">Friends</a>
+             <li class="nav-item"><a href="#friendsTab" ng-click="getFriendList(); getNotification();" class="nav-link" aria-controls="friendsTab" role="tab" data-toggle="tab">Friends</a>
              </li>
         </ul>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -89,7 +89,7 @@
                     <tbody>
                       <tr ng-repeat="user in inviteUser">
                         <td>{{user.name}}</td>
-                        <td> <button disabled="isLoading" type="button" class="btn" id="tab-button" ng-click="addFriend(user)" id="add-button start-game-button" ng-disabled="name.includes(user.name)">Add friend</button></td>
+                        <td> <button type="button" class="btn tab-button" id="tab-button" ng-click="addFriend(user);" ng-disabled="name.includes(user.name)">Add friend</button>
                         <td> <button type="button" class="btn" id="tab-button" ng-click="sendInvites(user)" >Invite</button></td>
                       </tr>
                     </tbody>
@@ -107,10 +107,11 @@
                   </div>
                   <table class="table" ng-show="friendList">
                     <tbody>
-                      <tr ng-repeat="friend in friendList">
-                        <td>{{friend.name}}</td>
-                        <td> <button type="button" class="btn" id="tab-button" ng-click="removeFriend(friend.email)" >remove friend</button></td>
-                        <td> <button type="button" class="btn" id="tab-button" ng-click="sendInviteToFriend(friend)" ng-disabled="listOfInvites.includes(friend.name)">invite</button></td>
+                      <tr ng-repeat="user in friendList">
+                        <td ng-if="!user.senderName">{{user.receiverName}}</td>
+                        <td ng-if="!user.receiverName">{{user.senderName}}</td>
+                        <td> <button type="button" class="btn" id="tab-button" ng-click="removeFriend(user.senderEmail || user.receiverEmail)" >remove friend</button></td>
+                        <td> <button type="button" class="btn" id="tab-button" ng-click="sendInviteToFriend(user)" ng-disabled="listOfInvites.includes(user.name)">invite</button></td>
                       </tr>
                     </tbody>
                   </table>
@@ -143,7 +144,6 @@
           <p> Maximun number of players reached. Sorry, You need to start a new game.</p>
         </div>
         <div class="modal-footer">
-        
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -169,8 +169,9 @@
             <tbody>
               <tr ng-repeat="notif in notifications">
                 <td>{{notif.message}}</td>
-                <td><a target="_blank" href="{{notif.link}}"><button class="btn" id="tab-button" ng-click="acceptInvite(notif)">join</button></a></td>
-                <!-- <td> <a href={{notif.link}} type="button" class="btn" id="tab-button" ng-click="joinGame(notif)" >Join game</a></td> -->
+                <td ng-if="notif.friendRequest == 0"><a target="_blank" href="{{notif.link}}"><button class="btn" id="tab-button" ng-click="acceptInvite(notif)">join</button></a></td>
+                <td ng-if="notif.friendRequest == 1"> <button type="button" class="btn" id="tab-button" ng-click="acceptFriendRequest(notif)" >Accept</button></td>
+                <td ng-if="notif.friendRequest == 1"> <button type="button" class="btn" id="tab-button" ng-click="rejectFriendRequest(notif)" >Reject</button></td>
               </tr>
             </tbody>
           </table>
