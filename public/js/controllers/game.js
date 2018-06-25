@@ -447,7 +447,11 @@ angular.module('mean.system')
       });
     }
 
-    $scope.sendInviteToFriend = (user, message) => {
+    $scope.sendInviteToFriend = (user, message, accept) => {
+      if(accept) {
+        return console.log(accept);
+        
+      }
       if(document.getElementById("tab-button").innerHTML === "Add friend") {
         $scope.gameLink = null;
         message = `You have a friend request from ${window.user.name}`;
@@ -521,7 +525,10 @@ angular.module('mean.system')
       const token = localStorage.token;
       $http({
         method: 'DELETE',
-        url: `/api/users/friends/${email}`,
+        url: `/api/users/friends/`,
+        data: {
+          email
+        },
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `${token}`,
@@ -536,6 +543,9 @@ angular.module('mean.system')
         
         $scope.getFriendsError = '';
         $scope.friendList = friends;
+
+        console.log(friends);
+        
         
       }, (response) => {
         console.log(response.data.error);
@@ -558,8 +568,8 @@ angular.module('mean.system')
          
         },
       }).then((response) => {
-        $scope.getNotification();
-        $("#closeNotifModal").click();
+        $scope.sendInviteToFriend(notif, 'ssd', 'hey yooooo');
+        $scope.getNotification();        
       }, (response) => {
         console.log(response.data.error);
       });
