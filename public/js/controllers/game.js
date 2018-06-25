@@ -19,6 +19,7 @@ angular.module('mean.system')
       $scope.global.user = window.user;
       $http.post(`/api/search/users`, {searchTerm: $scope.searchValue}).then((response) => {
         $scope.inviteError = '';
+        
         $scope.inviteUser = response.data.foundUsers.filter(user => user.name !== window.user.name);
       },
     (response) => {
@@ -380,6 +381,40 @@ angular.module('mean.system')
       $scope.gameTour.start();
     };
 
+    $scope.getNotification = () => {
+      const token = localStorage.token;
+      $http({
+        method: 'GET',
+        url: '/api/notifications',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        if(response.data.notification.length === 0) {
+          $scope.showNoNotification = 'No new notification';
+        }
+        const { notification } = response.data;
+        $scope.notifications = notification;
+        $scope.unreadNotification = notification.length;
+        $scope.false = false;
+
+        // $scope.listOfInvites = notification.map((notif) => {
+        //   if(notif.friendRequest === 0) {
+        //     return notif
+        //   }
+        // })
+        // return console.log($scope.listOfInvites);
+        return console.log(response.data.notification);
+             
+      }, (response) => {
+        console.log(response.data.error);
+      });
+    }
+
+    $scope.getNotification();
+
     $scope.getFriendList = () => {
       $scope.loading = true;
       $scope.showFriendError = '';
@@ -394,15 +429,56 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
+        // $scope.getNotification();
+
         if(response.data.friends.length === 0) {
           $scope.showFriendError = 'No friends added yet';
         }
         const { friends } = response.data;
+        
         $scope.getFriendsError = '';
         $scope.friendList = friends;
-        $scope.name = friends.map(friend => friend.name);
+        
+        $scope.name = friends.map(friend => friend.receiverName || friend.senderName);
         $scope.loading = false;   
              
+      }, (response) => {
+        console.log(response.data.error);
+      });
+    }
+
+    $scope.sendInviteToFriend = (user, message) => {
+      if(document.getElementById("tab-button").innerHTML === "Add friend") {
+        $scope.gameLink = null;
+        message = `You have a friend request from ${window.user.name}`;
+        $scope.requestStatus = 1;
+      } else {
+        $scope.gameLink = $location.absUrl();
+        message = `You have a game invite from ${window.user.name}`
+        $scope.requestStatus = 0;
+      }
+      
+      $scope.listOfInvites = [];
+      const token = localStorage.token;
+      $http({
+        method: 'POST',
+        url: `/api/notifications`,
+        data: {
+          message,
+          receiver: user.name,
+          link: $scope.gameLink,
+          requestStatus: $scope.requestStatus
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        const { notification } = response.data;
+        
+        // $scope.listOfInvites.push(notification.sender);
+
       }, (response) => {
         console.log(response.data.error);
       });
@@ -415,10 +491,10 @@ angular.module('mean.system')
       // let user = [];
       $http({
         method: 'PUT',
-        url: `/api/users/friends`,
+        url: `/api/users/friends/send`,
         data: {
-          name: user.name,
-          email: user.email
+          receiverName: user.name,
+          receiverEmail: user.email
         },
         headers: {
           'Content-Type': 'application/json',
@@ -426,10 +502,14 @@ angular.module('mean.system')
          
         },
       }).then((response) => {
+        console.log(response.data.message);
+        
         $scope.isLoading = false;
         const { friends } = response.data;
         $scope.getFriendsError = '';
         $scope.friendList = friends;
+        $scope.sendInviteToFriend(user);
+
       }, (response) => {
         console.log(response.data.error);
       });
@@ -463,62 +543,11 @@ angular.module('mean.system')
 
     }
 
-    $scope.sendInviteToFriend = (friend) => {
-      $scope.gameLink = $location.absUrl();
-      $scope.listOfInvites = [];
-      const token = localStorage.token;
-      $http({
-        method: 'POST',
-        url: `/api/notifications`,
-        data: {
-          receiverName: friend.name,
-          link: $scope.gameLink
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${token}`,
-         
-        }
-      }).then((response) => {
-        $scope.listOfInvites.push(response.data.notification.receiver);
-        return console.log(response.data.notification);
-
-      }, (response) => {
-        console.log(response.data.error);
-      });
-
-    }
-
-    $scope.getNotification = () => {
-      const token = localStorage.token;
-      $http({
-        method: 'GET',
-        url: '/api/notifications',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${token}`,
-         
-        }
-      }).then((response) => {
-        if(response.data.notification.length === 0) {
-          $scope.showNoNotification = 'No new notification';
-        }
-        const { notification } = response.data;
-        $scope.notifications = notification;
-        $scope.unreadNotification = notification.length;
-             
-      }, (response) => {
-        console.log(response.data.error);
-      });
-    }
-
-    $scope.getNotification();
-
     $scope.acceptInvite = (notif) => {
       const token = localStorage.token;
       
       $http({
-        method: 'PUT',
+        method: 'DELETE',
         url: `/api/notifications`,
         data: {
           id: notif._id
@@ -534,5 +563,59 @@ angular.module('mean.system')
       }, (response) => {
         console.log(response.data.error);
       });
+    }
+
+    $scope.acceptFriendRequest = (notif) => {
+      const token = localStorage.token;
+      $scope.isLoading = true;
+      // let user = [];
+      $http({
+        method: 'PUT',
+        url: `/api/users/friends/accept`,
+        data: {
+          senderName:  notif.sender,
+          senderEmail:  notif.senderEmail
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
+        $scope.acceptInvite(notif);
+        console.log(response.data.message);
+        $scope.isLoading = false;
+
+      }, (response) => {
+        console.log(response.data.error);
+      });
+
+    }
+
+    $scope.rejectFriendRequest = (notif) => {
+      const token = localStorage.token;
+      $scope.isLoading = true;
+      // let user = [];
+      $http({
+        method: 'PUT',
+        url: `/api/users/friends/reject`,
+        data: {
+          receiverName: notif.name,
+          receiverEmail: notif.email
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
+        $scope.acceptInvite(notif);
+        console.log(response.data.message);
+        $scope.isLoading = false;
+
+      }, (response) => {
+        console.log(response.data.error);
+      });
+
     }
 }]);
