@@ -110,7 +110,7 @@
                       <tr ng-repeat="user in friendList">
                         <td ng-if="!user.senderName">{{user.receiverName}}</td>
                         <td ng-if="!user.receiverName">{{user.senderName}}</td>
-                        <td> <button type="button" class="btn" id="tab-button" ng-click="removeFriend(user.senderEmail || user.receiverEmail)" >remove friend</button></td>
+                        <td> <button type="button" class="btn" id="tab-button" ng-click="removeFriend(!user.senderEmail ? user.receiverEmail : user.senderEmail)" >remove friend</button></td>
                         <td> <button type="button" class="btn" id="tab-button" ng-click="sendInviteToFriend(user)" ng-disabled="listOfInvites.includes(user.name)">invite</button></td>
                       </tr>
                     </tbody>
