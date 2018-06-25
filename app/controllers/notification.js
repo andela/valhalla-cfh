@@ -5,7 +5,7 @@ const Notification = mongoose.model('Notification');
 
 exports.newNotification = (req, res) => {
   const {
-    link, message, requestStatus, receiver
+    link, message, requestStatus, receiver, status, requestAccepted
   } = req.body;
   const { decoded } = req;
 
@@ -15,8 +15,9 @@ exports.newNotification = (req, res) => {
     senderEmail: decoded.email,
     message,
     link,
-    status: 0,
-    friendRequest: parseInt(requestStatus, 10)
+    status,
+    friendRequest: parseInt(requestStatus, 10),
+    requestAccepted
   });
 
   notification.save((err) => {
