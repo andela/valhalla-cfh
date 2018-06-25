@@ -1,126 +1,139 @@
 <div ng-controller="IndexController">
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="../img/logo.png" height="40px" width="180px">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="../img/logo.png" height="40px" width="180px">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active pointer">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="pointer nav-link btn nav-action-btn text-white" id="start-game" data-toggle="modal" data-target="#myModal" ng-click="startGameModal('custom')">
-                        Start Game
-                    </li>&nbsp;&nbsp;
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- NAVBAR -->
-
-    <div class="container p-t-md mt-5">
-        <div class="row pt-5">
-            <div class="col-md-12 text-center">
-                <ul class="nav nav-tabs justify-content-center">
-                    <li class="nav-item w-25">
-                        <a class="nav-link active" data-toggle="tab" href="#currentPreferences" ng-click="gameHistory()">Game</a>
-                    </li>
-                    <li class="nav-item w-25">
-                        <a class="nav-link" data-toggle="tab" href="#alternative" ng-click="leaderBoard()"> LeaderBoard </a>
-                    </li>
-                    <li class="nav-item w-25">
-                        <a class="nav-link" data-toggle="tab" href="#link" ng-click="donation()">Donations</a>
-                    </li>
-                </ul>
-                <br>
-                <br>
-                <div class="tab-content" style="background: white">
-                    <div role="tabpanel" class="tab-pane active" id="currentPreferences" ng-init="gameHistory()">
-                        <br/>
-                        <ul class="list-group media-list media-list-stream">
-                            <h4 class="text-center p-3"><b>Game History</b></h4>
-                            <table class="table table-striped text-center">
-                                <thead>
-                                    <tr class="w-100">
-                                        <th class="w-10">#</th>
-                                        <th class="w-35">Winner</th>
-                                        <th class="w-45">Players</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="game in games" class="w-100">
-                                        <td class="w-25">{{ $index+1 }}</td>
-                                        <td class="w-25">{{game.gameWinner}}</td>
-                                        <td class="w-50">
-                                            <span style="word-wrap: break-word">
-                                                <span ng-repeat="(key, onePlayer) in game.gamePlayers">
-                                                    {{onePlayer}}
-                                                    <span ng-show="{{key + 1}} != game.gamePlayers.length">,</span>
-                                                </span>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                        </ul>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade in" id="alternative">
-                        <br/>
-                        <ul class="list-group media-list media-list-stream">
-                            <h4 class="text-center p-3"><b>LeaderBoard</b></h4>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Rounds won</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="leader in leaderboards">
-                                        <td>{{ $index + 1}}</td>
-                                        <td>{{leader._id}}</td>
-                                        <td>{{leader.count}}</td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                        </ul>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade in" id="link">
-                        <br/>
-                        <ul class="list-group media-list media-list-stream">
-                            <h4 class="text-center p-3"><b>Donations</b></h4>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Avatar</th>
-                                        <th>Name</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="donation in donations" class="w-100">
-                                        <td class="w-25">{{ $index + 1}}</td>
-                                        <td class="w-25"><img src="{{donation.avatar}}"   width="30%" style="border-radius: 50%"/></td>
-                                        <td class="w-25">{{donation.name}}</td>
-                                        <td class="w-25"><b> ${{generateSum(donation.donations)}} </b></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active pointer">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="pointer nav-link btn nav-action-btn text-white" id="start-game" data-toggle="modal" data-target="#myModal" ng-click="startGameModal('custom')">
+            Start Game
+          </li>&nbsp;&nbsp;
+        </ul>
+      </div>
     </div>
+  </nav>
+  <!-- NAVBAR -->
+
+  <div class="spinner">
+    <i class="fa fa-circle-o-notch fa-spin" ng-show="loading" aria-hidden="true"></i>
+  </div>
+
+  <div class="container p-t-md mt-5">
+    <div class="row pt-5">
+      <div class="col-md-12 text-center">
+        <ul class="nav nav-tabs justify-content-center">
+          <li class="nav-item w-25">
+            <a class="nav-link active dashboard-tab" data-toggle="tab" href="#currentPreferences" ng-click="gameHistory()">Game</a>
+          </li>
+          <li class="nav-item w-25">
+            <a class="nav-link dashboard-tab" data-toggle="tab" href="#alternative" ng-click="leaderBoard()"> LeaderBoard </a>
+          </li>
+          <li class="nav-item w-25">
+            <a class="nav-link dashboard-tab" data-toggle="tab" href="#link" ng-click="donation()">Donations</a>
+          </li>
+        </ul>
+        <br>
+        <br>
+        <div class="tab-content" style="background: white" ng-hide="loading">
+          <div role="tabpanel" class="tab-pane active" id="currentPreferences" ng-init="gameHistory()">
+            <br/>
+            <ul class="list-group media-list media-list-stream">
+              <h4 class="text-center p-3">
+                <b>Game History</b>
+              </h4>
+              <table class="table table-striped text-center">
+                <thead>
+                  <tr class="w-100">
+                    <th class="w-10">#</th>
+                    <th class="w-35">Winner</th>
+                    <th class="w-45">Players</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="game in games" class="w-100">
+                    <td class="w-25">{{ $index+1 }}</td>
+                    <td class="w-25">{{game.gameWinner}}</td>
+                    <td class="w-50">
+                      <span style="word-wrap: break-word">
+                        <span ng-repeat="(key, onePlayer) in game.gamePlayers">
+                          {{onePlayer}}
+                          <span ng-show="{{key + 1}} != game.gamePlayers.length">,</span>
+                        </span>
+                      </span>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </ul>
+          </div>
+          <div role="tabpanel" class="tab-pane fade in" id="alternative">
+            <br/>
+            <ul class="list-group media-list media-list-stream">
+              <h4 class="text-center p-3">
+                <b>LeaderBoard</b>
+              </h4>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Rounds won</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="leader in leaderboards">
+                    <td>{{ $index + 1}}</td>
+                    <td>{{leader._id}}</td>
+                    <td>{{leader.count}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </ul>
+          </div>
+          <div role="tabpanel" class="tab-pane fade in" id="link">
+            <br/>
+            <ul class="list-group media-list media-list-stream">
+              <h4 class="text-center p-3">
+                <b>Donations</b>
+              </h4>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Avatar</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="donation in donations" class="w-100">
+                    <td class="w-25">{{ $index + 1}}</td>
+                    <td class="w-25">
+                      <img src="{{donation.avatar}}" width="30%" style="border-radius: 50%" />
+                    </td>
+                    <td class="w-25">{{donation.name}}</td>
+                    <td class="w-25">
+                      <b> ${{generateSum(donation.donations)}} </b>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

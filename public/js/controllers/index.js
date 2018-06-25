@@ -56,6 +56,7 @@ angular.module('mean.system')
     $scope.getUser();
 
     $scope.gameHistory = () => {
+      $scope.loading = true;
       const token = localStorage.token;
       let user = [];
       $http({
@@ -67,14 +68,18 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
+        $scope.loading = false;
         $scope.games = response.data.games;
+        
        //  console.log($scope.games);
       }, (error) => {
+        $scope.loading = false;
         console.log(error)
       })
     }
 
     $scope.leaderBoard = () => {
+      $scope.loading = true;
       const token = localStorage.token;
       let user = [];
       $http({
@@ -86,14 +91,17 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
+        $scope.loading = false;
         $scope.leaderboards = response.data.logs;
         // console.log($scope.leaderboards);
       }, (error) => {
+        $scope.loading = false;
         console.log(error)
       })
     }
 
     $scope.donation = () => {
+      $scope.loading = true;
       const token = localStorage.token;
       let user = [];
       $http({
@@ -105,10 +113,11 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
+        $scope.loading = false;
         $scope.donations = response.data.donationData;
-        console.log(response.data.donationData);
       },
       (error) => {
+        $scope.loading = false;
         console.log(error)
       }
     )
