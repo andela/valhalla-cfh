@@ -438,6 +438,7 @@ angular.module('mean.system')
         
         $scope.getFriendsError = '';
         $scope.friendList = friends;
+        $scope.totalFriends = friends.length;
         
         $scope.name = friends.map(friend => friend.receiverName || friend.senderName);
         $scope.loading = false;   
@@ -447,19 +448,28 @@ angular.module('mean.system')
       });
     }
 
-    $scope.sendInviteToFriend = (user, message, accept) => {
-      if(accept) {
-        return console.log(accept);
-        
-      }
-      if(document.getElementById("tab-button").innerHTML === "Add friend") {
+    $scope.sendInviteToFriend = (user, message, requestAccepted) => {
+      if(requestAccepted) {        
+        $scope.gameLink = null;
+        $scope.requestStatus = 0;
+        $scope.requestAccepted = requestAccepted;
+        $scope.status = 0;
+        $scope.name = user.sender;
+        message = `${window.user.name} has accepted your friend request`;
+      } else if(document.getElementById("tab-button").innerHTML === "Add friend") {
         $scope.gameLink = null;
         message = `You have a friend request from ${window.user.name}`;
+        $scope.status = 0;
         $scope.requestStatus = 1;
+        $scope.requestAccepted = 0;
+        $scope.name = user.name;
       } else {
+        $scope.name = user.senderName || user.receiverName
         $scope.gameLink = $location.absUrl();
         message = `You have a game invite from ${window.user.name}`
         $scope.requestStatus = 0;
+        $scope.status = 0;
+        $scope.requestAccepted = 0;
       }
       
       $scope.listOfInvites = [];
@@ -469,9 +479,11 @@ angular.module('mean.system')
         url: `/api/notifications`,
         data: {
           message,
-          receiver: user.name,
+          receiver: $scope.name,
           link: $scope.gameLink,
-          requestStatus: $scope.requestStatus
+          requestStatus: $scope.requestStatus,
+          requestAccepted: $scope.requestAccepted,
+          status: $scope.status
         },
         headers: {
           'Content-Type': 'application/json',
@@ -479,8 +491,14 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
+        $("#openSuccessModal").click();
         const { notification } = response.data;
-        
+
+        if(requestAccepted !== 1) {
+          $scope.showSuccessMessage = 'Friend request sent successfully';
+        } else {
+          $scope.showSuccessMessage = response.data.message;
+        }
         // $scope.listOfInvites.push(notification.sender);
 
       }, (response) => {
@@ -506,13 +524,12 @@ angular.module('mean.system')
          
         },
       }).then((response) => {
-        console.log(response.data.message);
+        $scope.sendInviteToFriend(user);
         
         $scope.isLoading = false;
         const { friends } = response.data;
         $scope.getFriendsError = '';
         $scope.friendList = friends;
-        $scope.sendInviteToFriend(user);
 
       }, (response) => {
         console.log(response.data.error);
@@ -527,7 +544,7 @@ angular.module('mean.system')
         method: 'DELETE',
         url: `/api/users/friends/`,
         data: {
-          email
+          receiverEmail: email
         },
         headers: {
           'Content-Type': 'application/json',
@@ -544,7 +561,8 @@ angular.module('mean.system')
         $scope.getFriendsError = '';
         $scope.friendList = friends;
 
-        console.log(friends);
+        $("#openSuccessModal").click();
+        $scope.showSuccessMessage = "Friend removed successfully";
         
         
       }, (response) => {
@@ -568,7 +586,28 @@ angular.module('mean.system')
          
         },
       }).then((response) => {
-        $scope.sendInviteToFriend(notif, 'ssd', 'hey yooooo');
+        $scope.sendInviteToFriend(notif, 'ssd', 1);
+        $scope.getNotification();        
+      }, (response) => {
+        console.log(response.data.error);
+      });
+    }
+
+    $scope.acceptGameInvite = (notif) => {
+      const token = localStorage.token;
+      
+      $http({
+        method: 'DELETE',
+        url: `/api/notifications`,
+        data: {
+          id: notif._id
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
         $scope.getNotification();        
       }, (response) => {
         console.log(response.data.error);
@@ -595,6 +634,9 @@ angular.module('mean.system')
         $scope.acceptInvite(notif);
         console.log(response.data.message);
         $scope.isLoading = false;
+
+        $("#openSuccessModal").click();
+        $scope.showSuccessMessage = response.data.message;
 
       }, (response) => {
         console.log(response.data.error);
@@ -623,9 +665,35 @@ angular.module('mean.system')
         console.log(response.data.message);
         $scope.isLoading = false;
 
+        $("#openSuccessModal").click();
+        $scope.showSuccessMessage = response.data.message;
+
       }, (response) => {
         console.log(response.data.error);
       });
 
+    }
+
+    $scope.deleteNotification = (notif) => {
+      const token = localStorage.token;
+      
+      $http({
+        method: 'DELETE',
+        url: `/api/notifications`,
+        data: {
+          id: notif._id
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
+        $scope.getNotification();        
+        console.log(response.data.message);
+        
+      }, (response) => {
+        console.log(response.data.error);
+      });
     }
 }]);
