@@ -13,11 +13,17 @@ const NotificationSchema = new Schema({
   receiver: {
     type: String
   },
+  senderEmail: {
+    type: String
+  },
   message: {
     type: String
   },
   link: {
     type: String
+  },
+  friendRequest: {
+    type: Number
   },
   status: {
     type: Number
