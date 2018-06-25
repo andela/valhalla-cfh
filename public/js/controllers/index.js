@@ -54,6 +54,70 @@ angular.module('mean.system')
 
     }
     $scope.getUser();
+
+    $scope.gameHistory = () => {
+      const token = localStorage.token;
+      let user = [];
+      $http({
+        method: 'GET',
+        url: `/api/games/history`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        $scope.games = response.data.games;
+       //  console.log($scope.games);
+      }, (error) => {
+        console.log(error)
+      })
+    }
+
+    $scope.leaderBoard = () => {
+      const token = localStorage.token;
+      let user = [];
+      $http({
+        method: 'GET',
+        url: `/api/leaderBoard`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        $scope.leaderboards = response.data.logs;
+        // console.log($scope.leaderboards);
+      }, (error) => {
+        console.log(error)
+      })
+    }
+
+    $scope.donation = () => {
+      const token = localStorage.token;
+      let user = [];
+      $http({
+        method: 'GET',
+        url: `/api/donations`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        $scope.donations = response.data.donationData;
+        console.log(response.data.donationData);
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+    }
+
+    $scope.generateSum = (array) => {
+      return array.reduce((a,b) => parseInt(a) + parseInt(b));
+    };
+
     $scope.previewImage = () => {
       // collect image chosen from the signup form
       // const imageFile = '';
@@ -285,3 +349,18 @@ angular.module('mean.system')
       document.getElementById('closeLogin').click();
     }
   }]);
+
+//   User.find()
+// +    .then((response) => {
+// +      if (response.length === 0) {
+// +        return res.send({ message: 'no data' });
+// +      }
+// +      const donationData = [];
+// +      response.forEach((array) => {
+// +        donationData.push({ name: array.name, avatar: array.avatar, donations: array.donations.length });
+// +      });
+// +      res.send(donationData);
+// +    })
+// +    .catch((error) => {
+// +      res.send(error);
+// +    });

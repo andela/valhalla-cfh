@@ -506,3 +506,39 @@ exports.profile = function (req, res) {
     });
   });
 }
+
+exports.donations = function (req, res){
+  User.find().exec((err, users) => {
+    if (err) {
+      return res.status(500).json({
+        message: 'Internal server error'
+      });
+    }
+    if (!users) {
+      return res.status(404).json({
+        message: 'No Users found',
+        error: true
+      })
+    }
+   // return console.log('Enter the function');
+    const donationData = [];
+    users.forEach((user) => {
+      //return console.log(user.donations.length);
+      if(user.donations.length > 0){
+        donationData.push({ name: user.name, avatar: user.avatar, donations: user.donations });
+        //return console.log('hello', user.donations.length);
+      }
+    })
+
+    if(donationData.length == 0){
+      return res.status(200).json({
+        message: 'No Donation'
+      });
+    }
+    return res.status(200).json({
+      message: 'User Donation',
+      donationData
+    });
+  })
+}
+
