@@ -553,15 +553,14 @@ else{
 }
 }
 
-exports.getUser = function (req, res) {
-  const { username } = req.query;
-  let getPlayers = '';
+exports.friends = function (req, res) {
+  const { decoded } = req;
 
-  User.findOne({
-    name: username
+  User.find({
+    _id: decoded.id
   }).exec((err, user) => {
     if (err) {
-      return res.status(404).json({
+      return res.status(500).json({
         message: 'Internal server error'
       });
     }
@@ -577,7 +576,7 @@ exports.getUser = function (req, res) {
   });
 };
 
-exports.friends = (req, res) => {
+exports.getUser = (req, res) => {
   const { decoded } = req;
 
   User.find({

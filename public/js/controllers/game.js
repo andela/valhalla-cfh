@@ -469,7 +469,8 @@ angular.module('mean.system')
         }
       }).then((response) => {
         $scope.getNotification();
-
+        console.log(response.data.friends); 
+        
         if(response.data.friends.length === 0) {
           $scope.showFriendError = 'No friends added yet';
         }
@@ -495,13 +496,14 @@ angular.module('mean.system')
         $scope.status = 0;
         $scope.name = user.sender;
         message = `${window.user.name} has accepted your friend request`;
-      } else if(document.getElementById("tab-button").innerHTML === "Add friend") {
+      } else if(document.getElementById("tab-button").innerHTML === "Add as Friend") {
         $scope.gameLink = null;
         message = `You have a friend request from ${window.user.name}`;
         $scope.status = 0;
         $scope.requestStatus = 1;
         $scope.requestAccepted = 0;
         $scope.name = user.name;
+        $scope.gameInvite = 0;
       } else {
         $scope.name = user.senderName || user.receiverName
         $scope.gameLink = $location.absUrl();
@@ -530,16 +532,17 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
-        $("#openSuccessModal").click();
-        const { notification } = response.data;
-
-        if(requestAccepted !== 1 && gameInvite !== 1) {
+        if($scope.requestAccepted !== 1 && $scope.gameInvite !== 1) {
           $scope.showSuccessMessage = 'Friend request sent successfully';
         } else if (gameInvite === 1) {
           $scope.showSuccessMessage = 'Game invite sent successfully';
         } else {
           $scope.showSuccessMessage = response.data.message;
         }
+
+        $("#openSuccessModal").click();
+        console.log('request accepted', $scope.requestAccepted);
+        console.log('gameInvite', $scope.gameInvite);
         // $scope.listOfInvites.push(notification.sender);
 
       }, (response) => {
@@ -548,7 +551,8 @@ angular.module('mean.system')
 
     }
 
-    $scope.addFriend = (user) => {
+    $scope.addFriend = (name) => {
+      console.log('name', name);
       const token = localStorage.token;
       $scope.isLoading = true;
       // let user = [];
@@ -556,8 +560,8 @@ angular.module('mean.system')
         method: 'PUT',
         url: `/api/users/friends/send`,
         data: {
-          receiverName: user.name,
-          receiverEmail: user.email
+          receiverName: name,
+          // receiverEmail: user.email
         },
         headers: {
           'Content-Type': 'application/json',
@@ -565,6 +569,7 @@ angular.module('mean.system')
          
         },
       }).then((response) => {
+        console.log('@here', user);
         $scope.sendInviteToFriend(user);
         
         $scope.isLoading = false;
@@ -573,7 +578,15 @@ angular.module('mean.system')
         $scope.friendList = friends;
 
       }, (response) => {
-        console.log(response.data.error);
+        const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white" style="background: red">Close</button>';        
+        const infoModal = $('#infoModal');
+        infoModal.find('.modal-body').empty();
+        infoModal.find('.modal-body')
+        .append(`<div class="text-center">Sorry, ${name} is not a registered user</div>`);
+        $('.button').empty();
+        infoModal.find('.button').append(closeModal);
+        infoModal.modal('show')
+        console.log('errorrrrrrr');
       });
 
     }

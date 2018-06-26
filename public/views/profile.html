@@ -1,4 +1,5 @@
 <div ng-controller="IndexController">
+<!-- <div ng-controller="IndexController"> -->
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
@@ -75,12 +76,11 @@
                               <table class="table">
                                 <tbody>
                                   <tr ng-repeat="onePlayer in player.gamePlayers | filter : '!{{user.name}}'">
-                                    <td>
+                                    <td ng-if="user.name !== onePlayer">
                                       <span>{{ onePlayer }}</span></td>
-                                    <td>
+                                    <td ng-if="user.name !== onePlayer">
                                       <button type="button" class="btn btn-secondary" ng-click="getUser('{{onePlayer}}')">Profile</button>
-                                      <button type="button" class="btn btn-success">Invite</button>
-                                      <button type="button" class="btn btn-info">Add as Friend</button>
+                                      <button type="button" class="btn btn-info" ng-click="addFriend(onePlayer)" ng-controller="GameController" id="tab-button">Add as Friend</button>
                                     </td>
                                   </tr>
                                 </tbody>
@@ -117,7 +117,7 @@
     </div>
 
     <!-- modal start -->
-    <div id="infoModal" class="modal fade" role="dialog" style="padding: 50px;" ng-controller="IndexController">
+    <div id="infoModal" class="modal fade" role="dialog" style="padding: 50px;">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -136,4 +136,25 @@
     <!-- end of modal -->
 
   </div>
+
+  <button data-toggle="modal" data-target="#successModal" class="btn btn-login btn-lg btn-block" id="openSuccessModal" hidden>
+      open modal
+    </button>
+  
+    <!-- Start of Second Signup Modal -->
+    <div id="successModal" class="modal fade">
+      <div class=" success-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <img src="../img/icons/checkmark-64.png" class="check-mark" alt="" height="100px" width="100px">
+              <div ng-show="showSuccessMessage" class="text-center">
+                {{showSuccessMessage}}
+              </div>
+              <button type="button" class="btn btn-outline-success" data-dismiss="modal" id="close-sucess-dialog">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
