@@ -356,8 +356,9 @@ hr {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   left: 50%;
-  top: 100%;
+  top: 50%;
   color: #495057; }
+
 
 .reset-modal {
   width: 100%;
@@ -378,6 +379,17 @@ hr {
   position: absolute;
   top: 39%;
   right: 3%; }
+
+.nav-tabs .nav-link {
+  background: #d2745e;
+  padding: 20px; }
+
+.dashboard-tab {
+  color: black;
+  font-weight: 1000px; }
+  .dashboard-tab:hover {
+    color: white; }
+
 
 .chat-notify {
   background: red;

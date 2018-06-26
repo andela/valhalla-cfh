@@ -151,6 +151,14 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
   // User profile route
   app.get('/api/profile', authorization.tokenVerification, users.profile);
 
+  // User donation route
+  app.get('/api/donations', authorization.tokenVerification, users.donations);
+  
+  // Game history route
+  app.get('/api/games/history', authorization.tokenVerification, games.history);
+
+  // Game history route
+  app.get('/api/leaderboard', authorization.tokenVerification, games.leaderBoard);
   // index route
   app.get('/', index.render);
 
