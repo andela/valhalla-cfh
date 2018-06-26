@@ -189,6 +189,7 @@ angular.module('mean.system')
         password: $scope.password
       })
         .then((response) => {
+          $scope.getNotification();
           const token = response.data.token;
           if (token) {
             localStorage.setItem('token', token);
@@ -304,21 +305,176 @@ angular.module('mean.system')
         $scope.notifications = notification;
         $scope.unreadNotification = notification.length;
         $scope.false = false;
-
-        // $scope.listOfInvites = notification.map((notif) => {
-        //   if(notif.friendRequest === 0) {
-        //     return notif
-        //   }
-        // })
-        // return console.log($scope.listOfInvites);
-        return console.log(response.data.notification);
-             
+        
       }, (response) => {
         console.log(response.data.error);
       });
     }
 
     $scope.getNotification();
+
+    $scope.sendInviteToFriend = (user, message, requestAccepted, gameInvite) => {
+      if(requestAccepted) {        
+        $scope.gameLink = null;
+        $scope.requestStatus = 0;
+        $scope.requestAccepted = requestAccepted;
+        $scope.status = 0;
+        $scope.name = user.sender;
+        message = `${window.user.name} has accepted your friend request`;
+      } else if(document.getElementById("tab-button").innerHTML === "Add friend") {
+        $scope.gameLink = null;
+        message = `You have a friend request from ${window.user.name}`;
+        $scope.status = 0;
+        $scope.requestStatus = 1;
+        $scope.requestAccepted = 0;
+        $scope.name = user.name;
+      } else {
+        $scope.name = user.senderName || user.receiverName
+        $scope.gameLink = $location.absUrl();
+        message = `You have a game invite from ${window.user.name}`
+        $scope.requestStatus = 0;
+        $scope.status = 0;
+        $scope.requestAccepted = 0;
+      }
+      
+      $scope.listOfInvites = [];
+      const token = localStorage.token;
+      $http({
+        method: 'POST',
+        url: `/api/notifications`,
+        data: {
+          message,
+          receiver: $scope.name,
+          link: $scope.gameLink,
+          requestStatus: $scope.requestStatus,
+          requestAccepted: $scope.requestAccepted,
+          status: $scope.status
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        $("#openSuccessModal").click();
+        const { notification } = response.data;
+
+        if(requestAccepted !== 1 && gameInvite !== 1) {
+          $scope.showSuccessMessage = 'Friend request sent successfully';
+        } else if (gameInvite === 1) {
+          $scope.showSuccessMessage = 'Game invite sent successfully';
+        } else {
+          $scope.showSuccessMessage = response.data.message;
+        }
+        // $scope.listOfInvites.push(notification.sender);
+
+      }, (response) => {
+        console.log(response.data.error);
+      });
+
+    }
+
+    $scope.acceptInvite = (notif) => {
+      const token = localStorage.token;
+      
+      $http({
+        method: 'DELETE',
+        url: `/api/notifications`,
+        data: {
+          id: notif._id
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
+        $scope.sendInviteToFriend(notif, 'ssd', 1);
+        $scope.getNotification();        
+      }, (response) => {
+        console.log(response.data.error);
+      });
+    }
+
+    $scope.acceptGameInvite = (notif) => {
+      const token = localStorage.token;
+      
+      $http({
+        method: 'DELETE',
+        url: `/api/notifications`,
+        data: {
+          id: notif._id
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
+        $scope.getNotification();        
+      }, (response) => {
+        console.log(response.data.error);
+      });
+    }
+
+
+    $scope.acceptFriendRequest = (notif) => {
+      const token = localStorage.token;
+      $scope.isLoading = true;
+      // let user = [];
+      $http({
+        method: 'PUT',
+        url: `/api/users/friends/accept`,
+        data: {
+          senderName:  notif.sender,
+          senderEmail:  notif.senderEmail
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
+        $scope.acceptInvite(notif);
+        console.log(response.data.message);
+        $scope.isLoading = false;
+
+        $("#openSuccessModal").click();
+        $scope.showSuccessMessage = response.data.message;
+
+      }, (response) => {
+        console.log(response.data.error);
+      });
+
+    }
+
+    $scope.rejectFriendRequest = (notif) => {
+      const token = localStorage.token;
+      $scope.isLoading = true;
+      // let user = [];
+      $http({
+        method: 'PUT',
+        url: `/api/users/friends/reject`,
+        data: {
+          senderName: notif.sender,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
+        $scope.deleteNotification(notif);
+        $scope.isLoading = false;
+
+        $("#openSuccessModal").click();
+        $scope.showSuccessMessage = response.data.message;
+
+      }, (response) => {
+        console.log(response.data.error);
+      });
+
+    }
     
     $scope.deleteNotification = (notif) => {
       const token = localStorage.token;
