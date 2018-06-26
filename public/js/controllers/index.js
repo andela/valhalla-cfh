@@ -62,6 +62,10 @@ angular.module('mean.system')
         console.log(response.data.error);
       });
 
+      $scope.totalDonation = (donations) => {
+        return donations.reduce((a,b) => parseInt(a) + parseInt(b));
+      }
+
     }
     // $scope.getUser();
     $scope.previewImage = () => {

@@ -102,7 +102,10 @@
               <div class="card mt-5" style="width: 18rem;">
                 <div class="card-body">
                   <h5 class="card-title">Donated</h5>
-                  <p class="card-text"><span style="font-size: 70px; text-shadow: #495055 0 0 10px, #cc5403 5px 5px 5px;">$100</span></p>
+                  <p class="card-text"><span style="font-size: 70px; text-shadow: #495055 0 0 10px, #cc5403 5px 5px 5px;">
+                    {{ user.donations.length > 0 ? '$'+totalDonation(user.donations) : '$0' }}
+                    
+                  </span></p>
                   <a href="#" id="donate-button" class="btn btn-primary" style="background: #1d5d21; border-color: #1d5d21">Donate More</a>
                 </div>
               </div>
