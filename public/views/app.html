@@ -1,24 +1,33 @@
-
 <div ng-controller="GameController" ng-init="takeTour()" id="app-container">
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
     <div class="container">
-      <a class="navbar-brand" href="/"><img src="../img/logo.png" height="40px" width="180px"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="/">
+        <img src="../img/logo.png" height="40px" width="180px">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-link pointer" id="takeTourBtn" ng-click="repeatTour()">
-                Take a Tour
-            </li>
-          <li class="nav-link pointer" id='abandon' ng-click="abandonGame()">
-              Abandon Game
+          <li class="pointer bg-custom pt-2 text-white nav-link" id='invite-players' data-toggle="modal" data-target="#notifModal">
+            <i class="fa fa-comments" style="font-size: 1.5rem;" aria-hidden="true"></i>
+            <span ng-show="unreadNotification" class="badge notification">
+              {{unreadNotification}}
+            </span>
           </li>
-          <li class="pointer nav-link btn nav-action-btn text-white" id='invite-players' data-toggle="modal" data-target="#myModal" ng-click="inviteModal()">
-              Invite Friends
+          <li class="nav-link pointer" id="takeTourBtn" ng-click="repeatTour()">
+              Take a Tour
+          </li>
+          <li class="nav-link pointer" data-toggle="modal" data-target="#abandonGameModal">
+            Abandon Game
+          </li>
+          <li class="pointer nav-link btn nav-action-btn text-white" id='invite-players' data-toggle="modal" data-target="#myModal"
+            ng-click="inviteModal()">
+            Invite Friends
           </li>&nbsp;&nbsp;
           <li ng-hide="showOptions" class="nav-item pointer">
             <a class="nav-link" href="/#!/profile">Profile</a>
@@ -28,6 +37,7 @@
     </div>
   </nav>
   <!-- NAVBAR -->
+  
   <!-- MAIN CONTENT -->
   <div>
     <div class="container">
@@ -43,10 +53,10 @@
           </div>
           <answers></answers>
         </div>
-        <div class="col-sm-12 col-md-3 mt-3 card p-0" style="max-height: 100%;overflow: auto;">
-          <h2 class="text-center sticky-top bg-white">Current Players</h2>
-          <div id="player-card">
-          <player></player>
+        <div class="col-sm-12 col-md-3 mt-3 p-0">
+          <div class="card" style="overflow-y: scroll; max-height: 580px;">
+            <h2 class="text-center sticky-top bg-custom text-white mb-0">Current Players</h2>
+            <player></player>
           </div>
         </div>
       </div>
@@ -54,41 +64,70 @@
   </div>
   <!-- MAIN CONTENT -->
 
+  <!-- CHAT -->
+  <div>
+    <chatbox></chatbox>
+  </div>
+  <!-- CHAT -->
+
   <!-- Modal for searching for users -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content -->
       <div class="modal-content">
-        <div class="modal-header text-center">
-          <h4 class="modal-title">Invite Players</h4>
+        <div class="modal-header text-center invite-header">
+          <!-- <h4 class="modal-title">Invite Players</h4>
+           -->
+           <ul class="nav nav-tabs" role="tablist">
+             <li class="nav-item"><a href="#searchTab" ng-click="getFriendList()" class="nav-link active" aria-controls="searchTab" role="tab" data-toggle="tab">Search</a>
+             </li>
+             <li class="nav-item"><a href="#friendsTab" ng-click="getFriendList(); getNotification();" class="nav-link" aria-controls="friendsTab" role="tab" data-toggle="tab">Friends</a>
+             </li>
+        </ul>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          
-          <span class="searchfield">
-            <input type="text" class="form-control" ng-change="handleSearch()" ng-model="searchValue" placeholder="Search For Players"/>
-          </span>
+          <div role="tabpanel">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane show active" id="searchTab">
+                  <span class="searchfield">
+                    <input type="text" class="form-control" ng-change="handleSearch(); getFriendList()" ng-model="searchValue" placeholder="Search For Players"/>
+                  </span>
 
-          <table class="table" ng-show="inviteUser">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="user in inviteUser">
-                <td>{{user.name}}</td>
-                <td>{{user.email}}</td>
-                <td> <button type="button" ng-click="sendInvites(user)" >Invite</button></td>
-              </tr>
-            </tbody>
-          </table>
-          </br>
-          <div class="error" ng-show="inviteError">
-            <span>{{inviteError}}</span>
+                  <table class="table" ng-show="inviteUser">
+                    <tbody>
+                      <tr ng-repeat="user in inviteUser">
+                        <td>{{user.name}}</td>
+                        <td> <button type="button" class="btn tab-button" id="tab-button" ng-click="addFriend(user);" ng-disabled="name.includes(user.name)">Add friend</button>
+                        <td> <button type="button" class="btn" id="tab-button" ng-click="sendInvites(user)" >Invite</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </br>
+                  <div class="error" ng-show="inviteError">
+                    <span>{{inviteError}}</span>
+                  </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="friendsTab">
+                  <div class="friend-loader"><i class="fa fa-circle-o-notch fa-spin" ng-show="loading" aria-hidden="true"></i></div>
+                  <div ng-show="showFriendError" class="text-center">
+                    {{showFriendError}}
+                  </div>
+                  <table class="table" ng-show="friendList">
+                    <tbody>
+                      <tr ng-repeat="user in friendList">
+                        <td ng-if="!user.senderName">{{user.receiverName}}</td>
+                        <td ng-if="!user.receiverName">{{user.senderName}}</td>
+                        <td> <button type="button" class="btn" id="tab-button" ng-click="removeFriend(!user.senderEmail ? user.receiverEmail : user.senderEmail)" >remove friend</button></td>
+                        <td> <button type="button" class="btn" id="tab-button" ng-click="sendInviteToFriend(user, 1, 0, 1)" ng-disabled="listOfInvites.includes(user.name)">invite</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p ng-show="totalFriends">Friends: {{totalFriends}}</p>
+                </div>
+            </div>
           </div>
         </div>
 
@@ -116,6 +155,40 @@
           <p> Maximun number of players reached. Sorry, You need to start a new game.</p>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of the modal -->
+
+  <!-- modal for notification -->
+  <div class="modal" id="notifModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Notification</h5>
+          <button type="button" class="close" id="closeNotifModal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div ng-show="showNoNotification" class="text-center" style="font-size: 2rem;">
+              {{showNoNotification}}
+            </div>
+          <table class="table" ng-show="notifications">
+            <tbody>
+              <tr ng-repeat="notif in notifications">
+                <td>{{notif.message}}</td>
+                <td ng-if="notif.requestAccepted == 1"><a target="_blank" href="{{notif.link}}"><button class="btn" id="tab-button" ng-click="deleteNotification(notif)">Remove</button></a></td>
+                <td ng-if="notif.friendRequest == 0 && notif.requestAccepted == 0"><a target="_blank" href="{{notif.link}}"><button class="btn" id="tab-button" ng-click="acceptGameInvite(notif)">join</button></a></td>
+                <td ng-if="notif.friendRequest == 1"> <button type="button" class="btn" id="tab-button" ng-click="acceptFriendRequest(notif)" >Accept</button></td>
+                <td ng-if="notif.friendRequest == 1"> <button type="button" class="btn" id="tab-button" ng-click="rejectFriendRequest(notif)" >Reject</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
         
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
@@ -123,5 +196,62 @@
     </div>
   </div>
   <!-- End of the modal -->
+
+  <button data-toggle="modal" data-target="#successModal" class="btn btn-login btn-lg btn-block" id="openSuccessModal" hidden>
+      open modal
+    </button>
+  
+    <!-- Start of Second Signup Modal -->
+    <div id="successModal" class="modal fade">
+      <div class=" success-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <img src="../img/icons/checkmark-64.png" class="check-mark" alt="" height="100px" width="100px">
+              <div ng-show="showSuccessMessage" class="text-center">
+                {{showSuccessMessage}}
+              </div>
+              <button type="button" class="btn btn-outline-success" data-dismiss="modal" id="close-sucess-dialog">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+  <!-- Start of Abandon game modal -->
+  <div id="abandonGameModal" class="modal fade text-dark">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>
+            <img src="../img/crying.gif" height="40px" width="40px">
+            <br/> We'll miss you if you leave
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" id="closeAbandonModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="" style="text-align:center">
+            <button class="btn nav-action-btn text-white" data-dismiss="modal" id="closeAbandonModal">
+              Stay in the game
+            </button>
+            <button class="btn btn-danger" id='abandon' ng-click="abandonGame()">
+              Yes, I'm sure I want to leave
+            </button>
+            <br/>
+            <br/>
+            <br/>
+            <!-- STATIC DONATION BUTTON -->
+              <div style="font-family: 'Halant';">MAKE AN IMPACT</div>
+              <div style="font-weight: bold; font-size: 1.3rem;">$746 Raised</div>
+              <span class="btn btn-success">Donate now</span>
+            <!-- STATIC DONATION BUTTON -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End of Abandon game Modal -->
 
 </div>

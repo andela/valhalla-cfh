@@ -21,6 +21,8 @@ const UserSchema = new Schema({
   avatar: String,
   profile_image: String,
   points: Number,
+  friendRequests: [],
+  friends: [],
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)
   donations: [],
   hashed_password: String,

@@ -1,28 +1,26 @@
-<div class="rounded answer-height" id="instructions-row">
+<div class="rounded" id="instructions-row" style="color: white">
   <div ng-cloak ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
-      <div id="cardss" class='hand'>
-          <span ng-show="winnerPicked()"></span>
-          <div ng-style="{'cursor':'pointer'}" class="cardd smallest" id='answers' ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
-          ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
-              <span ng-bind-html-unsafe="card.text" style="position:relative; min-width:100%; top:35%"></span>
-              <span id='selection-number' ng-show="showFirst(card)" style="position:absolute; right: 6%"> 1 </span>
-              <span id='selection-number' ng-show="showSecond(card)" style="position:absolute; right: 6%"> 2 </span>
-          </div>
-          <span ng-repeat="answer in game.table">
-              <div class="cardd smallest" ng-style="pointerCursorStyle()" id='table' ng-click="pickWinning(answer)" ng-show="showTable || isCzar()"
-              ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="width: 150px; margin: 10px;">
-                  <span ng-bind-html-unsafe="card.text" style="position:relative; min-width:100%; top:35%"></span>
-                  <span id='selection-number' ng-show="firstAnswer($index)" style="position:absolute; right: 60%"> 1 </span>
-                  <span id='selection-number' ng-show="secondAnswer($index)" style="position:absolute; right: 6%"> 2 </span>
-              </div>
-          </span>
-          
+    <div id="cardss" class="hand mt-3">
+      <span ng-show="winnerPicked()"></span>
+      <div class="cardd smallest alt-card pointer" id='answers' ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
+        ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
+          <span ng-bind-html-unsafe="card.text" style="position:relative; min-width:100%; top:35%"></span>
+          <span id='selection-number' ng-show="showFirst(card)" style="position:absolute; right: 6%"> 1 </span>
+          <span id='selection-number' ng-show="showSecond(card)" style="position:absolute; right: 6%"> 2 </span>
+      </div>
+      <span ng-repeat="answer in game.table">
+        <div class="cardd smallest alt-card" ng-style="pointerCursorStyle(answer)" id='table' ng-click="pickWinning(answer)" ng-show="showTable || isCzar()"
+          ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="width: 150px; margin: 10px;">
+          <span ng-bind-html-unsafe="card.text" style="position:relative; min-width:100%; top:35%"></span>
+          <span id='selection-number' ng-show="firstAnswer($index)" style="position:absolute; right: 60%"> 1 </span>
+          <span id='selection-number' ng-show="secondAnswer($index)" style="position:absolute; right: 6%"> 2 </span>
         </div>
+      </span>
+    </div>
   </div>
   
   <!-- HOW TO PLAY -->
-  <div>
-  <div ng-show="game.state === 'awaiting players'">
+  <div ng-show="game.state === 'awaiting players'" class="answer-height card mt-3 py-5 bg-custom">
     <h1 class="text-center">How To Play</h1>
     <ol id="oh-el">
       <li>Each player begins with, and will always have, 10 white answer cards.</li>
@@ -32,12 +30,11 @@
       <li>*Want to adorn your avatar with a glorious crown? Donate to charity after the game!</li>
     </ol>
   </div>
-  </div>
   <!-- HOW TO PLAY -->
   
   <!-- END OF GAME DECISION -->
-  <div id="game-end-container" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
-    <h2 class="text-center mt-3">What would you like to do now?</h2>
+  <div id="game-end-container" class="answer-height card mt-3 p-5 text-center bg-custom" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
+    <h2 class="mt-3">What would you like to do now?</h2>
     <div class="py-3" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
       You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely crown on your avatar's head.
     </div>
@@ -45,31 +42,38 @@
       Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
     </div>
     <div class="mt-3 justify-content-around d-flex">
-      <a class="pointer" ng-click="game.joinGame('joinNewGame')">Join a New Game</a>
-      <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" target="_blank">Donate Now</a>
-      <a href='/'>Return to Lobby </a>
+      <span class="btn btn-primary align-self-center" ng-click="game.joinGame('joinNewGame')">Join a New Game</span>
+      <a id="donate-button" class="btn btn-success" style="font-size: 1.2rem; padding: 15px 20px; border-radius: 5px;" href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" target="_blank">Donate Now</a>
+      <a class="btn btn-primary align-self-center" href='/'>Return to Lobby </a>
     </div>
   </div>
   <!-- END OF GAME DECISION -->
   
-  <!-- DISPLAY TO CURRENT CZAR -->
-  <div class="text-center" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
-    <div>
+  <!-- DISPLAY WHEN CZAR IS PICKING -->
+  <div class="text-center text-dark mt-3" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+    <div ng-show="isCzar()">
       <h1>You are the Card Czar.</h1>
       <p>Players are choosing their answers. Prepare to select a winner.</p>
     </div>
-    <div id='charity-fact-container'>
-      <div id='charity-fact-tagline'>Did you know?</div>
-  
-      <div id='charity-fact'>
-         {{ makeAWishFact }}
-      </div>
-  
-      <div id='charity-logo-container'>
-        <img src='/img/make-a-wish-logo.png'/>
-      </div>
-  
-    </div>
   </div>
-   <!-- DISPLAY TO CURRENT CZAR -->
+
+  <div class="text-center card mt-3 p-5 bg-custom" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+    <h3>Did you know?</h3>
+    <div id='charity-fact'>
+      {{ makeAWishFact }}
+    </div>
+    <img src='/img/make-a-wish-logo.png'/>
+  </div>
+  <!-- DISPLAY WHEN CZAR IS PICKING -->
+  
+  <!-- DISPLAY TO OTHER PLAYERS WHEN CZAR IS PICKING -->
+  <div class="text-center card mt-3 p-5 bg-custom" ng-show="!isCzar() && game.state === 'czar pick card'">
+    <h3>Did you know?</h3>
+    <div id='charity-fact'>
+      {{ makeAWishFact }}
+    </div>
+    <img src='/img/make-a-wish-logo.png'/>
+  </div>
+  <!-- DISPLAY TO OTHER PLAYERS WHEN CZAR IS PICKING -->
 </div>
+  

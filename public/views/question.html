@@ -1,11 +1,10 @@
 <div>
   <!-- QUESTION AND INFO DISPLAY -->
   <div class="card d-flex flex-column text-center timer-height" id="question-box">
-    <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
 
     <!-- NOTIFICATION -->
-    <div style="height: 3rem">
-      <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}} </div>
+    <div style="height: 3rem" class="py-3 text-danger">
+      <div id="notifications" class="d-inline-block" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOutRight'}">{{game.notification}}</div>
     </div>
     <!-- NOTIFICATION -->
 
@@ -17,19 +16,17 @@
         <span id="player-count">{{game.players.length}} / 12 Players</span>
       </div>
       <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride)">
-
         <div class="pointer btn nav-action-btn text-white" id='start-game'>
           Start Game with {{game.players.length}} player(s)
-
         </div>
       </div>
     </div>
     <!-- INITIAL PAGE DISPLAY -->
 
     <!-- Game Over Stuff -->
-    <div id="game-end-info">
+    <div id="game-end-info" class="lead">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
-        <div class="game-end-headline">What the!? The game ended because too many people left! </div>
+        <div>What the!? The game ended because too many people left! </div>
         Our sincere apologies.
       </div>
       <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
@@ -41,10 +38,20 @@
       </div>
     </div>
     <!-- Game Over Stuff -->
-    
+
+    <!-- DISPLAY THE QUESTION AND THE ANSWER -->
+    <h4 ng-bind-html-unsafe="game.curQuestion.text" class="px-2" ng-hide="game.state === 'czar pick card' || game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></h4>
+    <!-- DISPLAY THE QUESTION AND THE ANSWER -->
+
+    <!-- DISPLAY WHEN CZAR IS PICKING CARDS -->
+    <div ng-show="!isCzar() && game.state === 'czar pick card'">
+      <h3>The Czar is picking a question</h3>
+      <img style="width: 100px;" ng-src="https://cdn.dribbble.com/users/338744/screenshots/2886346/load-dribbble.gif"/>
+    </div>
+    <!-- DISPLAY WHEN CZAR IS PICKING CARDS -->
   </div>
   <!-- QUESTION AND INFO DISPLAY -->
-
+  
   <!-- modal for cant start a game message -->
   <div class="modal" id="cantStartGame" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -72,18 +79,19 @@
         <div class="modal-header" style="background-color: #495057; color: #FFF;">
           <h5 class="modal-title" style="text-align: center; margin: auto;">Cards For Humanity</h5>
         </div>
-            <div class="modal-body" style="min-height: 240px; margin: auto;">
-                <h6 id="shuffleText" style="color: rgb(0, 0, 0); text-align: center;">You are the Czar - Click card to pick question</h6>
-                  <div class="center" style="margin: auto;">
-                    <div class="shuffle" ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style="margin: auto; cursor: pointer;">
-                    <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard1">
-                    <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard2">
-                    <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard3">
-                    <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard4">
-                    </div>
-                  </div>
+        <div class="modal-body" style="min-height: 240px; margin: auto;">
+          <h6 id="shuffleText" style="color: rgb(0, 0, 0); text-align: center;">You are the Czar - Click card to pick question</h6>
+          <div class="center" style="margin: auto;">
+            <div class="shuffle" ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style="margin: auto; cursor: pointer;">
+              <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard1">
+              <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard2">
+              <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard3">
+              <img src="../img/czar.png" style="width: 100px;" class="animated flipInX" id="shufflecard4">
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+  

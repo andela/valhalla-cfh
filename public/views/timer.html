@@ -1,6 +1,6 @@
 <div class="card text-center timer-height">
-  <div class="card-header" ng-hide="game.state === 'winner has been chosen' || game.state === 'waiting for czar to decide'">Time Remaining</div>
-  <div class="card-header" ng-show="game.state === 'winner has been chosen'">Next Round In</div>
-  <div class="card-header" ng-show="game.state === 'waiting for czar to decide'"> Czar Choosing</div>
-  <span id="time" ng-bind="game.time"></span>
+  <div class="card-header" ng-style="timerStyle()" ng-hide="game.state === 'winner has been chosen' || game.state === 'waiting for czar to decide'">Time Remaining</div>
+  <div class="card-header" ng-style="timerStyle()" ng-show="game.state === 'winner has been chosen'">Next Round In</div>
+  <div class="card-header" ng-style="timerStyle()" ng-show="game.state === 'waiting for czar to decide'"> Czar Choosing</div>
+  <span id="time" ng-style="gameTimerStyle()" ng-bind="game.time"></span>
 </div>

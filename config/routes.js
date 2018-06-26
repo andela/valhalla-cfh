@@ -10,6 +10,8 @@ const users = require('../app/controllers/users');
 const answers = require('../app/controllers/answers');
 // Question Routes
 const questions = require('../app/controllers/questions');
+// Notification Routes
+const notifications = require('../app/controllers/notification');
 // Avatar Routes
 const avatars = require('../app/controllers/avatars');
 // Home route
@@ -158,4 +160,16 @@ module.exports = (app, passport, auth) => { // eslint-disable-line no-unused-var
 
   // Game Route
   app.post('/api/games/:id/start', authorization.tokenVerification, games.saveGameResults);
+
+  // Friends routes
+  app.get('/api/users/friends', authorization.tokenVerification, users.friends);
+  app.put('/api/users/friends/send', authorization.tokenVerification, users.sendFriendRequest);
+  app.put('/api/users/friends/accept', authorization.tokenVerification, users.acceptFriendRequest);
+  app.put('/api/users/friends/reject', authorization.tokenVerification, users.rejectFriendRequest);
+  app.delete('/api/users/friends', authorization.tokenVerification, users.deleteFriend, users.friends);
+
+  // Notification routes
+  app.post('/api/notifications', authorization.tokenVerification, notifications.newNotification);
+  app.get('/api/notifications', authorization.tokenVerification, notifications.getNotifications);
+  app.delete('/api/notifications', authorization.tokenVerification, notifications.readNotification);
 };

@@ -122,13 +122,23 @@ angular.module('mean.system')
         $('.button').empty();
         infoModal.find('.button').append(idStartButton, closeModal);
       }
-      if (term === undefined) {
+      if (term === 'guest') {
+        infoModal.find('.modal-body').empty();
         infoModal.find('.modal-body')
-        .text('Click on start to continue and wait for people to join the game. Can\'t wait? Signup/Signin to invite and play with friends.');
+        .append('<div class="">Click on start to continue and wait for people to join the game.<br/> Can\'t wait? <br/>Signup/Signin to invite and play with friends.</div>');
 
         $('.button').empty();
         infoModal.find('.button').append(startButton, closeModal);
       }
+      if (term === 'Strangers') {
+        infoModal.find('.modal-body').empty();
+        infoModal.find('.modal-body')
+        .append('<div class="">Click on start to continue and wait for people to join the game.</div>');
+
+        $('.button').empty();
+        infoModal.find('.button').append(startButton, closeModal);
+      }
+      
       infoModal.modal('show');
     };
     
@@ -297,5 +307,62 @@ angular.module('mean.system')
 
     $scope.toggleResetModal = function() {
       document.getElementById('closeLogin').click();
+    }
+
+    $scope.getNotification = () => {
+      const token = localStorage.token;
+      $http({
+        method: 'GET',
+        url: '/api/notifications',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        if(response.data.notification.length === 0) {
+          $scope.showNoNotification = 'No new notification';
+        }
+        const { notification } = response.data;
+        $scope.notifications = notification;
+        $scope.unreadNotification = notification.length;
+        $scope.false = false;
+
+        // $scope.listOfInvites = notification.map((notif) => {
+        //   if(notif.friendRequest === 0) {
+        //     return notif
+        //   }
+        // })
+        // return console.log($scope.listOfInvites);
+        return console.log(response.data.notification);
+             
+      }, (response) => {
+        console.log(response.data.error);
+      });
+    }
+
+    $scope.getNotification();
+    
+    $scope.deleteNotification = (notif) => {
+      const token = localStorage.token;
+      
+      $http({
+        method: 'DELETE',
+        url: `/api/notifications`,
+        data: {
+          id: notif._id
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        },
+      }).then((response) => {
+        $scope.getNotification();        
+        console.log(response.data.message);
+        
+      }, (response) => {
+        console.log(response.data.error);
+      });
     }
   }]);
