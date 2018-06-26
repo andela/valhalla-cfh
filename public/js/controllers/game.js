@@ -69,7 +69,6 @@ angular.module('mean.system')
       $("#openSuccessModal").click();
       $scope.showSuccessMessage = response.data.message;
       $scope.totalInvites = $scope.totalInvites + 1;
-      document.getElementById("closeModal").click();
     }, (response) => {
       $("#openSuccessModal").click();
       $scope.showSuccessMessage = response.data.error;
@@ -441,12 +440,12 @@ angular.module('mean.system')
         $scope.false = false;
 
         // $scope.listOfInvites = notification.map((notif) => {
-        //   if(notif.friendRequest === 0) {
-        //     return notif
+        //   if(notif.friendRequest === 0 && notif.status === 0 && notif.requestAccepted === 0) {
+        //     return notif.receiver;
         //   }
         // })
         // return console.log($scope.listOfInvites);
-        return console.log(response.data.notification);
+        // return console.log(response.data.notification);
              
       }, (response) => {
         console.log(response.data.error);
@@ -469,7 +468,7 @@ angular.module('mean.system')
          
         }
       }).then((response) => {
-        // $scope.getNotification();
+        $scope.getNotification();
 
         if(response.data.friends.length === 0) {
           $scope.showFriendError = 'No friends added yet';
@@ -694,8 +693,7 @@ angular.module('mean.system')
         method: 'PUT',
         url: `/api/users/friends/reject`,
         data: {
-          receiverName: notif.name,
-          receiverEmail: notif.email
+          senderName: notif.sender,
         },
         headers: {
           'Content-Type': 'application/json',
@@ -703,8 +701,7 @@ angular.module('mean.system')
          
         },
       }).then((response) => {
-        $scope.acceptInvite(notif);
-        console.log(response.data.message);
+        $scope.deleteNotification(notif);
         $scope.isLoading = false;
 
         $("#openSuccessModal").click();

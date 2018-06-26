@@ -627,7 +627,7 @@ exports.sendFriendRequest = (req, res) => {
 
   User.findOneAndUpdate(
     { _id: decoded.id },
-    { $push: {friendRequests: {receiverName, receiverEmail}} }
+    { $push: {friendRequests: {receiverName}} }
   ).exec((err) => {
     if (err) {
       return res.status(500).json({
@@ -637,9 +637,8 @@ exports.sendFriendRequest = (req, res) => {
   });
 
   User.findOneAndUpdate(
-    { email: receiverEmail },
-    { $push: {friendRequests: {senderName, senderEmail}} }
-    // { $push: {friendRequests: {senderName, senderEmail}} }
+    { name: receiverName },
+    { $push: {friendRequests: {senderName}} }
   ).exec((err, user) => {
     if (err) {
       return res.status(500).json({
@@ -679,8 +678,8 @@ exports.acceptFriendRequest = (req, res) => {
   });
 
   User.findOneAndUpdate(
-    { email: senderEmail },
-    { $pull: {friendRequests: { receiverEmail }} } 
+    { name: senderName },
+    { $pull: {friendRequests: { receiverName }} } 
   ).exec((err, user) => {
     console.log(user);
     if (err) {
@@ -694,7 +693,7 @@ exports.acceptFriendRequest = (req, res) => {
 
   User.findOneAndUpdate(
     { _id: decoded.id },
-    { $push: {friends: {senderName, senderEmail}} }
+    { $push: {friends: {senderName}} }
   ).exec((err, user) => {
     console.log(user);
     
@@ -709,8 +708,8 @@ exports.acceptFriendRequest = (req, res) => {
   });
 
   User.findOneAndUpdate(
-    { email: senderEmail },
-    { $push: {friends: {receiverName, receiverEmail}} }
+    { name: senderName },
+    { $push: {friends: {receiverName}} }
   ).exec((err, user) => {
     if (err) {
       return res.status(500).json({
@@ -732,9 +731,9 @@ exports.acceptFriendRequest = (req, res) => {
 
 exports.rejectFriendRequest = (req, res) => {
   const { decoded } = req;
-  const senderName = decoded.name;
-  const senderEmail = decoded.email;
-  const { receiverEmail } = req.body;
+  const receiverName = decoded.name;
+  // const senderEmail = decoded.email;
+  const { senderName } = req.body;
 
   User.findOneAndUpdate(
     { _id: decoded.id },
@@ -748,8 +747,8 @@ exports.rejectFriendRequest = (req, res) => {
   });
 
   User.findOneAndUpdate(
-    { email: senderEmail },
-    { $pull: {friendRequests: { receiverEmail }} }
+    { name: senderName },
+    { $pull: {friendRequests: { receiverName }} }
   ).exec((err, user) => {
     if (err) {
       return res.status(500).json({
@@ -769,12 +768,12 @@ exports.rejectFriendRequest = (req, res) => {
 
 exports.deleteFriend = (req, res, next) => {
   const { decoded } = req;
-  const { receiverEmail } = req.body;
-  const senderEmail = decoded.email;
+  const { receiverName } = req.body;
+  const senderName = decoded.name;
 
   User.findOneAndUpdate(
     { _id: decoded.id },
-    { $pull: {friends: { senderEmail: receiverEmail }} },
+    { $pull: {friends: { senderName: receiverName }} },
   ).exec((err) => {
     if (err) {
       return res.status(500).json({
@@ -784,8 +783,8 @@ exports.deleteFriend = (req, res, next) => {
   });
 
   User.findOneAndUpdate(
-    { email: receiverEmail },
-    { $pull: {friends: { senderEmail: senderEmail }} },
+    { name: receiverName },
+    { $pull: {friends: { senderName: senderName }} },
   ).exec((err) => {
     if (err) {
       return res.status(500).json({
@@ -797,7 +796,7 @@ exports.deleteFriend = (req, res, next) => {
 
   User.findOneAndUpdate(
     { _id: decoded.id },
-    { $pull: {friends: { receiverEmail: receiverEmail }} },
+    { $pull: {friends: { receiverName: receiverName }} },
   ).exec((err) => {
     if (err) {
       return res.status(500).json({
@@ -807,8 +806,8 @@ exports.deleteFriend = (req, res, next) => {
   });
 
   User.findOneAndUpdate(
-    { email: receiverEmail },
-    { $pull: {friends: { receiverEmail: senderEmail }} },
+    { name: receiverName },
+    { $pull: {friends: { receiverName: senderName }} },
   ).exec((err, user) => {
     if (err) {
       return res.status(500).json({
