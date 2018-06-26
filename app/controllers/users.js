@@ -497,7 +497,7 @@ exports.sendResetMail = function (req, res) {
       subject: 'CFH - Password reset help is here',
       html: `<div style="background-color:#495057; width:400px; display:block; margin-left:auto; margin-right:auto;
             border-radius:7px; padding-top: 10px; padding-bottom: 10px; padding-left:30px; color:white">
-            <p>Hi ${name}, </p>
+            <p>Hi ${user.name}, </p>
             <p>Click the button below to reset your password</p>
             <a style="text-decoration: none; width:60px; padding:10px; background-color:#1B5E20; border-radius:5px; color:white;" href="${link}/resetpassword/${token}"><strong>Reset</strong><a/>
             <p style="color:white"><em><strong>Ignore this email if you didn't request for it.</em></strong></p>

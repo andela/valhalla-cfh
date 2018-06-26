@@ -254,7 +254,6 @@ angular.module('mean.system')
       
       document.getElementById('reset-password').innerHTML = "sending...";
       $http.post('/api/sendresetlink', {
-        name: window.user.name,
         email: $scope.email,
         appLink: $scope.appLink
       }).then((response) => {
