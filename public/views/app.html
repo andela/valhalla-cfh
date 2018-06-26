@@ -13,7 +13,7 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <li class="pointer bg-custom pt-2 text-white nav-link" id='invite-players' data-toggle="modal" data-target="#notifModal" ng-hide="showOptions">
+          <li class="pointer bg-custom pt-2 text-white nav-link" id="notification" data-toggle="modal" data-target="#notifModal" ng-hide="showOptions">
             <i class="fa fa-bell-o" style="font-size: 1.5rem;" aria-hidden="true"></i>
             <span ng-show="unreadNotification" class="badge notification">
               {{unreadNotification}}
@@ -22,7 +22,7 @@
           <li class="nav-link pointer" id="takeTourBtn" ng-click="repeatTour()">
               Take a Tour
           </li>
-          <li class="nav-link pointer" data-toggle="modal" data-target="#abandonGameModal">
+          <li class="nav-link pointer" id="abandon" data-toggle="modal" data-target="#abandonGameModal">
             Abandon Game
           </li>
           <li class="pointer nav-link btn nav-action-btn text-white" id='invite-players' data-toggle="modal" data-target="#myModal"
@@ -32,6 +32,7 @@
           <li ng-hide="showOptions" class="nav-item pointer">
             <a class="nav-link" href="/#!/profile">Profile</a>
           </li>
+          
         </ul>
       </div>
     </div>
@@ -120,7 +121,7 @@
                       <tr ng-repeat="user in friendList">
                         <td ng-if="!user.senderName">{{user.receiverName}}</td>
                         <td ng-if="!user.receiverName">{{user.senderName}}</td>
-                        <td> <button type="button" class="btn" id="tab-button" ng-click="removeFriend(!user.senderEmail ? user.receiverEmail : user.senderEmail)" >remove friend</button></td>
+                        <td> <button type="button" class="btn" id="tab-button" ng-click="removeFriend(!user.senderName ? user.receiverName : user.senderName)" >Delete friend</button></td>
                         <td> <button type="button" class="btn" id="tab-button" ng-click="sendInviteToFriend(user, 1, 0, 1)" ng-disabled="listOfInvites.includes(user.name)">invite</button></td>
                       </tr>
                     </tbody>

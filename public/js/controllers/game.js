@@ -393,6 +393,10 @@ angular.module('mean.system')
         element: '#instructions-row',
         intro: 'This panel shows the instructions of the game. When the game starts, the answers to the question in the <strong>question box</strong> above will be shown here.',
       },
+      {
+        element: '#notification',
+        intro: 'This displays any new notification that you have.',
+      },
       // {
       //   element: '#chat-icon-container',
       //   intro: 'Feel like chatting with players in this game session? Here is the place to chat. Just click on this button and voila! the chat begins.',
@@ -578,14 +582,14 @@ angular.module('mean.system')
 
     }
 
-    $scope.removeFriend = (email) => {
+    $scope.removeFriend = (name) => {
       $scope.isLoading = true;
       const token = localStorage.token;
       $http({
         method: 'DELETE',
         url: `/api/users/friends/`,
         data: {
-          receiverEmail: email
+          receiverName: name
         },
         headers: {
           'Content-Type': 'application/json',
