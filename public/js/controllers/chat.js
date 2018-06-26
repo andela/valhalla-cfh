@@ -11,8 +11,7 @@ angular.module('mean.system')
   $scope.messageAlert = 0;
 
   $scope.sendMessage = () => {
-    let message = $scope.message;
-    console.log(message);
+    let message = emoji.data('emojioneArea').getText();
     
     if (message && message !== '') {
       $scope.messages.$add({
@@ -21,7 +20,7 @@ angular.module('mean.system')
         avatar: game.players[game.playerIndex].avatar,
         username: game.players[game.playerIndex].username
       });
-      $scope.message = '';
+      emoji.data('emojioneArea').setText('');
     }
   };
 
@@ -45,5 +44,22 @@ angular.module('mean.system')
       }, 1000);
     }
   };
+
+  const emoji = $("#chatInput").emojioneArea({
+    hidePickerOnBlur: true,
+		pickerPosition: "top",
+    tonesStyle: 'radio',
+    searchPosition: "bottom",
+    events: {
+      keyup: (editor, event) => {
+        if (event.keyCode === 13) {
+          $scope.sendMessage();
+        }
+      },
+      emojibtn_click: (button, event) => {
+        $('.emojionearea-button-close').click();
+      }
+    }
+  });
   
 }]);
