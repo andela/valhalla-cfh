@@ -1,88 +1,123 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Cabin" rel="stylesheet">
-</head>
-<style>
-  .bg-custom {
-    background-color: #707274;
-}
-body{
-  font-family: 'Cabin', sans-serif !important;
-  font-size: 18px;
-}
-</style>
-<body>
-  <div ng-controller="IndexController">
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
-      <div class="container">
-        <a class="navbar-brand" href="/"><img src="../img/logo.png" height="40px" width="180px"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active pointer">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="pointer nav-link btn nav-action-btn text-white" id="start-game" data-toggle="modal" data-target="#myModal" ng-click="startGameModal('custom')">
-               Start Game
-            </li>&nbsp;&nbsp;
-          </ul>
-        </div>
+<div ng-controller="IndexController">
+<!-- <div ng-controller="IndexController"> -->
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="../img/logo.png" height="40px" width="180px">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active pointer">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="pointer nav-link btn nav-action-btn text-white" id="start-game" data-toggle="modal" data-target="#myModal" ng-click="startGameModal('custom')">
+            Start Game
+          </li>&nbsp;&nbsp;
+        </ul>
       </div>
-    </nav>
-    <!-- NAVBAR -->
-    <div class="row">
-      <div class="col-lg-12 col-sm-6 col-12 main-section text-center">
+    </div>
+  </nav>
+  <!-- NAVBAR -->
+  <div class="row" ng-init="getUser()">
+    <div class="col-lg-12 col-sm-6 col-12 main-section text-center">
+      <div class="row">
+        <div class="col-lg-12 col-sm-12 col-12 profile-header" style="background-color: #495056;"></div>
+      </div>
+      <div class="row user-detail">
+        <div class="col-lg-12 col-sm-12 col-12">
+          <img src="{{user.avatar}}" class="rounded-circle img-thumbnail" style="width: 12%; height: 10rem; margin-top:-25px">
+          <div class="spinner">
+            <i class="fa fa-circle-o-notch fa-spin" ng-show="loading" aria-hidden="true"></i>
+          </div>
+          <h5>{{user.name}}</h5>
+          <p>{{user.email}}</p>
+          <p>
+            <!-- {user.points.length > 0 ? user.points}} : No } Round(s) won</p> -->
+            {{user.points ? user.points + ' Round(s) Won' : 'No Rounds Won'}}</p>
+            
+          <hr>
+          <br>
           <div class="row">
-              <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
-          </div>
-          <div class="row user-detail">
-              <div class="col-lg-12 col-sm-12 col-12">
-                  <img src="{{user.avatar}}" class="rounded-circle img-thumbnail" style="width: 12%; height: 10rem; margin-top:-25px">
-                  <div class="spinner"><i class="fa fa-circle-o-notch fa-spin" ng-show="loading" aria-hidden="true"></i></div>
-                  <h5>{{user.name}}</h5>
-                  <p>{{user.email}}</p>
-                  <p>
-                    <!-- {user.points.length > 0 ? user.points}} : No } Round(s) won</p> -->
-                    {{user.points ? user.points + ' Round(s) Won' : 'No Rounds Won'}}</p>
-                  <hr><br>
-                  <div class="offset-lg-2 col-lg-8 col-sm-6">
-                    <div ng-show="players">
-                  <h3 style="color: #cc5403">My Game Log</h3>
-                  <table class="table table-striped" >
-                      <thead>
-                        <tr>
-                          <th>Game Id</th>
-                          <th>Winner</th>
-                          <th>Players</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr ng-repeat="player in players">
-                          <td>{{player.gameId}}</td>
-                          <td>{{player.gameWinner}}</td>
-                          <td>{{player.gamePlayers.toString()}}</td>
-                        </tr>
-                        
-                      </tbody>
-                    </table>
-                  </div>
-                  <div ng-show="players.length <= 0">
-                  <h3 style="color: #cc5403">No Game Log</h3>
-                  </div>
+            <div class="offset-1 col-lg-8 col-sm-6">
+              <div ng-show="players">
+                <h3 style="color: #cc5403">My Game Log</h3>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Game Id</th>
+                      <th>Winner</th>
+                      <th>Players</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="player in players">
+                      <td>{{player.gameId}}</td>
+                      <td>{{player.gameWinner}}</td>
+                      <td>
+                        <span style="float:left; width:50%; word-wrap: break-word">
+                          <span ng-repeat="(key, onePlayer) in player.gamePlayers">
+                              {{onePlayer}}<span ng-show="{{key + 1}} != player.gamePlayers.length">,</span>
+                          </span>
+                        </span>
+                        <span>
+                            <a class="btn btn-secondary mb-2" data-toggle="collapse" href="#{{player.gameId}}" role="button" aria-expanded="false" aria-controls="{{player.gameId}}">
+                              Action
+                            </a>
+
+                          <div class="collapse" id={{player.gameId}}>
+                            <div class="card card-body">
+                              <table class="table">
+                                <tbody>
+                                  <tr ng-repeat="onePlayer in player.gamePlayers | filter : '!{{user.name}}'">
+                                    <td ng-if="user.name !== onePlayer">
+                                      <span>{{ onePlayer }}</span></td>
+                                    <td ng-if="user.name !== onePlayer">
+                                      <button type="button" class="btn btn-secondary" ng-click="getUser('{{onePlayer}}')">Profile</button>
+                                      <button type="button" class="btn btn-info" ng-click="addFriend(onePlayer)" ng-controller="GameController" id="tab-button">Add as Friend</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </span>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
               </div>
+              <div ng-show="players.length <= 0">
+                <h3 style="color: #cc5403">No Game Log</h3>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="card mt-5" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Donated</h5>
+                  <p class="card-text"><span style="font-size: 70px; text-shadow: #495055 0 0 10px, #cc5403 5px 5px 5px;">
+                    {{ user.donations.length > 0 ? '$'+totalDonation(user.donations) : '$0' }}
+                    
+                  </span></p>
+                  <a href="#" id="donate-button" class="btn btn-primary" style="background: #1d5d21; border-color: #1d5d21">Donate More</a>
+                </div>
+              </div>
+            </div>
           </div>
+
+        </div>
       </div>
     </div>
 
     <!-- modal start -->
-  <div id="infoModal" class="modal fade" role="dialog" style="padding: 50px;" ng-controller="IndexController">
+    <div id="infoModal" class="modal fade" role="dialog" style="padding: 50px;">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -93,13 +128,33 @@ body{
           <div class="button" style="text-align:center">
           </div>
           <div class="modal-footer">
-            
+
           </div>
         </div>
       </div>
-  </div>
-  <!-- end of modal -->
+    </div>
+    <!-- end of modal -->
 
   </div>
-</body>
-</html>
+
+  <button data-toggle="modal" data-target="#successModal" class="btn btn-login btn-lg btn-block" id="openSuccessModal" hidden>
+      open modal
+    </button>
+  
+    <!-- Start of Second Signup Modal -->
+    <div id="successModal" class="modal fade">
+      <div class=" success-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <img src="../img/icons/checkmark-64.png" class="check-mark" alt="" height="100px" width="100px">
+              <div ng-show="showSuccessMessage" class="text-center">
+                {{showSuccessMessage}}
+              </div>
+              <button type="button" class="btn btn-outline-success" data-dismiss="modal" id="close-sucess-dialog">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
