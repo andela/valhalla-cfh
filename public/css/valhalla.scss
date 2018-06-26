@@ -414,8 +414,22 @@ hr {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   left: 50%;
-  top: 100%;
+  top: 50%;
   color: rgb(73, 80, 87);
+}
+
+.nav-tabs .nav-link {
+  background: #d2745e;
+  padding: 20px;
+}
+
+.dashboard-tab {
+  color:black;
+  font-weight: 1000px;
+
+  &:hover {
+    color:white;
+  }
 }
 
 .chat-notify {

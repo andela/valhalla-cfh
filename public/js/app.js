@@ -26,6 +26,9 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', '
           when('/profile', {
             templateUrl: '/views/profile.html'
           }).
+          when('/dashboard', {
+            templateUrl: '/views/dashboard.html'
+          }).
           otherwise({
             redirectTo: '/'
           });
