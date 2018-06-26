@@ -13,7 +13,7 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <li class="pointer bg-custom pt-2 text-white nav-link" id='invite-players' data-toggle="modal" data-target="#notifModal">
+          <li class="pointer bg-custom pt-2 text-white nav-link" id='invite-players' data-toggle="modal" data-target="#notifModal" ng-hide="showOptions">
             <i class="fa fa-bell-o" style="font-size: 1.5rem;" aria-hidden="true"></i>
             <span ng-show="unreadNotification" class="badge notification">
               {{unreadNotification}}
@@ -82,7 +82,7 @@
            <ul class="nav nav-tabs" role="tablist">
              <li class="nav-item"><a href="#searchTab" ng-click="getFriendList()" class="nav-link active" aria-controls="searchTab" role="tab" data-toggle="tab">Search</a>
              </li>
-             <li class="nav-item"><a href="#friendsTab" ng-click="getFriendList(); getNotification();" class="nav-link" aria-controls="friendsTab" role="tab" data-toggle="tab">Friends</a>
+             <li class="nav-item"><a href="#friendsTab" ng-click="getFriendList();" class="nav-link" aria-controls="friendsTab" role="tab" data-toggle="tab">Friends</a>
              </li>
         </ul>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
