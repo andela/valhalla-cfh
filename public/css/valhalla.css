@@ -359,6 +359,27 @@ hr {
   top: 50%;
   color: #495057; }
 
+
+.reset-modal {
+  width: 100%;
+  max-width: 500px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%; }
+
+.action-btn {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.input-group-btn {
+  position: absolute;
+  top: 39%;
+  right: 3%; }
+
 .nav-tabs .nav-link {
   background: #d2745e;
   padding: 20px; }
@@ -368,6 +389,7 @@ hr {
   font-weight: 1000px; }
   .dashboard-tab:hover {
     color: white; }
+
 
 .chat-notify {
   background: red;

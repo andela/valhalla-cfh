@@ -19,8 +19,17 @@ require('dotenv').config();
  * @param {Object} res
  * @return {Object} webpage
  */
-exports.authCallback = (req, res) => {
+exports.authCallback = function(req, res, next) {
   res.redirect('/chooseavatars');
+};
+/**
+ * password reset callback
+ * @param {Object} req
+ * @param {Object} res
+ * @return {Object} webpage
+ */
+exports.resetCallback = (req, res) => {
+  res.redirect(`/#!/resetpassword?${req.decoded}`);
 };
 
 /**
@@ -89,7 +98,7 @@ exports.checkAvatar = (req, res) => {
         if (user.avatar !== undefined) {
           res.redirect('/#!/');
         } else {
-          res.redirect('/#!/choose-avatar');
+          res.redirect('/#!/choose-avatar/');
         }
       });
   } else {
@@ -285,7 +294,6 @@ exports.finishUserSignup = (req, res) => {
       };
 
       const token = jwt.sign(userData, process.env.SECRET);
-
       req.login(createdUser, (err) => {
         if (err) return next(err);
       
@@ -328,76 +336,14 @@ exports.login = (req, res) => {
       };
       // Create token
       const token = jwt.sign(userData, process.env.SECRET);
-      // return res.status(200).json({
-      //   token,
-      //   message: 'Successfully SignIn',
-      // });
-
       
       return res.status(200).json({
         token,
-        message: 'Successfully SignIn',
+        message: `Welcome, ${user.name}`,
       });
     }
     return res.status(400).json({
       error: 'Username or Password is Incorrect'
-    });
-  });
-};
-
-/**
-* Method to reset User password
-* @param {Object} req
-* @param {Object} res
-* @return {Object} logged in object
-*/
-exports.resetPassword = (req, res) => {
-  // Destructure from req.body
-  const { email, password, confirmPassword } = req.body;
-  // Find email
-  User.findOne({ email }).exec((err, user) => {
-    if (err) {
-      return res.status(500).json({
-        error: 'Internal Server Error'
-      });
-    }
-    // If no user found
-    if (!user) {
-      return res.status(400).json({
-        emailError: 'Sorry user with email provided does not exist'
-      });
-    }
-    
-    // Compare password from user
-    if (password !== confirmPassword) {
-      return res.status(400).json({
-        passwordMismatch: 'Passwords do not match'
-      });
-    }
-
-    user.password = password; 
-    user.save((err, updatedUser) => {
-      if (err) {
-        return res.status(500).json(['Sorry password update failed']);
-      }
-      
-      const userData = {
-        id: updatedUser._id,
-        name: updatedUser.name,
-        email: updatedUser.email
-      };
-
-      const token = jwt.sign(userData, process.env.SECRET);
-
-      req.login(updatedUser, (err) => {
-        if (err) return next(err);
-      
-        return res.status(200).json({
-          message: `Welcome, ${updatedUser.name}`,
-          token,
-          userData
-        });
-      });
     });
   });
 };
@@ -507,6 +453,123 @@ exports.profile = function (req, res) {
   });
 }
 
+/**
+* Method to send reset password link to users email
+* @param {Object} req
+* @param {Object} res
+* @return {Object} logged in object
+*/
+exports.sendResetMail = function (req, res) {
+  const { name, email, appLink } = req.body;
+  const link = appLink.split('/#!/')[0];
+
+  User.findOne({ email }).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    // If no user found
+    if (!user) {
+      return res.status(400).json({
+        emailError: 'Sorry user with email provided does not exist'
+      });
+    }
+
+    const userData = {
+      exp: Math.floor(Date.now() / 1000) + (60 * 60),
+      id: user._id,
+      email: user.email
+    };
+
+    const token = jwt.sign(userData, process.env.SECRET);
+
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: 'valhallacfh@gmail.com',
+        pass: 'valhalla190'
+      }
+    });
+    const mailOptions = {
+      from: 'valhallacfh@gmail.com',
+      to: email,
+      subject: 'CFH - Password reset help is here',
+      html: `<div style="background-color:#495057; width:400px; display:block; margin-left:auto; margin-right:auto;
+            border-radius:7px; padding-top: 10px; padding-bottom: 10px; padding-left:30px; color:white">
+            <p>Hi ${user.name}, </p>
+            <p>Click the button below to reset your password</p>
+            <a style="text-decoration: none; width:60px; padding:10px; background-color:#1B5E20; border-radius:5px; color:white;" href="${link}/resetpassword/${token}"><strong>Reset</strong><a/>
+            <p style="color:white"><em><strong>Ignore this email if you didn't request for it.</em></strong></p>
+            <p style="color:white"><strong>NB:</strong>This link is valid for an hour.</p>
+            </div>`
+    };
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        res.status(500).json({
+          error: 'Email Not Sent!'
+        });
+      } else {
+        res.status(200).json({
+          message: `Check your mailbox for password reset link.
+          This email is valid for 1hour`,
+          token
+        });
+      }
+    });
+  });
+};
+
+/**
+* Method to reset User password
+* @param {Object} req
+* @param {Object} res
+* @return {Object} logged in object
+*/
+exports.resetPassword = (req, res) => {
+  // Destructure from req.body
+  const { password } = req.body;
+  // Find email
+  User.findOne({ email: req.decoded.email }).exec((err, user) => {
+      if (err) {
+        return res.status(500).json({
+          error: 'Internal Server Error'
+        });
+      }
+      // If no user found
+      if (!user) {
+        return res.status(400).json({
+          message: 'Sorry, an error occurred please use the forgot password section'
+        });
+      }
+  
+      user.password = password; 
+      user.save((err, updatedUser) => {
+        if (err) {
+          return res.status(500).json(['Sorry password update failed']);
+        }
+        
+        const userData = {
+          id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email
+        };
+  
+        const token = jwt.sign(userData, process.env.SECRET);
+  
+        req.login(updatedUser, (err) => {
+          if (err) return next(err);
+        
+          return res.status(200).json({
+            message: `Welcome, password reset successful`,
+            token,
+            userData
+          });
+        });
+      });
+  });
+};
+
 exports.donations = function (req, res){
   User.find().exec((err, users) => {
     if (err) {
@@ -541,4 +604,3 @@ exports.donations = function (req, res){
     });
   })
 }
-
