@@ -40,11 +40,93 @@ angular.module('mean.system')
         $scope.players = response.data.players;
         $scope.loading = false;
       }, (response) => {
+        $scope.loading = false;
+        const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white mb-4" style="background: red">Close</button>';        
+        const infoModal = $('#infoModal');
+        infoModal.find('.modal-body').empty();
+        infoModal.find('.modal-body')
+        .append(`<div class="text-center">Sorry, ${term} is not a registered user</div>`);
+        $('.button').empty();
+        infoModal.find('.button').append(closeModal);
+        infoModal.modal('show')
         console.log(response.data.error);
       });
 
     }
     $scope.getUser();
+
+    $scope.gameHistory = () => {
+      $scope.loading = true;
+      const token = localStorage.token;
+      let user = [];
+      $http({
+        method: 'GET',
+        url: `/api/games/history`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        $scope.loading = false;
+        $scope.games = response.data.games;
+        
+       //  console.log($scope.games);
+      }, (error) => {
+        $scope.loading = false;
+        console.log(error)
+      })
+    }
+
+    $scope.leaderBoard = () => {
+      $scope.loading = true;
+      const token = localStorage.token;
+      let user = [];
+      $http({
+        method: 'GET',
+        url: `/api/leaderBoard`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        $scope.loading = false;
+        $scope.leaderboards = response.data.logs;
+        // console.log($scope.leaderboards);
+      }, (error) => {
+        $scope.loading = false;
+        console.log(error)
+      })
+    }
+
+    $scope.donation = () => {
+      $scope.loading = true;
+      const token = localStorage.token;
+      let user = [];
+      $http({
+        method: 'GET',
+        url: `/api/donations`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+         
+        }
+      }).then((response) => {
+        $scope.loading = false;
+        $scope.donations = response.data.donationData;
+      },
+      (error) => {
+        $scope.loading = false;
+        console.log(error)
+      }
+    )
+    }
+
+    $scope.generateSum = (array) => {
+      return array.reduce((a,b) => parseInt(a) + parseInt(b));
+    };
+
     $scope.previewImage = () => {
       // collect image chosen from the signup form
       // const imageFile = '';
@@ -286,3 +368,18 @@ angular.module('mean.system')
       document.getElementById('closeLogin').click();
     }
   }]);
+
+//   User.find()
+// +    .then((response) => {
+// +      if (response.length === 0) {
+// +        return res.send({ message: 'no data' });
+// +      }
+// +      const donationData = [];
+// +      response.forEach((array) => {
+// +        donationData.push({ name: array.name, avatar: array.avatar, donations: array.donations.length });
+// +      });
+// +      res.send(donationData);
+// +    })
+// +    .catch((error) => {
+// +      res.send(error);
+// +    });
