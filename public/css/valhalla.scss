@@ -414,7 +414,7 @@ hr {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   left: 50%;
-  top: 100%;
+  top: 50%;
   color: rgb(73, 80, 87);
 }
 
@@ -455,6 +455,44 @@ hr {
   left: -15px;
   font-size: 0.7rem; }
 
+.reset-modal {
+  width: 100%;
+  max-width: 500px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.action-btn {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-group-btn {
+  position: absolute;
+  top: 39%;
+  right: 3%;
+}
+
+.nav-tabs .nav-link {
+  background: #d2745e;
+  padding: 20px;
+}
+
+.dashboard-tab {
+  color:black;
+  font-weight: 1000px;
+
+  &:hover {
+    color:white;
+  }
+}
+
+
 .chat-notify {
   background:red;
   position:relative;
@@ -480,7 +518,6 @@ hr {
 }
 
 .alt-card {
-
   &:nth-child(odd) {
     background-color: #BF360C;
   }

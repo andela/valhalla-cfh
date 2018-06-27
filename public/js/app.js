@@ -14,17 +14,20 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', '
           when('/bottom', {
             templateUrl: '/views/bottom.html'
           }).
-          when('/signin', {
-            templateUrl: '/views/signin.html'
+          when('/resetpassword', {
+            templateUrl: '/views/resetpassword.html'
           }).
-          when('/signup', {
-            templateUrl: '/views/signup.html'
+          when('/password-reset-error', {
+            templateUrl: '/views/password_reset_error.html'
           }).
-          when('/choose-avatar', {
+          when('/choose-avatar/', {
             templateUrl: '/views/choose-avatar.html'
           }).
           when('/profile', {
             templateUrl: '/views/profile.html'
+          }).
+          when('/dashboard', {
+            templateUrl: '/views/dashboard.html'
           }).
           otherwise({
             redirectTo: '/'
