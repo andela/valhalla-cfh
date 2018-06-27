@@ -14,13 +14,15 @@ const { Schema } = mongoose;
  * User Schema
  */
 const UserSchema = new Schema({
-  name: String,
+  name: { type: String, unique : true},
   email: String,
   username: String,
   provider: String,
   avatar: String,
   profile_image: String,
   points: Number,
+  friendRequests: [],
+  friends: [],
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)
   donations: [],
   hashed_password: String,

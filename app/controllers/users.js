@@ -332,7 +332,9 @@ exports.login = (req, res) => {
     // Compare password from user to database
     if (bcrypt.compareSync(password, user.hashed_password)) {
       const userData = {
-        id: user.id
+        id: user.id,
+        name: user.name,
+        email: user.email
       };
       // Create token
       const token = jwt.sign(userData, process.env.SECRET);
@@ -453,6 +455,29 @@ exports.profile = function (req, res) {
   });
 }
 
+exports.friends = (req, res) => {
+  const { decoded } = req;
+
+  User.find({
+    _id: decoded.id
+  }).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    return res.status(200).json({
+      message: 'User found',
+      friends: user[0].friends
+    });
+  });
+};
+
 /**
 * Method to send reset password link to users email
 * @param {Object} req
@@ -464,11 +489,6 @@ exports.sendResetMail = function (req, res) {
   const link = appLink.split('/#!/')[0];
 
   User.findOne({ email }).exec((err, user) => {
-    if (err) {
-      return res.status(500).json({
-        error: 'Internal Server Error'
-      });
-    }
     // If no user found
     if (!user) {
       return res.status(400).json({
@@ -517,6 +537,210 @@ exports.sendResetMail = function (req, res) {
         });
       }
     });
+  });
+}
+
+exports.sendFriendRequest = (req, res) => {
+  const { decoded } = req;
+  const { receiverName, receiverEmail } = req.body;
+  
+  const senderName = decoded.name;
+  const senderEmail = decoded.email;
+
+  User.findOneAndUpdate(
+    { _id: decoded.id },
+    { $push: {friendRequests: {receiverName}} }
+  ).exec((err) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+  });
+
+  User.findOneAndUpdate(
+    { name: receiverName },
+    { $push: {friendRequests: {senderName}} }
+  ).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    res.status(200).json({
+      message: 'Friend Request Sent Succesfully!'
+  });
+});
+}
+
+exports.acceptFriendRequest = (req, res) => {
+  const { decoded } = req;
+  const { senderName, senderEmail } = req.body;
+  const receiverName = decoded.name;
+  const receiverEmail = decoded.email;
+
+  User.findOneAndUpdate(
+    { _id: decoded.id },
+    { $pull: {friendRequests: { senderName }} }
+  ).exec((err, user) => {
+    console.log(user);
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error receiver end'
+      });
+    }
+
+    console.log('pull from 1');
+    
+  });
+
+  User.findOneAndUpdate(
+    { name: senderName },
+    { $pull: {friendRequests: { receiverName }} } 
+  ).exec((err, user) => {
+    console.log(user);
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    console.log('pull from 2');
+
+  });
+
+  User.findOneAndUpdate(
+    { _id: decoded.id },
+    { $push: {friends: {senderName}} }
+  ).exec((err, user) => {
+    console.log(user);
+    
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+
+    console.log('error from 1');
+
+  });
+
+  User.findOneAndUpdate(
+    { name: senderName },
+    { $push: {friends: {receiverName}} }
+  ).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    console.log('error from 2');
+
+    res.status(200).json({
+      message: 'Friend Request Accepted!'
+    });
+  });
+};
+
+exports.rejectFriendRequest = (req, res) => {
+  const { decoded } = req;
+  const receiverName = decoded.name;
+  // const senderEmail = decoded.email;
+  const { senderName } = req.body;
+
+  User.findOneAndUpdate(
+    { _id: decoded.id },
+    { $pull: {friendRequests: { senderName }} }
+  ).exec((err) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error receiver end'
+      });
+    }
+  });
+
+  User.findOneAndUpdate(
+    { name: senderName },
+    { $pull: {friendRequests: { receiverName }} }
+  ).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    res.status(200).json({
+      message: 'Friend Request Rejected!'
+    });
+  });
+}
+
+exports.deleteFriend = (req, res, next) => {
+  const { decoded } = req;
+  const { receiverName } = req.body;
+  const senderName = decoded.name;
+
+  User.findOneAndUpdate(
+    { _id: decoded.id },
+    { $pull: {friends: { senderName: receiverName }} },
+  ).exec((err) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+  });
+
+  User.findOneAndUpdate(
+    { name: receiverName },
+    { $pull: {friends: { senderName: senderName }} },
+  ).exec((err) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+  });
+
+  User.findOneAndUpdate(
+    { _id: decoded.id },
+    { $pull: {friends: { receiverName: receiverName }} },
+  ).exec((err) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+  });
+
+  User.findOneAndUpdate(
+    { name: receiverName },
+    { $pull: {friends: { receiverName: senderName }} },
+  ).exec((err, user) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error'
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    next(); 
   });
 };
 
@@ -602,5 +826,5 @@ exports.donations = function (req, res){
       message: 'User Donation',
       donationData
     });
-  })
+  });
 }
