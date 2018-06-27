@@ -5,6 +5,13 @@ const mongoose = require('mongoose');
 // const async = require('async');
 const Question = mongoose.model('Question');
 // const _ = require('underscore');
+const regionIdList = [
+  '59b91ad4605e234f4555a4dd',
+  '59b91ad4605e234f4555a4dc',
+  '59b8ffd328650f1362ca5940',
+  '59b8ffde28650f1362ca5941',
+  '59b90186ad7d37a9fb7d3630'
+];
 
 /**
  * Find question by id
@@ -54,18 +61,30 @@ exports.all = (req, res) => {
 
 /**
  * List of Questions (for Game class)
- */
-/**
- * List of Questions (for Game class)
  * @param {func} cb
+ * @param {String} regionIndex
  * @return {*} err, void
  */
-exports.allQuestionsForGame = (cb) => {
-  Question.find({ official: true, numAnswers: { $lt: 3 } })
-    .select('-_id').exec((err, questions) => {
-      if (err) {
-        return new Error(err);
-      }
-      cb(questions);
-    });
+exports.allQuestionsForGame = (cb, regionIndex) => {
+  if (!regionIndex || regionIndex >= 6) {
+    Question.find({ official: true, numAnswers: { $lt: 3 } })
+      .select('-_id').exec((err, questions) => {
+        if (err) {
+          return new Error(err);
+        }
+        cb(questions);
+      });
+  } else {
+    Question.find({
+      official: true,
+      numAnswers: { $lt: 3 },
+      regionId: regionIdList[regionIndex - 1]
+    })
+      .select('-_id').exec((err, questions) => {
+        if (err) {
+          return new Error(err);
+        }
+        cb(questions);
+      });
+  }
 };

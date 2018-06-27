@@ -28,6 +28,11 @@ const QuestionSchema = new Schema({
     type: String,
     default: '',
     trim: true
+  },
+  regionId: {
+    type: String,
+    default: '',
+    trim: true
   }
 });
 

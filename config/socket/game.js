@@ -42,6 +42,7 @@ function Game(gameID, io) {
   this.questions = null;
   this.answers = null;
   this.curQuestion = null;
+  this.regionIndex = null;
   this.timeLimits = {
     stateChoosing: 21,
     stateJudging: 16,
@@ -113,8 +114,9 @@ Game.prototype.assignGuestNames = function () {
   });
 };
 
-Game.prototype.prepareGame = function () {
+Game.prototype.prepareGame = function (regionIndex) {
   this.state = 'game in progress';
+  this.regionIndex = regionIndex;
 
   this.io.sockets.in(this.gameID).emit(
     'prepareGame',
@@ -129,7 +131,7 @@ Game.prototype.prepareGame = function () {
   const self = this;
   async.parallel(
     [
-      this.getQuestions,
+      this.getQuestions.bind(this),
       this.getAnswers
     ],
     (err, results) => {
@@ -269,7 +271,7 @@ Game.prototype.stateDissolveGame = function () {
 Game.prototype.getQuestions = function (cb) {
   questions.allQuestionsForGame((data) => {
     cb(null, data);
-  });
+  }, this.regionIndex);
 };
 
 Game.prototype.getAnswers = function (cb) {

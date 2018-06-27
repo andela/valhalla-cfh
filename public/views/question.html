@@ -15,10 +15,15 @@
         <img style="width: 100px;" ng-src="https://cdn.dribbble.com/users/338744/screenshots/2886346/load-dribbble.gif"/>
         <span id="player-count">{{game.players.length}} / 12 Players</span>
       </div>
-      <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride)">
-        <div class="pointer btn nav-action-btn text-white" id='start-game'>
+      <div id="start-game-container" ng-show="(game.playerIndex === 0 || game.joinOverride)">
+        <div class="pointer btn nav-action-btn text-white" id='start-game' ng-show="game.players.length < 3" data-toggle="modal" data-target="#cantStartGame">
+            Start Game with {{game.players.length}} player(s)
+        </div>
+
+        <div class="pointer btn nav-action-btn text-white" id='start-game' ng-show="game.players.length >= 3" data-toggle="modal" data-target="#regionModal">
           Start Game with {{game.players.length}} player(s)
         </div>
+
       </div>
     </div>
     <!-- INITIAL PAGE DISPLAY -->
@@ -73,7 +78,7 @@
     </div>
   </div>
   <!-- End of the modal -->
-  <div id="start-modal" class="modal fade center" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div id="start-modal" class="modal fade center" role="dialog"  data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content" style="margin-left: auto; margin-right: auto">
         <div class="modal-header" style="background-color: #495057; color: #FFF;">
@@ -93,5 +98,33 @@
       </div>
     </div>
   </div>
+
+  <!-- MODAL TO CHOOSE REGION -->
+  <div class="modal fade" id="regionModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title">Select Game Region</h5>
+        </div>
+        <div class="modal-body">
+          <select ng-model="regionIndex" class="form-control">
+            <option selected value="">Select a region</option>
+            <option value="1">Africa</option>
+            <option value="2">America</option>
+            <option value="3">Australia</option>
+            <option value="4">Antarctica</option>
+            <option value="5">Europe</option>
+            <option value="6">World</option>
+          </select>
+        </div>
+        <div class="text-danger text-center">{{regionError}}</div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn text-white" style="background-color: #1B5E20" ng-click="startGame()">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL TO CHOOSE REGION -->
 </div>
   

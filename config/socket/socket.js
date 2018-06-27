@@ -203,7 +203,7 @@ module.exports = (io) => {
       joinGame(socket, data);
     });
 
-    socket.on('startGame', () => {
+    socket.on('startGame', (data) => {
       if (allGames[socket.gameID]) {
         const thisGame = allGames[socket.gameID];
         console.log('comparing', thisGame.players[0].socket.id, 'with', socket.id);
@@ -218,7 +218,7 @@ module.exports = (io) => {
               return gamesNeedingPlayers.splice(index, 1);
             }
           });
-          thisGame.prepareGame();
+          thisGame.prepareGame(data.regionIndex);
           thisGame.sendNotification('The game has begun!');
         }
 
@@ -236,7 +236,9 @@ module.exports = (io) => {
     });
 
     socket.on('czarCardSelected', () => {
-      allGames[socket.gameID].startNextRound(allGames[socket.gameID]);
+      if (allGames[socket.gameID]) {
+        allGames[socket.gameID].startNextRound(allGames[socket.gameID]);
+      }
     });
   });
 };

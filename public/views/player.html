@@ -1,27 +1,29 @@
-<div id="player-card" ng-repeat="player in game.players" class="d-flex p-2 rounded-bottom" ng-style="{'background-color': colors[player.color]}">
+<div id="player-card" ng-repeat="player in game.players" ng-style="{'background-color': colors[player.color]}">
 
-  <!-- USER AVATAR -->
-  <div>
-    <!-- CROWN FOR USER THAT HAVE DONATED -->
-    <img ng-show="isPremium($index)" ng-src="img/king.png" id="king" />
-    <!-- CROWN FOR USER THAT HAVE DONATED -->
-
-    <!-- DISPLAY USER AVATAR-->
-    <img ng-src="{{player.avatar}}" style="width: 60px; z-index: 999;" />
-    <!-- DISPLAY USER AVATAR-->
-
-  </div>
-  <!-- USER AVATAR -->
+  <div ng-style="playerStyle(player)" class="d-flex p-2 rounded-bottom">
+    <!-- USER AVATAR -->
+    <div>
+      <!-- CROWN FOR USER THAT HAVE DONATED -->
+      <img ng-show="isPremium($index)" ng-src="img/king.png" id="king" />
+      <!-- CROWN FOR USER THAT HAVE DONATED -->
   
-  <!-- SHOW USER DETAILS DURING GAME -->
-  <div class="w-100">
-    <h4 class="my-0">{{player.username | upperFirstLetter}}</h4>
-    <div class="d-flex justify-content-between">
-      <h4>{{player.points}}/{{game.pointLimit}}</h4>
-      <span ng-show="currentCzar($index)">CZAR</span>
-      <img ng-show="isPlayer($index)" src="../img/11.png" style="height: 90%;"/>
+      <!-- DISPLAY USER AVATAR-->
+      <img ng-src="{{player.avatar}}" style="width: 60px; z-index: 999;" />
+      <!-- DISPLAY USER AVATAR-->
+  
     </div>
+    <!-- USER AVATAR -->
+    
+    <!-- SHOW USER DETAILS DURING GAME -->
+    <div class="w-100">
+      <h4 class="my-0">{{player.username | upperFirstLetter}}</h4>
+      <div class="d-flex justify-content-between">
+        <h4>{{player.points}}/{{game.pointLimit}}</h4>
+        <span ng-show="currentCzar($index)">CZAR</span>
+        <img ng-show="isPlayer($index)" src="../img/11.png" style="height: 90%;"/>
+      </div>
+    </div>
+    <!-- SHOW USER DETAILS DURING GAME -->
   </div>
-  <!-- SHOW USER DETAILS DURING GAME -->
   
 </div>
