@@ -12,6 +12,7 @@ angular.module('mean.system')
     $scope.totalInvites = 0;
     $scope.showAppModal = true;
     $scope.gameTour = introJs();
+    $scope.regionError = '';
 
     $scope.timerStyle = () =>({
       'background-color': '#495057',
@@ -105,7 +106,7 @@ angular.module('mean.system')
       const card = $(`#${event.target.id}`);
       setTimeout(() => {
 
-      $scope.startNextRound();
+      $scope.NextRound();
        $('#start-modal').modal('hide');
       }, 500);
     };
@@ -113,10 +114,19 @@ angular.module('mean.system')
     $scope.startNextRound = () => {
       // playTone('newRound');
       if ($scope.isCzar()) {
-        console.log('am @ here');
         game.startNextRound();
       }
     };
+
+    $scope.playerStyle = (player) => {
+      if ((game.state === 'winner has been chosen') && (game.winningCardPlayer === player.color)) {
+        return {
+          '-webkit-animation': 'shake 0.7s infinite',
+          'animation': 'shake 0.7s infinite',
+          'position': 'relative'
+        };
+      }
+    }
 
 
     $scope.pointerCursorStyle = (winningSet) => {
@@ -222,7 +232,12 @@ angular.module('mean.system')
     };
 
     $scope.startGame = function() {
-      game.startGame();
+      if ($scope.regionIndex && $scope.regionIndex !== '') {
+        $('#regionModal').modal('hide');
+        game.startGame($scope.regionIndex);
+      } else {
+        $scope.regionError = 'Please select a region';
+      }
     };
 
     $scope.abandonGame = function() {
@@ -248,7 +263,6 @@ angular.module('mean.system')
 
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function() {
-      console.log('*********************');
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
@@ -257,7 +271,6 @@ angular.module('mean.system')
         const {
           players, gameID, gameWinner, round
         } = game;
-        console.log('index of the game winner', gameWinner);
         
         const gameStarter = players[0].username;
         const nameOfWinner = players[gameWinner].username;
@@ -359,7 +372,6 @@ angular.module('mean.system')
     $scope.startNextRound = () => {
       // playTone('newRound');
       if ($scope.isCzar()) {
-        console.log('am @ here');
         game.startNextRound();
       }
     };
