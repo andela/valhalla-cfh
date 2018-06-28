@@ -2,7 +2,7 @@ angular.module('mean.system')
   .controller('IndexController', ['$scope', '$http', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, $http, Global, $location, socket, game, AvatarService) {
     $scope.global = Global;
     $scope.gameWithCustom = 'false';
-
+    
     // Run validation on user input
     $scope.validator = () => {
       const userDetails = $scope.user;
@@ -22,25 +22,38 @@ angular.module('mean.system')
         );
     };
 
-    $scope.getUser = () => {
+    
+    $scope.getUser = (term) => {
+       console.log(term);
       $scope.loading = true;
       const token = localStorage.token;
       let user = [];
+      let url;
+      if(term){
+        url = `/api/profile?username=${term}`;
+      }
+      else{
+        url = '/api/profile';
+      }
+      
       $http({
         method: 'GET',
-        url: `/api/profile`,
+        url: url,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `${token}`,
          
         }
       }).then((response) => {
-        const { user } = response.data;
+        const { user , players} = response.data;
         $scope.user = user;
         $scope.players = response.data.players;
         $scope.loading = false;
       }, (response) => {
         $scope.loading = false;
+
+        // const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white" style="background: red">Close</button>';        
+
         const closeModal = '<button id="closeModal" data-dismiss="modal" type="button" class="btn btn-md text-white mb-4" style="background: red">Close</button>';        
         const infoModal = $('#infoModal');
         infoModal.find('.modal-body').empty();
@@ -52,8 +65,13 @@ angular.module('mean.system')
         console.log(response.data.error);
       });
 
+      $scope.totalDonation = (donations) => {
+        return donations.reduce((a,b) => parseInt(a) + parseInt(b));
+      }
+
     }
-    $scope.getUser();
+
+    //$scope.getUser();
 
     $scope.gameHistory = () => {
       $scope.loading = true;

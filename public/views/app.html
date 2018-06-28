@@ -100,7 +100,7 @@
                     <tbody>
                       <tr ng-repeat="user in inviteUser">
                         <td>{{user.name}}</td>
-                        <td> <button type="button" class="btn tab-button" id="tab-button" ng-click="addFriend(user);" ng-disabled="name.includes(user.name)">Add friend</button>
+                        <td> <button type="button" class="btn tab-button" id="tab-button" ng-click="addFriend(user.name);" ng-disabled="name.includes(user.name)">Add as Friend</button>
                         <td> <button type="button" class="btn" id="tab-button" ng-click="sendInvites(user)" >Invite</button></td>
                       </tr>
                     </tbody>
